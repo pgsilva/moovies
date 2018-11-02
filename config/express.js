@@ -7,7 +7,7 @@ var app = express();
 app.use(express.static('./public')); //liberando uma pasta para ser acessivel ao navegador
 app.use(bodyParser.json());
 
-consign({cwd: 'app'})
+consign({ cwd: 'app' })
         .include('model')
         .then('api')
         .then('routes')

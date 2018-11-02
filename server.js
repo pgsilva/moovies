@@ -6,7 +6,7 @@ http.createServer(app, function(req, res){
 
     res.send('NodeJs');
     
-}).listen(3000, function(){
+}).listen(3002, function(){
     console.log("─────────▄──────────────▄ \n"+
                 "────────▌▒█───────────▄▀▒▌\n"+
                 "────────▌▒▒▀▄───────▄▀▒▒▒▐\n"+
