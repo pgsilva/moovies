@@ -3,7 +3,7 @@ package com.dojo.moovies.out.api.data
 import com.google.gson.annotations.SerializedName
 import java.math.BigDecimal
 
-internal data class DiscoverMovie(
+internal data class DiscoverMovieResult(
     @SerializedName("adult")
     val resultAdult: Boolean,
     @SerializedName("backdrop_path")
