@@ -14,7 +14,6 @@ internal interface TheMovieDbApi {
         const val TMDB_API_INITIAL_SORT_BY = "popularity.desc"
         const val TMDB_API_INITIAL_LANGUAGE = "pt-BR"
         const val TMDB_API_KEY = BuildConfig.TMDB_API_KEY
-
     }
 
     @GET("/3/discover/movie")
