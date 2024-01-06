@@ -17,11 +17,21 @@ jobs:
     with:
       with-docker-compose: false
 
+  secret:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract secret
+        shell: bash
+        run: echo "secret=${{ secrets.TMDB_API_KEY }}" >> $GITHUB_OUTPUT
+        id: extract_secret
+
   apk:
     needs: test_and_build
     uses: pgsilva/deck-actions/.github/workflows/android-build-upload-apk.yml@v2
     with:
       build-config: true
       key-name: TMDB_API_KEY
-      key-value: ${{ secrets.TMDB_API_KEY }}
+      key-value: ${{ steps.extract_secret.outputs.secret }}
       apk-name: Moovies.apk
