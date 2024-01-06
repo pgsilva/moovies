@@ -21,6 +21,6 @@ jobs:
     uses: pgsilva/deck-actions/.github/workflows/android-build-upload-apk.yml@v2
     with:
       build-config: true
-      key: TMDB_API_KEY
+      key-name: TMDB_API_KEY
       value: ${{ secrets.TMDB_API_KEY }}
       apk-name: Moovies.apk
