@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fg_home">
+
+    <fragment
+        android:id="@+id/fg_home"
+        android:name="com.dojo.moovies.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_fg_home_to_fg_search"
+            app:destination="@id/fg_search" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fg_search"
+        android:name="com.dojo.moovies.ui.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search">
+
+        <action
+            android:id="@+id/action_fg_search_to_fg_detail"
+            app:destination="@id/fg_detail" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fg_detail"
+        android:name="com.dojo.moovies.ui.detail.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" />
+
+</navigation>
