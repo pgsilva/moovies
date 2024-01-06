@@ -4,12 +4,12 @@ import com.google.gson.annotations.SerializedName
 
 internal data class DiscoverResponse(
     @SerializedName("page")
-    val catalogPage: Int,
+    val page: Int,
     @SerializedName("results")
-    val catalogResults: List<DiscoverMovie>,
+    val results: List<DiscoverMovieResult>,
     @SerializedName("total_pages")
-    val catalogTotalPages: Int,
+    val totalPages: Int,
     @SerializedName("total_results")
-    val catalogTotalResults: Int
+    val totalResults: Int
 
 )

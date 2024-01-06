@@ -13,6 +13,9 @@ import androidx.navigation.fragment.findNavController
 import com.dojo.moovies.R
 import com.dojo.moovies.databinding.FragmentHomeBinding
 import com.dojo.moovies.out.api.TheMovieDbApi
+import com.dojo.moovies.out.db.MyListDao
+import com.dojo.moovies.out.db.entity.MyListEntity
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
@@ -22,6 +25,8 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var binding: FragmentHomeBinding
 
     private val api: TheMovieDbApi by inject()
+
+    private val dao: MyListDao by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +39,6 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.i("MOOVIES-APP", "Home onViewCreated")
 
         initComponents()
     }
@@ -48,12 +52,18 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
             )
         }
 
-        lifecycleScope.launch{
+        binding.btMylist.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_fg_home_to_fg_mylist
+            )
+        }
+
+        lifecycleScope.launch {
             api.getDiscoverMovies().let { response ->
 
                 if (response.isSuccessful) {
                     binding.textView2.text =
-                        response.body()!!.catalogResults.map { it.resultTitle }.toString()
+                        response.body()!!.results.map { it.resultTitle }.toString()
                 }
             }
         }
