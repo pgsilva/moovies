@@ -1,9 +1,13 @@
-name: Morales Bot - Feature to Develop
+name: Morales Bot - Moovies CI
 
 on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+    types: [closed]
 
 permissions:
   contents: write
