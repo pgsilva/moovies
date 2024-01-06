@@ -23,3 +23,4 @@ jobs:
       build-config: true
       key: TMDB_API_KEY
       value: ${{ secrets.TMDB_API_KEY }}
+      apk-name: Moovies.apk
