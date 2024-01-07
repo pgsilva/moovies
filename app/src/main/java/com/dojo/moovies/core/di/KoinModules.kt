@@ -42,4 +42,6 @@ val databaseModule = module {
     }
 
     single { get<AppDatabase>().myListDao() }
+    single { get<AppDatabase>().streamingChannelDao() }
+
 }

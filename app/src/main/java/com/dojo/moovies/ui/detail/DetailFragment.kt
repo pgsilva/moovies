@@ -11,6 +11,10 @@ import com.dojo.moovies.R
 import com.dojo.moovies.databinding.FragmentDetailBinding
 import com.dojo.moovies.out.api.MovieOfTheNightApi
 import com.dojo.moovies.out.api.TheMovieDbApi
+import com.dojo.moovies.out.db.StreamingChannelDao
+import com.dojo.moovies.ui.loadFromTMDBApi
+import com.dojo.moovies.ui.tryLoad
+import com.dojo.moovies.ui.tryLoadSvg
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
@@ -21,6 +25,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private val apiMotn: MovieOfTheNightApi by inject()
 
     private val apiTmdb: TheMovieDbApi by inject()
+
+    private val dao: StreamingChannelDao by inject()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,19 +50,30 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             apiTmdb.getTvDetail(2316).let { response ->
                 if (response.isSuccessful)
                     binding.tvTvDetail.text =
-                        response.body()!!.toString()
+                        response.body()!!.originalName + "-" + response.body()!!.id
             }
 
             apiTmdb.getMovieDetail(667538).let { response ->
                 if (response.isSuccessful)
                     binding.tvMovieDetail.text =
-                        response.body()!!.toString()
+                        response.body()!!.originalTitle + "-" + response.body()!!.id
             }
 
             apiMotn.getStreamingInfoByImdbId("tv/2316").let { response ->
-                if (response.isSuccessful)
-                    binding.tvStreamingList.text =
-                        response.body()!!.result.streamingInfo.br.toString()
+                if (response.isSuccessful) {
+                    val streamingList =
+                        response.body()!!.result.streamingInfo.br
+
+                    val channel = streamingList.first().service
+
+                    binding.tvStreamingList.text = channel
+
+                    dao.findById(channel).collect {
+                        it?.let {
+                            binding.ivStreamingLogo.tryLoadSvg(it.darkThemeImage)
+                        }
+                    }
+                }
             }
 
 

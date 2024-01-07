@@ -85,8 +85,10 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
 
     //Coil
-    implementation("io.coil-kt:coil:2.5.0")
-    implementation("io.coil-kt:coil-gif:2.5.0")
+    val coilVersion = "2.5.0"
+    implementation("io.coil-kt:coil:$coilVersion")
+    implementation("io.coil-kt:coil-gif:$coilVersion")
+    implementation("io.coil-kt:coil-svg:$coilVersion")
 
     //Koin
     val koinVersion = "3.2.0"

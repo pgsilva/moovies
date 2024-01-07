@@ -2,6 +2,7 @@ package com.dojo.moovies.out.api
 
 import com.dojo.moovies.BuildConfig
 import com.dojo.moovies.out.api.data.motn.StreamingInfoResponse
+import com.dojo.moovies.out.api.data.motn.StreamingServicesResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.HeaderMap
@@ -28,4 +29,9 @@ internal interface MovieOfTheNightApi {
         @Query("output_language") language: String = MOTN_API_INITIAL_LANGUAGE,
         @HeaderMap headers: Map<String, String> = headers()
     ): Response<StreamingInfoResponse>
+
+    @GET("/countries")
+    suspend fun getStreamingList(
+        @HeaderMap headers: Map<String, String> = headers()
+    ): Response<StreamingServicesResponse>
 }
