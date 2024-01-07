@@ -19,7 +19,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        buildConfigField("String", "TMDB_API_KEY", getApiKey())
+        buildConfigField("String", "TMDB_API_KEY", getApiKey("TMDB_API_KEY"))
+        buildConfigField("String", "MOTN_API_KEY", getApiKey("MOTN_API_KEY"))
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -62,8 +63,8 @@ android {
     }
 }
 
-fun getApiKey(): String {
-    return gradleLocalProperties(rootDir).getProperty("TMDB_API_KEY")
+fun getApiKey(key:String): String {
+    return gradleLocalProperties(rootDir).getProperty(key)
 }
 
 dependencies {

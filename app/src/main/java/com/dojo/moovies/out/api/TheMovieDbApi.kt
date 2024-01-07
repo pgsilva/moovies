@@ -1,9 +1,14 @@
 package com.dojo.moovies.out.api
 
-import com.dojo.moovies.out.api.data.DiscoverResponse
+import com.dojo.moovies.out.api.data.tmdb.DiscoverMovieResponse
 import com.dojo.moovies.BuildConfig
+import com.dojo.moovies.out.api.data.tmdb.DiscoverTvResponse
+import com.dojo.moovies.out.api.data.tmdb.MovieDetail
+import com.dojo.moovies.out.api.data.tmdb.MultiResponse
+import com.dojo.moovies.out.api.data.tmdb.TvDetail
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -24,5 +29,38 @@ internal interface TheMovieDbApi {
         @Query("include_adult") adult: Boolean = true,
         @Query("include_video") video: Boolean = true,
         @Query("page") page: Int = TMDB_API_INITIAL_PAGE
-    ): Response<DiscoverResponse>
+    ): Response<DiscoverMovieResponse>
+
+    @GET("/3/discover/tv")
+    suspend fun getDiscoverTv(
+        @Query("api_key") apiKey: String = TMDB_API_KEY,
+        @Query("language") language: String = TMDB_API_INITIAL_LANGUAGE,
+        @Query("sort_by") sortBy: String = TMDB_API_INITIAL_SORT_BY,
+        @Query("include_adult") adult: Boolean = true,
+        @Query("include_null_first_air_dates") firstAirData: Boolean = false,
+        @Query("page") page: Int = TMDB_API_INITIAL_PAGE
+    ): Response<DiscoverTvResponse>
+
+    @GET("/3/search/multi")
+    suspend fun getMultiByQuery(
+        @Query("query") query: String,
+        @Query("api_key") apiKey: String = TMDB_API_KEY,
+        @Query("language") language: String = TMDB_API_INITIAL_LANGUAGE,
+        @Query("include_adult") adult: Boolean = true,
+        @Query("page") page: Int = TMDB_API_INITIAL_PAGE
+    ): Response<MultiResponse>
+
+    @GET("/3/movie/{movie_id}")
+    suspend fun getMovieDetail(
+        @Path("movie_id") id: Int,
+        @Query("api_key") apiKey: String = TMDB_API_KEY,
+        @Query("language") language: String = TMDB_API_INITIAL_LANGUAGE
+    ): Response<MovieDetail>
+
+    @GET("/3/tv/{series_id}")
+    suspend fun getTvDetail(
+        @Path("series_id") id: Int,
+        @Query("api_key") apiKey: String = TMDB_API_KEY,
+        @Query("language") language: String = TMDB_API_INITIAL_LANGUAGE
+    ): Response<TvDetail>
 }

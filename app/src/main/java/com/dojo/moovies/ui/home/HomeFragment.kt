@@ -26,8 +26,6 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val api: TheMovieDbApi by inject()
 
-    private val dao: MyListDao by inject()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,8 +42,6 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun initComponents() {
-        Toast.makeText(context, "Fragment Home", LENGTH_SHORT).show()
-
         binding.btPesquisa.setOnClickListener {
             findNavController().navigate(
                 R.id.action_fg_home_to_fg_search
@@ -60,10 +56,16 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
 
         lifecycleScope.launch {
             api.getDiscoverMovies().let { response ->
-
                 if (response.isSuccessful) {
-                    binding.textView2.text =
-                        response.body()!!.results.map { it.resultTitle }.toString()
+                    binding.tvMovie.text =
+                        response.body()!!.results.map { it.title }.toString()
+                }
+            }
+
+            api.getDiscoverTv().let { response ->
+                if (response.isSuccessful) {
+                    binding.tvTv.text =
+                        response.body()!!.results.map { it.name }.toString()
                 }
             }
         }

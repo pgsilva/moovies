@@ -1,35 +1,48 @@
-package com.dojo.moovies.out.api.data
+package com.dojo.moovies.out.api.data.tmdb
 
 import com.google.gson.annotations.SerializedName
 import java.math.BigDecimal
 
-internal data class DiscoverMovieResult(
+internal data class DiscoverMovie(
     @SerializedName("adult")
-    val resultAdult: Boolean,
+    val adult: Boolean?,
+
     @SerializedName("backdrop_path")
-    val resultBackdropPath: String?,
+    val backdropPath: String?,
+
     @SerializedName("genre_ids")
-    val resultGenreIds: List<Int>,
+    val genreIds: List<Int>,
+
     @SerializedName("id")
-    val resultId: Int,
+    val id: Int,
+
     @SerializedName("original_language")
-    val resultOriginalLanguage: String,
+    val originalLanguage: String,
+
     @SerializedName("original_title")
-    val resultOriginalTitle: String,
+    val originalTitle: String,
+
     @SerializedName("overview")
-    val resultOverview: String,
+    val overview: String,
+
     @SerializedName("popularity")
-    val resultPopularity: BigDecimal,
+    val popularity: BigDecimal,
+
     @SerializedName("poster_path")
-    val resultPosterPath: String?,
+    val posterPath: String?,
+
     @SerializedName("release_date")
-    val resultReleaseDate: String,
+    val releaseDate: String,
+
     @SerializedName("title")
-    val resultTitle: String,
+    val title: String,
+
     @SerializedName("video")
-    val resultVideo: Boolean,
+    val video: Boolean,
+
     @SerializedName("vote_average")
-    val resultVoteAverage: BigDecimal,
+    val voteAverage: BigDecimal,
+
     @SerializedName("vote_count")
-    val resultVoteCount: Int
+    val voteCount: Int
 )
