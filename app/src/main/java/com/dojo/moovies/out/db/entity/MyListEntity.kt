@@ -20,7 +20,7 @@ data class MyListEntity(
     val originalName: String,
     val overview: String,
     val posterPath: String,
-    val mediaType: String?,
-    val voteAverage: Double?,
+    val mediaType: String,
+    val voteAverage: Double,
     val voteCount: Int?
 )

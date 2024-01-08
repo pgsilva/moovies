@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="275dp"
+    android:layout_marginHorizontal="4dp"
+    android:clickable="true"
+    android:focusable="true">
+
+    <ImageView
+        android:id="@+id/iv_poster"
+        android:layout_width="130dp"
+        android:layout_height="205dp"
+        android:layout_margin="8dp"
+        android:padding="2dp"
+        android:scaleType="centerCrop"
+        app:cardBackgroundColor="?attr/colorOnBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/img_poster_tv" />
+
+    <TextView
+        android:id="@+id/tv_tv"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:padding="8dp"
+        android:text="Homem-Aranha: Através do Aranhaverso"
+        android:textColor="?attr/colorOnBackground"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/iv_poster"
+        app:layout_constraintStart_toStartOf="@id/iv_poster"
+        app:layout_constraintTop_toBottomOf="@id/iv_poster" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

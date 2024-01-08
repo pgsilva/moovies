@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Moovies</string>
+    <string name="str_title_discover_movie">Novidades em Filmes</string>
+    <string name="str_title_discover_tv">Novidades em Séries</string>
+    <string name="str_tittle">Moovies</string>
+    <string name="str_title_my_list">Minha Lista</string>
 </resources>

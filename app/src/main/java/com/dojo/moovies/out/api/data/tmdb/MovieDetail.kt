@@ -3,7 +3,7 @@ package com.dojo.moovies.out.api.data.tmdb
 import com.google.gson.annotations.SerializedName
 import java.math.BigDecimal
 
-internal data class MovieDetail (
+data class MovieDetail (
     @SerializedName("adult")
     val adult: Boolean?,
 

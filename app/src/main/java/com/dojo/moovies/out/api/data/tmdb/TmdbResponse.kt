@@ -2,7 +2,7 @@ package com.dojo.moovies.out.api.data.tmdb
 
 import com.google.gson.annotations.SerializedName
 
-internal data class DiscoverMovieResponse(
+data class DiscoverMovieResponse(
     @SerializedName("page")
     val page: Int,
     @SerializedName("results")
@@ -13,7 +13,7 @@ internal data class DiscoverMovieResponse(
     val totalResults: Int
 )
 
-internal data class DiscoverTvResponse(
+data class DiscoverTvResponse(
     @SerializedName("page")
     val page: Int,
     @SerializedName("results")
@@ -24,7 +24,7 @@ internal data class DiscoverTvResponse(
     val totalResults: Int
 )
 
-internal data class MultiResponse(
+data class MultiResponse(
     @SerializedName("page")
     val page: Int,
     @SerializedName("results")

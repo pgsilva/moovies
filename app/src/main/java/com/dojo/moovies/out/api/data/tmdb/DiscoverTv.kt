@@ -3,12 +3,12 @@ package com.dojo.moovies.out.api.data.tmdb
 import com.google.gson.annotations.SerializedName
 import java.math.BigDecimal
 
-internal data class DiscoverTv (
+data class DiscoverTv (
     @SerializedName("adult")
-    val adult: Boolean?,
+    val adult: Boolean,
 
     @SerializedName("backdrop_path")
-    val backdropPath: String?,
+    val backdropPath: String,
 
     @SerializedName("first_air_date")
     val firstAirDate: String?,
@@ -35,7 +35,7 @@ internal data class DiscoverTv (
     val popularity: BigDecimal,
 
     @SerializedName("poster_path")
-    val posterPath: String?,
+    val posterPath: String,
 
     @SerializedName("vote_average")
     val voteAverage: BigDecimal,

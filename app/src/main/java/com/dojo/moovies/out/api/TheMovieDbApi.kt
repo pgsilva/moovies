@@ -12,7 +12,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 
-internal interface TheMovieDbApi {
+interface TheMovieDbApi {
     companion object {
         const val TMDB_API_URL = "https://api.themoviedb.org/"
         const val TMDB_API_INITIAL_PAGE = 1

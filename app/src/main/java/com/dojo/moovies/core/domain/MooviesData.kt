@@ -1,13 +1,22 @@
 package com.dojo.moovies.core.domain
 
-import okhttp3.MediaType
 import java.math.BigDecimal
 
 enum class MooviesMediaType {
-    TV, MOVIE
+    TV, MOVIE;
+
+    companion object {
+        fun valueFromString(str: String) : MooviesMediaType {
+            return when (str) {
+                "tv" -> TV
+                "movie" -> MOVIE
+                else -> throw IllegalArgumentException("MediaType invalid")
+            }
+        }
+    }
 }
 
-internal data class MooviesData(
+data class MooviesData(
     val id: Long,
     val isAdult: Boolean,
     val backdropPath: String,
@@ -16,7 +25,7 @@ internal data class MooviesData(
     val originalName: String,
     val overview: String,
     val posterPath: String,
-    val mediaType: MediaType?,
-    val voteAverage: BigDecimal,
-    val voteCount: Int
+    val mediaType: MooviesMediaType,
+    val voteAverage: BigDecimal?,
+    val voteCount: Int?
 )

@@ -11,12 +11,13 @@ import coil.load
 import com.dojo.moovies.R
 
 enum class TmdbImageSize {
-    POSTER_SIZE, COVER_SIZE, POSTER_BLUR_SIZE
+    POSTER_SIZE, COVER_SIZE, POSTER_BLUR_SIZE,POSTER_COVER_SIZE
 }
 
 private const val TMDB_IMAGE_URL = "https://www.themoviedb.org/t/p"
 private const val POSTER_SIZE = "/w300_and_h450_bestv2/"
 private const val COVER_SIZE = "/w1920_and_h800_multi_faces/"
+private const val POSTER_COVER_SIZE = "/original/"
 private const val POSTER_BLUR_SIZE = "/w300_and_h450_bestv2_filter(blur)/"
 
 fun ImageView.loadFromTMDBApi(url: String, size: TmdbImageSize) {
@@ -24,6 +25,7 @@ fun ImageView.loadFromTMDBApi(url: String, size: TmdbImageSize) {
         TmdbImageSize.POSTER_SIZE -> this.tryLoad("$TMDB_IMAGE_URL$POSTER_SIZE$url")
         TmdbImageSize.COVER_SIZE -> this.tryLoad("$TMDB_IMAGE_URL$COVER_SIZE$url")
         TmdbImageSize.POSTER_BLUR_SIZE -> this.tryLoad("$TMDB_IMAGE_URL$POSTER_BLUR_SIZE$url")
+        TmdbImageSize.POSTER_COVER_SIZE ->this.tryLoad("$TMDB_IMAGE_URL$POSTER_COVER_SIZE$url")
     }
 }
 

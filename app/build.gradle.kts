@@ -83,6 +83,7 @@ dependencies {
 
     //Material
     implementation("com.google.android.material:material:1.11.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     //Coil
     val coilVersion = "2.5.0"
@@ -93,6 +94,10 @@ dependencies {
     //Koin
     val koinVersion = "3.2.0"
     implementation("io.insert-koin:koin-androidx-compose:$koinVersion")
+    implementation("io.insert-koin:koin-core:$koinVersion")
+    implementation("io.insert-koin:koin-android:$koinVersion")
+
+
 
     //Retrofit
     val retrofitVersion = "2.9.0"

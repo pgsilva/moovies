@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.dojo.moovies.out.api.MovieOfTheNightApi
 import com.dojo.moovies.out.api.data.motn.StreamingServicesByCountry
 import com.dojo.moovies.out.db.StreamingChannelDao
+import com.dojo.moovies.out.db.entity.MyListEntity
 import com.dojo.moovies.out.db.entity.StreamingChannelEntity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
