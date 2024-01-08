@@ -15,6 +15,8 @@ import com.dojo.moovies.databinding.FragmentHomeBinding
 import com.dojo.moovies.out.api.TheMovieDbApi
 import com.dojo.moovies.out.db.MyListDao
 import com.dojo.moovies.out.db.entity.MyListEntity
+import com.dojo.moovies.ui.TmdbImageSize
+import com.dojo.moovies.ui.loadFromTMDBApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -42,13 +44,13 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun initComponents() {
-        binding.btPesquisa.setOnClickListener {
+        binding.fbSearch.setOnClickListener {
             findNavController().navigate(
                 R.id.action_fg_home_to_fg_search
             )
         }
 
-        binding.btMylist.setOnClickListener {
+        binding.btMyList.setOnClickListener {
             findNavController().navigate(
                 R.id.action_fg_home_to_fg_mylist
             )
@@ -57,15 +59,18 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
         lifecycleScope.launch {
             api.getDiscoverMovies().let { response ->
                 if (response.isSuccessful) {
-                    binding.tvMovie.text =
-                        response.body()!!.results.map { it.title }.toString()
+                    val imgUrl = response.body()!!.results.random().posterPath!!
+                    binding.ivPoster.loadFromTMDBApi(imgUrl, TmdbImageSize.POSTER_SIZE)
+
+                    val coverUrl = response.body()!!.results.random().backdropPath!!
+                    binding.ivCoverPoster.loadFromTMDBApi(coverUrl, TmdbImageSize.COVER_SIZE)
                 }
             }
 
             api.getDiscoverTv().let { response ->
                 if (response.isSuccessful) {
-                    binding.tvTv.text =
-                        response.body()!!.results.map { it.name }.toString()
+                    val imgUrl = response.body()!!.results.random().posterPath!!
+                    binding.ivTv.loadFromTMDBApi(imgUrl, TmdbImageSize.POSTER_SIZE)
                 }
             }
         }

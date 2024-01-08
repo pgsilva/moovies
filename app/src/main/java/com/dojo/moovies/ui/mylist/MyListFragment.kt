@@ -11,6 +11,7 @@ import com.dojo.moovies.R
 import com.dojo.moovies.databinding.FragmentMylistBinding
 import com.dojo.moovies.out.db.MyListDao
 import com.dojo.moovies.out.db.entity.MyListEntity
+import com.dojo.moovies.ui.TmdbImageSize
 import com.dojo.moovies.ui.loadFromTMDBApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -48,7 +49,7 @@ class MyListFragment : Fragment(R.layout.fragment_mylist) {
                 if (list.isNotEmpty()) {
                     binding.textView4.text =
                         list.first().originalName + " " + list.first().originalLanguage
-                    binding.imageView.loadFromTMDBApi(list.first().posterPath)
+                    binding.imageView.loadFromTMDBApi(list.first().posterPath, TmdbImageSize.COVER_SIZE)
                 }
             }
         }
