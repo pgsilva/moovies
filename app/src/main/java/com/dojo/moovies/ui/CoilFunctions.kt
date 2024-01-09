@@ -20,7 +20,7 @@ private const val COVER_SIZE = "/w1920_and_h800_multi_faces/"
 private const val POSTER_COVER_SIZE = "/original/"
 private const val POSTER_BLUR_SIZE = "/w300_and_h450_bestv2_filter(blur)/"
 
-fun ImageView.loadFromTMDBApi(url: String, size: TmdbImageSize) {
+fun ImageView.loadFromTMDBApi(url: String?, size: TmdbImageSize) {
     when (size) {
         TmdbImageSize.POSTER_SIZE -> this.tryLoad("$TMDB_IMAGE_URL$POSTER_SIZE$url")
         TmdbImageSize.COVER_SIZE -> this.tryLoad("$TMDB_IMAGE_URL$COVER_SIZE$url")

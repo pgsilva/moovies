@@ -22,7 +22,9 @@ class TheMovieDbRepository(
         } else {
             Log.e(
                 "MOOVIES-THEMOVIEDBAPI",
-                "Api Discover Movies Error, response is not successful: ${response.errorBody().toString()}"
+                "Api Discover Movies Error, response is not successful: ${
+                    response.errorBody().toString()
+                }"
             )
 
             emit(emptyList())
@@ -39,7 +41,28 @@ class TheMovieDbRepository(
         } else {
             Log.e(
                 "MOOVIES-THEMOVIEDBAPI",
-                "Api Discover TV Error, response is not successful: ${response.errorBody().toString()}"
+                "Api Discover TV Error, response is not successful: ${
+                    response.errorBody().toString()
+                }"
+            )
+
+            emit(emptyList())
+        }
+    }
+
+    suspend fun getMultiByQuery(query: String): Flow<List<MooviesData>> = flow {
+        val response = api.getMultiByQuery(query)
+        if (response.isSuccessful) {
+            response.body()!!.let { response ->
+                val domain = response.results.map { it.toDomain() }
+                emit(domain)
+            }
+        } else {
+            Log.e(
+                "MOOVIES-THEMOVIEDBAPI",
+                "Api Multi Error, response is not successful: ${
+                    response.errorBody().toString()
+                }"
             )
 
             emit(emptyList())

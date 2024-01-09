@@ -11,15 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dojo.moovies.R
 import com.dojo.moovies.core.domain.MooviesData
 import com.dojo.moovies.databinding.FragmentHomeBinding
-import com.dojo.moovies.out.api.TheMovieDbApi
-import com.dojo.moovies.out.db.MyListDao
 import com.dojo.moovies.ui.TmdbImageSize
 import com.dojo.moovies.ui.home.adapter.DiscoverMovieAdapter
 import com.dojo.moovies.ui.home.adapter.DiscoverTvAdapter
 import com.dojo.moovies.ui.home.adapter.PreviewMyListAdapter
 import com.dojo.moovies.ui.loadFromTMDBApi
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -66,6 +63,8 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun initComponents() {
+        binding.abToolbar.outlineProvider = null
+
         initSearchButton()
         initMyListButton()
         initDiscoverMovieList()
@@ -86,8 +85,10 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
             discoverMovieAdapter.refresh(it)
 
             if (it.isNotEmpty()) {
-                val coverUrl = it.random().backdropPath
-                binding.ivCoverPoster.loadFromTMDBApi(coverUrl, TmdbImageSize.POSTER_COVER_SIZE)
+                binding.ivCoverPoster.loadFromTMDBApi(
+                    it.random().backdropPath,
+                    TmdbImageSize.POSTER_COVER_SIZE
+                )
             }
         }
     }

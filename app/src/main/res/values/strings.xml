@@ -4,4 +4,6 @@
     <string name="str_title_discover_tv">Novidades em Séries</string>
     <string name="str_tittle">Moovies</string>
     <string name="str_title_my_list">Minha Lista</string>
+    <string name="hint_search_text_input_layout">Pesquise por filmes ou séries …</string>
+    <string name="str_detail_label_streaming">Assista em</string>
 </resources>

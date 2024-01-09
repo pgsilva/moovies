@@ -5,6 +5,7 @@ import com.dojo.moovies.core.di.databaseModule
 import com.dojo.moovies.core.di.repositoryModule
 import com.dojo.moovies.core.di.homeViewModel
 import com.dojo.moovies.core.di.motnApiModule
+import com.dojo.moovies.core.di.searchViewModel
 import com.dojo.moovies.core.di.tmdbApiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -25,7 +26,8 @@ class MooviesApplication: Application() {
                 motnApiModule,
                 databaseModule,
                 repositoryModule,
-                homeViewModel
+                homeViewModel,
+                searchViewModel
             ))
 
         }

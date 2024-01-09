@@ -18,13 +18,13 @@ enum class MooviesMediaType {
 
 data class MooviesData(
     val id: Long,
-    val isAdult: Boolean,
-    val backdropPath: String,
-    val name: String?,
+    val isAdult: Boolean?,
+    val backdropPath: String?,
+    val name: String,
     val originalLanguage: String,
-    val originalName: String,
+    val originalName: String?,
     val overview: String,
-    val posterPath: String,
+    val posterPath: String?,
     val mediaType: MooviesMediaType,
     val voteAverage: BigDecimal?,
     val voteCount: Int?

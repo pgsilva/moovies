@@ -29,7 +29,7 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:padding="8dp"
-        android:text="Homem-Aranha: Através do Aranhaverso"
+        tools:text="Homem-Aranha: Através do Aranhaverso"
         android:textColor="?attr/colorOnBackground"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@id/iv_poster"

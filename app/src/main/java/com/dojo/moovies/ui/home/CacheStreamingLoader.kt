@@ -30,6 +30,14 @@ internal object CacheStreamingLoader {
     }
 
     private suspend fun loadStreamingDataAsync() {
+        dao.findAll().collect { cachedData ->
+            if (cachedData.isEmpty())
+                loadStreamingChannelsFromApi()
+        }
+
+    }
+
+    private suspend fun loadStreamingChannelsFromApi() {
         api.getStreamingList().let { response ->
             if (response.isSuccessful) {
                 Log.i("Moovies-CacheStreamingLoader", "Streaming Data Loaded")
