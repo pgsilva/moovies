@@ -2,11 +2,9 @@ package com.dojo.moovies.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dojo.moovies.core.domain.MooviesData
+import com.dojo.moovies.core.domain.MooviesDataSimplified
 import com.dojo.moovies.interactor.HomeIntercator
 import com.dojo.moovies.interactor.state.HomeInteractorState
-import com.dojo.moovies.ui.TmdbImageSize
-import com.dojo.moovies.ui.loadFromTMDBApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,25 +16,35 @@ class HomeViewModel(
     private val interactor: HomeIntercator
 ) : ViewModel() {
 
-    private val _discoverMovieList = MutableStateFlow(emptyList<MooviesData>())
+    private val _discoverMovieList = MutableStateFlow(emptyList<MooviesDataSimplified>())
 
     val discoverMovieList = _discoverMovieList.asStateFlow()
 
 
-    private val _discoverTvList = MutableStateFlow(emptyList<MooviesData>())
+    private val _discoverTvList = MutableStateFlow(emptyList<MooviesDataSimplified>())
 
     val discoverTvList = _discoverTvList.asStateFlow()
 
 
-    private val _previewMyList = MutableStateFlow(emptyList<MooviesData>())
+    private val _previewMyList = MutableStateFlow(emptyList<MooviesDataSimplified>())
 
     val previewMyList = _previewMyList.asStateFlow()
+
+    private val _popularMovieList = MutableStateFlow(emptyList<MooviesDataSimplified>())
+
+    val popularMovieList = _popularMovieList.asStateFlow()
+
+    private val _popularTvList = MutableStateFlow(emptyList<MooviesDataSimplified>())
+
+    val popularTvList = _popularTvList.asStateFlow()
 
 
     init {
         loadDiscoverMovies()
         loadDiscoverTv()
         loadPreviewMyList()
+        loadPopularMovies()
+        loadPopularTv()
     }
 
     private fun loadDiscoverMovies() {
@@ -71,6 +79,29 @@ class HomeViewModel(
                 }
         }
     }
+
+    private fun loadPopularMovies() {
+        viewModelScope.launch {
+            interactor.loadPopularMovies()
+                .flowOn(Dispatchers.IO)
+                .collect { state ->
+                    if (state is HomeInteractorState.HomeLoadState.Success)
+                        _popularMovieList.update { state.data }
+                }
+        }
+    }
+
+    private fun loadPopularTv() {
+        viewModelScope.launch {
+            interactor.loadPopularTv()
+                .flowOn(Dispatchers.IO)
+                .collect { state ->
+                    if (state is HomeInteractorState.HomeLoadState.Success)
+                        _popularTvList.update { state.data }
+                }
+        }
+    }
+
 
 
 }

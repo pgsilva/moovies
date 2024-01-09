@@ -3,25 +3,24 @@ package com.dojo.moovies.ui.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.dojo.moovies.core.domain.MooviesData
-import com.dojo.moovies.databinding.ItemPreviewMyListListBinding
-import com.dojo.moovies.out.db.entity.MyListEntity
+import com.dojo.moovies.core.domain.MooviesDataSimplified
+import com.dojo.moovies.databinding.ItemHomeListBinding
 import com.dojo.moovies.ui.TmdbImageSize
 import com.dojo.moovies.ui.loadFromTMDBApi
 
 class PreviewMyListAdapter(
-    private val onSelect: (MooviesData) -> Unit
+    private val onSelect: (MooviesDataSimplified) -> Unit
 ) : RecyclerView.Adapter<PreviewMyListAdapter.ViewHolder>() {
 
-    private val dataset = mutableListOf<MooviesData>()
+    private val dataset = mutableListOf<MooviesDataSimplified>()
 
-    inner class ViewHolder(private val binding: ItemPreviewMyListListBinding) :
+    inner class ViewHolder(private val binding: ItemHomeListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         private val poster = binding.ivPoster
         private val name = binding.tvName
 
-        fun bind(item: MooviesData, onSelect: (MooviesData) -> Unit) {
+        fun bind(item: MooviesDataSimplified, onSelect: (MooviesDataSimplified) -> Unit) {
             item.posterPath?.let {
                 poster.loadFromTMDBApi(it, TmdbImageSize.POSTER_SIZE)
             }
@@ -37,7 +36,7 @@ class PreviewMyListAdapter(
         parent: ViewGroup,
         viewType: Int
     ): PreviewMyListAdapter.ViewHolder =
-        ItemPreviewMyListListBinding.inflate(
+        ItemHomeListBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -50,7 +49,7 @@ class PreviewMyListAdapter(
 
     override fun getItemCount(): Int = dataset.size
 
-    fun refresh(items: List<MooviesData>) {
+    fun refresh(items: List<MooviesDataSimplified>) {
         dataset.clear()
         dataset.addAll(items)
 

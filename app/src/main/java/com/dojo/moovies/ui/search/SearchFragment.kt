@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dojo.moovies.R
-import com.dojo.moovies.core.domain.MooviesData
+import com.dojo.moovies.core.domain.MooviesDataSimplified
 import com.dojo.moovies.databinding.FragmentSearchBinding
 import com.dojo.moovies.ui.search.adapter.SearchListAdapter
 import kotlinx.coroutines.launch
@@ -55,7 +55,7 @@ internal class SearchFragment : Fragment(R.layout.fragment_search) {
         }
     }
 
-    private fun initDetailAction(it: MooviesData) {
+    private fun initDetailAction(it: MooviesDataSimplified) {
         findNavController().navigate(
             R.id.action_fg_search_to_fg_detail
         )

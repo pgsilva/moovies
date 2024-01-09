@@ -3,8 +3,6 @@ package com.dojo.moovies.core.di
 import androidx.room.Room
 import com.dojo.moovies.interactor.HomeIntercator
 import com.dojo.moovies.interactor.SearchInteractor
-import com.dojo.moovies.out.api.MovieOfTheNightApi
-import com.dojo.moovies.out.api.MovieOfTheNightApi.Companion.MOTN_API_URL
 import com.dojo.moovies.out.api.TheMovieDbApi
 import com.dojo.moovies.out.api.TheMovieDbApi.Companion.TMDB_API_URL
 import com.dojo.moovies.out.db.AppDatabase
@@ -28,15 +26,6 @@ val tmdbApiModule = module {
     }
 }
 
-val motnApiModule = module {
-    single {
-        Retrofit.Builder()
-            .baseUrl(MOTN_API_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(MovieOfTheNightApi::class.java)
-    }
-}
 
 val databaseModule = module {
     single {
@@ -49,7 +38,6 @@ val databaseModule = module {
     }
 
     single { get<AppDatabase>().myListDao() }
-    single { get<AppDatabase>().streamingChannelDao() }
 }
 
 val repositoryModule = module {

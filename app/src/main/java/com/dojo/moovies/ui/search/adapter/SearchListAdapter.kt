@@ -2,17 +2,19 @@ package com.dojo.moovies.ui.search.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
-import com.dojo.moovies.core.domain.MooviesData
+import com.dojo.moovies.R
+import com.dojo.moovies.core.domain.MooviesDataSimplified
 import com.dojo.moovies.databinding.ItemSearchResultListBinding
 import com.dojo.moovies.ui.TmdbImageSize
 import com.dojo.moovies.ui.loadFromTMDBApi
 
 class SearchListAdapter(
-    private val onSelect: (MooviesData) -> Unit
+    private val onSelect: (MooviesDataSimplified) -> Unit
 ) : RecyclerView.Adapter<SearchListAdapter.ViewHolder>() {
 
-    private val dataset = mutableListOf<MooviesData>()
+    private val dataset = mutableListOf<MooviesDataSimplified>()
 
     inner class ViewHolder(private val binding: ItemSearchResultListBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -20,7 +22,14 @@ class SearchListAdapter(
         private val poster = binding.ivCoverPoster
         private val name = binding.tvName
 
-        fun bind(item: MooviesData, onSelect: (MooviesData) -> Unit) {
+        fun bind(item: MooviesDataSimplified, onSelect: (MooviesDataSimplified) -> Unit) {
+            binding.clItemSearch.startAnimation(
+                AnimationUtils.loadAnimation(
+                    binding.root.context,
+                    R.anim.anim_down
+                )
+            )
+
             poster.loadFromTMDBApi(item.posterPath, TmdbImageSize.POSTER_SIZE)
             name.text = item.name
 
@@ -47,7 +56,7 @@ class SearchListAdapter(
 
     override fun getItemCount(): Int = dataset.size
 
-    fun refresh(items: List<MooviesData>) {
+    fun refresh(items: List<MooviesDataSimplified>) {
         dataset.clear()
         dataset.addAll(items)
 

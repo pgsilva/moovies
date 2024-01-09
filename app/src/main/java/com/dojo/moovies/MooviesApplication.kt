@@ -4,7 +4,6 @@ import android.app.Application
 import com.dojo.moovies.core.di.databaseModule
 import com.dojo.moovies.core.di.repositoryModule
 import com.dojo.moovies.core.di.homeViewModel
-import com.dojo.moovies.core.di.motnApiModule
 import com.dojo.moovies.core.di.searchViewModel
 import com.dojo.moovies.core.di.tmdbApiModule
 import org.koin.android.ext.koin.androidContext
@@ -23,7 +22,6 @@ class MooviesApplication: Application() {
 
             modules(listOf(
                 tmdbApiModule,
-                motnApiModule,
                 databaseModule,
                 repositoryModule,
                 homeViewModel,

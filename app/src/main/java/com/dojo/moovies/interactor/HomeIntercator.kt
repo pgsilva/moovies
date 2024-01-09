@@ -35,4 +35,25 @@ class HomeIntercator(
             emit(HomeLoadState.Success(it))
         }
     }
+
+    suspend fun loadPopularMovies(
+    ): Flow<HomeLoadState> = flow {
+        apiRepository.getPopularMovies().let {
+            it.collect { list ->
+                if (list.isEmpty()) emit(HomeLoadState.Error)
+                else emit(HomeLoadState.Success(list))
+            }
+        }
+    }
+
+    suspend fun loadPopularTv(
+    ): Flow<HomeLoadState> = flow {
+        apiRepository.getPopularTv().let {
+            it.collect { list ->
+                if (list.isEmpty()) emit(HomeLoadState.Error)
+                else emit(HomeLoadState.Success(list))
+            }
+        }
+    }
+
 }

@@ -8,9 +8,9 @@ import com.dojo.moovies.databinding.ItemHomeListBinding
 import com.dojo.moovies.ui.TmdbImageSize
 import com.dojo.moovies.ui.loadFromTMDBApi
 
-class DiscoverTvAdapter(
+class PopularMovieAdapter(
     private val onSelect: (MooviesDataSimplified) -> Unit
-) : RecyclerView.Adapter<DiscoverTvAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<PopularMovieAdapter.ViewHolder>() {
 
     private val dataset = mutableListOf<MooviesDataSimplified>()
 
@@ -35,7 +35,7 @@ class DiscoverTvAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): DiscoverTvAdapter.ViewHolder =
+    ): PopularMovieAdapter.ViewHolder =
         ItemHomeListBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -44,7 +44,7 @@ class DiscoverTvAdapter(
             ViewHolder(it)
         }
 
-    override fun onBindViewHolder(holder: DiscoverTvAdapter.ViewHolder, position: Int) =
+    override fun onBindViewHolder(holder: PopularMovieAdapter.ViewHolder, position: Int) =
         holder.bind(dataset[position], onSelect)
 
     override fun getItemCount(): Int = dataset.size

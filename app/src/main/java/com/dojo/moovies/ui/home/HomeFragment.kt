@@ -3,17 +3,21 @@ package com.dojo.moovies.ui.home
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dojo.moovies.R
-import com.dojo.moovies.core.domain.MooviesData
+import com.dojo.moovies.core.domain.MooviesDataSimplified
 import com.dojo.moovies.databinding.FragmentHomeBinding
 import com.dojo.moovies.ui.TmdbImageSize
 import com.dojo.moovies.ui.home.adapter.DiscoverMovieAdapter
 import com.dojo.moovies.ui.home.adapter.DiscoverTvAdapter
+import com.dojo.moovies.ui.home.adapter.PopularMovieAdapter
+import com.dojo.moovies.ui.home.adapter.PopularTvAdapter
 import com.dojo.moovies.ui.home.adapter.PreviewMyListAdapter
 import com.dojo.moovies.ui.loadFromTMDBApi
 import kotlinx.coroutines.launch
@@ -26,6 +30,10 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var discoverTvAdapter: DiscoverTvAdapter
 
     private lateinit var previewMyListAdapter: PreviewMyListAdapter
+
+    private lateinit var popularMovieAdapter: PopularMovieAdapter
+
+    private lateinit var popularTvAdapter: PopularTvAdapter
 
     private lateinit var binding: FragmentHomeBinding
 
@@ -60,6 +68,15 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
         previewMyListAdapter = PreviewMyListAdapter {
             initDetailAction(it)
         }
+
+
+        popularTvAdapter = PopularTvAdapter {
+            initDetailAction(it)
+        }
+
+        popularMovieAdapter = PopularMovieAdapter {
+            initDetailAction(it)
+        }
     }
 
     private fun initComponents() {
@@ -70,6 +87,8 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
         initDiscoverMovieList()
         initDiscoverTvList()
         initPreviewMyListList()
+        initPopularMovieList()
+        initPopularTvList()
         initObservables()
     }
 
@@ -77,6 +96,8 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
         observableDiscoverMovie()
         observableDiscoverTv()
         observablePreviewMyList()
+        observablePopularMovie()
+        observablePopularTv()
     }
 
 
@@ -101,10 +122,27 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun observablePreviewMyList() = lifecycleScope.launch {
         viewModel.previewMyList.collect {
-            previewMyListAdapter.refresh(it)
+            if (it.isEmpty()) {
+                binding.tvMyList.visibility = GONE
+            } else {
+                binding.tvMyList.visibility = VISIBLE
+                previewMyListAdapter.refresh(it)
+
+            }
         }
     }
 
+    private fun observablePopularMovie() = lifecycleScope.launch {
+        viewModel.popularMovieList.collect {
+            popularMovieAdapter.refresh(it)
+        }
+    }
+
+    private fun observablePopularTv() = lifecycleScope.launch {
+        viewModel.popularTvList.collect {
+            popularTvAdapter.refresh(it)
+        }
+    }
 
     private fun initDiscoverMovieList() {
         binding.rvDiscoverMovie.let { rv ->
@@ -116,6 +154,20 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun initDiscoverTvList() {
         binding.rvDiscoverTv.let { rv ->
             rv.adapter = discoverTvAdapter
+            rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
+    }
+
+    private fun initPopularMovieList() {
+        binding.rvPopularMovie.let { rv ->
+            rv.adapter = popularMovieAdapter
+            rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
+    }
+
+    private fun initPopularTvList() {
+        binding.rvPopularTv.let { rv ->
+            rv.adapter = popularTvAdapter
             rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
     }
@@ -143,7 +195,7 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun initDetailAction(item: MooviesData) {
+    private fun initDetailAction(item: MooviesDataSimplified) {
         findNavController().navigate(
             R.id.action_fg_home_to_fg_detail
         )

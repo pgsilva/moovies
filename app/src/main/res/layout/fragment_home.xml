@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,18 +13,20 @@
         android:id="@+id/ab_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
         android:background="#CC000000">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="8dp">
 
             <ImageButton
                 android:id="@+id/ib_search"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="20dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
                 android:background="@android:color/transparent"
                 android:padding="4dp"
                 android:src="@drawable/ic_search"
@@ -76,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
-                android:text="Minha Lista"
+                android:text="@string/bt_my_lista"
                 android:textAllCaps="false"
                 android:textColor="?attr/colorOnBackground"
                 app:cornerRadius="20dp"
@@ -103,12 +105,14 @@
                 app:layout_constraintTop_toBottomOf="@id/iv_cover_poster"
                 app:layout_constraintVertical_bias="0.594" />
 
+            <!--Conteudo-->
+
 
             <TextView
                 android:id="@+id/tv_discover_movie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="4dp"
                 android:padding="8dp"
                 android:text="@string/str_title_discover_movie"
                 android:textColor="?attr/colorOnBackground"
@@ -123,20 +127,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="8dp"
+                android:layout_marginVertical="2dp"
                 android:orientation="horizontal"
                 app:layoutManager="LinearLayoutManager"
                 app:layout_constraintStart_toStartOf="@id/tv_discover_movie"
                 app:layout_constraintTop_toBottomOf="@id/tv_discover_movie"
                 tools:layout_editor_absoluteX="0dp"
-                tools:listitem="@layout/item_discover_movie_list" />
+                tools:listitem="@layout/item_home_list" />
 
             <TextView
                 android:id="@+id/tv_discover_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:padding="8dp"
+                android:layout_marginVertical="2dp"
+                android:padding="4dp"
                 android:text="@string/str_title_discover_tv"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="16sp"
@@ -149,20 +153,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="8dp"
+                android:layout_marginVertical="2dp"
                 android:orientation="horizontal"
                 app:layoutManager="LinearLayoutManager"
                 app:layout_constraintStart_toStartOf="@id/tv_discover_tv"
                 app:layout_constraintTop_toBottomOf="@id/tv_discover_tv"
-                tools:listitem="@layout/item_discover_tv_list" />
+                tools:listitem="@layout/item_home_list" />
 
 
             <TextView
                 android:id="@+id/tv_my_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:padding="8dp"
+                android:layout_marginVertical="2dp"
+                android:padding="4dp"
                 android:text="@string/str_title_my_list"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="16sp"
@@ -175,15 +179,66 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="8dp"
+                android:layout_marginVertical="2dp"
                 android:orientation="horizontal"
                 app:layoutManager="LinearLayoutManager"
                 app:layout_constraintStart_toStartOf="@id/tv_my_list"
                 app:layout_constraintTop_toBottomOf="@id/tv_my_list"
-                tools:listitem="@layout/item_preview_my_list_list" />
+                tools:listitem="@layout/item_home_list" />
+
+
+            <TextView
+                android:id="@+id/tv_popular_movie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="2dp"
+                android:padding="4dp"
+                android:text="@string/str_title_popular_movie"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/tv_title_moovies"
+                app:layout_constraintTop_toBottomOf="@id/rv_my_list" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_popular_movie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="2dp"
+                android:orientation="horizontal"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="@id/tv_popular_movie"
+                app:layout_constraintTop_toBottomOf="@id/tv_popular_movie"
+                tools:listitem="@layout/item_home_list" />
+
+            <TextView
+                android:id="@+id/tv_popular_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="2dp"
+                android:padding="4dp"
+                android:text="@string/str_title_popular_tv"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/tv_title_moovies"
+                app:layout_constraintTop_toBottomOf="@id/rv_popular_movie" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_popular_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="2dp"
+                android:orientation="horizontal"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="@id/tv_popular_tv"
+                app:layout_constraintTop_toBottomOf="@id/tv_popular_tv"
+                tools:listitem="@layout/item_home_list" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

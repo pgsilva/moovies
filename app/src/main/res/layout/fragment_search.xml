@@ -9,6 +9,7 @@
     android:theme="@style/Theme.Moovies"
     tools:context=".ui.search.SearchFragment">
 
+
     <SearchView
         android:id="@+id/sv_search_input"
         android:layout_width="match_parent"
@@ -25,7 +26,7 @@
         app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/ab_toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_search_items"
@@ -33,6 +34,8 @@
         android:layout_height="0dp"
         android:paddingHorizontal="6dp"
         android:paddingTop="12dp"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sv_search_input"
         app:layout_constraintVertical_bias="0.0"

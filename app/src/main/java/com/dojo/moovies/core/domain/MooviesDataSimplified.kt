@@ -16,9 +16,8 @@ enum class MooviesMediaType {
     }
 }
 
-data class MooviesData(
+data class MooviesDataSimplified(
     val id: Long,
-    val isAdult: Boolean?,
     val backdropPath: String?,
     val name: String,
     val originalLanguage: String,
@@ -26,6 +25,6 @@ data class MooviesData(
     val overview: String,
     val posterPath: String?,
     val mediaType: MooviesMediaType,
-    val voteAverage: BigDecimal?,
-    val voteCount: Int?
+    val genreList: String,
+    val releaseDate: String
 )

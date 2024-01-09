@@ -43,7 +43,7 @@ fun ImageView.tryLoad(url: String? = null) {
     load(url, loader) {
         fallback(R.drawable.img_no_signal_error)
         error(R.drawable.img_no_signal_error)
-        placeholder(R.drawable.img_placeholder_blur)
+        placeholder(R.drawable.card_outline)
     }
 }
 
@@ -53,5 +53,9 @@ fun ImageView.tryLoadSvg(url: String) {
             add(SvgDecoder.Factory())
         }.build()
 
-    load(url, loader)
+    load(url, loader){
+        fallback(R.drawable.img_no_signal_error)
+        error(R.drawable.img_no_signal_error)
+        placeholder(R.drawable.card_outline)
+    }
 }

@@ -3,43 +3,35 @@ package com.dojo.moovies.out.api.data.tmdb
 import com.google.gson.annotations.SerializedName
 import java.math.BigDecimal
 
-data class MovieDetail (
-    @SerializedName("adult")
-    val adult: Boolean?,
+data class MovieDetail(
 
     @SerializedName("backdrop_path")
     val backdropPath: String?,
-
-    @SerializedName("homepage")
-    val homepage: String?,
-
     @SerializedName("id")
     val id: Int,
-
-    @SerializedName("imdb_id")
-    val imdb_id: String?,
-
     @SerializedName("original_title")
     val originalTitle: String,
-
     @SerializedName("title")
-    val title: String,
-
+    val title: String?,
+    @SerializedName("name")
+    val name: String?,
+    @SerializedName("original_name")
+    val originalName: String?,
     @SerializedName("original_language")
-    val originalLanguage: String,
-
+    val originalLanguage: String?,
     @SerializedName("overview")
-    val overview: String,
-
-    @SerializedName("popularity")
-    val popularity: BigDecimal,
-
+    val overview: String?,
     @SerializedName("poster_path")
     val posterPath: String?,
+    @SerializedName("genres")
+    val genres: List<MovieGenre>?,
+    @SerializedName("release_date")
+    val releaseDate: String?,
+    @SerializedName("first_air_date")
+    val firstAirDate: String?
+)
 
-    @SerializedName("vote_average")
-    val voteAverage: BigDecimal,
-
-    @SerializedName("vote_count")
-    val voteCount: Int
+data class MovieGenre(
+    val id: Int,
+    val name: String
 )

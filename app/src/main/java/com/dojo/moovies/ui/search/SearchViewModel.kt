@@ -2,7 +2,7 @@ package com.dojo.moovies.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dojo.moovies.core.domain.MooviesData
+import com.dojo.moovies.core.domain.MooviesDataSimplified
 import com.dojo.moovies.interactor.SearchInteractor
 import com.dojo.moovies.interactor.state.SearchInteractorState
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +17,7 @@ class SearchViewModel(
 ) : ViewModel(
 
 ) {
-    private val _searchList = MutableStateFlow(emptyList<MooviesData>())
+    private val _searchList = MutableStateFlow(emptyList<MooviesDataSimplified>())
 
     val searchList = _searchList.asStateFlow()
 

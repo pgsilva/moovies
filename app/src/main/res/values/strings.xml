@@ -2,8 +2,12 @@
     <string name="app_name">Moovies</string>
     <string name="str_title_discover_movie">Novidades em Filmes</string>
     <string name="str_title_discover_tv">Novidades em Séries</string>
+    <string name="str_title_popular_movie">Sucessos em Filmes</string>
+    <string name="str_title_popular_tv">Sucessos em Séries</string>
     <string name="str_tittle">Moovies</string>
     <string name="str_title_my_list">Minha Lista</string>
     <string name="hint_search_text_input_layout">Pesquise por filmes ou séries …</string>
     <string name="str_detail_label_streaming">Assista em</string>
+    <string name="str_detail_label_buy">Disponível para compra em</string>
+    <string name="bt_my_lista">Minha Lista</string>
 </resources>
