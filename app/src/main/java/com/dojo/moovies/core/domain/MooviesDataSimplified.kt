@@ -1,7 +1,5 @@
 package com.dojo.moovies.core.domain
 
-import java.math.BigDecimal
-
 enum class MooviesMediaType {
     TV, MOVIE;
 
@@ -11,6 +9,13 @@ enum class MooviesMediaType {
                 "tv" -> TV
                 "movie" -> MOVIE
                 else -> throw IllegalArgumentException("MediaType invalid")
+            }
+        }
+
+        fun valueFromEnum(enum: MooviesMediaType) : String {
+            return when (enum) {
+                TV ->  "tv"
+                MOVIE -> "movie"
             }
         }
     }

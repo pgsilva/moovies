@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dojo.moovies.R
 import com.dojo.moovies.core.domain.MooviesDataSimplified
+import com.dojo.moovies.core.domain.MooviesMediaType.Companion.valueFromEnum
 import com.dojo.moovies.databinding.FragmentHomeBinding
 import com.dojo.moovies.ui.TmdbImageSize
 import com.dojo.moovies.ui.home.adapter.DiscoverMovieAdapter
@@ -196,9 +197,11 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun initDetailAction(item: MooviesDataSimplified) {
-        findNavController().navigate(
-            R.id.action_fg_home_to_fg_detail
+        val direction = HomeFragmentDirections.actionFgHomeToFgDetail(
+            item.id.toInt(),
+            valueFromEnum(item.mediaType)
         )
+        findNavController().navigate(direction)
     }
 
 }

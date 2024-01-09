@@ -2,6 +2,7 @@ package com.dojo.moovies
 
 import android.app.Application
 import com.dojo.moovies.core.di.databaseModule
+import com.dojo.moovies.core.di.detailViewModel
 import com.dojo.moovies.core.di.repositoryModule
 import com.dojo.moovies.core.di.homeViewModel
 import com.dojo.moovies.core.di.searchViewModel
@@ -25,7 +26,8 @@ class MooviesApplication: Application() {
                 databaseModule,
                 repositoryModule,
                 homeViewModel,
-                searchViewModel
+                searchViewModel,
+                detailViewModel
             ))
 
         }

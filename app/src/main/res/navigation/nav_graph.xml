@@ -41,7 +41,14 @@
         android:id="@+id/fg_detail"
         android:name="com.dojo.moovies.ui.detail.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="mediaType"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/fg_mylist"

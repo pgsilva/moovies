@@ -5,6 +5,7 @@ import com.dojo.moovies.out.api.data.tmdb.DiscoverMovieResponse
 import com.dojo.moovies.out.api.data.tmdb.DiscoverTvResponse
 import com.dojo.moovies.out.api.data.tmdb.MovieDetail
 import com.dojo.moovies.out.api.data.tmdb.MultiResponse
+import com.dojo.moovies.out.api.data.tmdb.StreamResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -76,4 +77,17 @@ interface TheMovieDbApi {
         @Query("language") language: String = TMDB_API_INITIAL_LANGUAGE,
         @Query("page") page: Int = TMDB_API_INITIAL_PAGE
     ): Response<DiscoverTvResponse>
+
+
+    @GET("/3/movie/{movie_id}/watch/providers")
+    suspend fun getMovieStreaming(
+        @Path("movie_id") id: Int,
+        @Query("api_key") apiKey: String = TMDB_API_KEY,
+    ): Response<StreamResponse>
+
+    @GET("/3/tv/{tv_id}/watch/providers")
+    suspend fun getTvStreaming(
+        @Path("tv_id") id: Int,
+        @Query("api_key") apiKey: String = TMDB_API_KEY,
+    ): Response<StreamResponse>
 }

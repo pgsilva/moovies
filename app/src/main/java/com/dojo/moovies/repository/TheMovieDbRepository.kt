@@ -2,8 +2,10 @@ package com.dojo.moovies.repository
 
 import android.util.Log
 import com.dojo.moovies.core.domain.MooviesDataSimplified
+import com.dojo.moovies.core.domain.MooviesProvider
 import com.dojo.moovies.out.api.TheMovieDbApi
 import com.dojo.moovies.repository.mapper.toDomain
+import com.dojo.moovies.repository.mapper.toProviderDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -106,4 +108,82 @@ class TheMovieDbRepository(
             emit(emptyList())
         }
     }
+
+    fun getMovie(id: Int): Flow<MooviesDataSimplified?> = flow {
+        val response = api.getMovieDetail(id)
+        if (response.isSuccessful) {
+            response.body()!!.let { response ->
+                val domain = response.toDomain()
+                emit(domain)
+            }
+        } else {
+            Log.e(
+                "MOOVIES-THEMOVIEDBAPI",
+                "Api Movie By Id Error, response is not successful: ${
+                    response.errorBody().toString()
+                }"
+            )
+            emit(null)
+        }
+    }
+
+    fun getTv(id: Int): Flow<MooviesDataSimplified?> = flow {
+        val response = api.getTvDetail(id)
+        if (response.isSuccessful) {
+            response.body()!!.let { response ->
+                val domain = response.toDomain()
+                emit(domain)
+            }
+        } else {
+            Log.e(
+                "MOOVIES-THEMOVIEDBAPI",
+                "Api Tv by Id Error, response is not successful: ${
+                    response.errorBody().toString()
+                }"
+            )
+            emit(null)
+        }
+    }
+
+    fun getMovieStreaming(id: Int): Flow<MooviesProvider?> = flow {
+        val response = api.getMovieStreaming(id)
+        if (response.isSuccessful) {
+            response.body()!!.let { response ->
+                response.results.br?.let {
+                    val domain = it.toProviderDomain()
+                    emit(domain)
+                }
+            }
+        } else {
+            Log.e(
+                "MOOVIES-THEMOVIEDBAPI",
+                "Api Tv by Id Error, response is not successful: ${
+                    response.errorBody().toString()
+                }"
+            )
+            emit(null)
+        }
+    }
+
+    fun getTvStreaming(id: Int): Flow<MooviesProvider?> = flow {
+        val response = api.getTvStreaming(id)
+        if (response.isSuccessful) {
+            response.body()!!.let { response ->
+                response.results.br?.let {
+                    val domain = it.toProviderDomain()
+                    emit(domain)
+                }
+
+            }
+        } else {
+            Log.e(
+                "MOOVIES-THEMOVIEDBAPI",
+                "Api Tv by Id Error, response is not successful: ${
+                    response.errorBody().toString()
+                }"
+            )
+            emit(null)
+        }
+    }
+
 }

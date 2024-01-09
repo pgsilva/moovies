@@ -34,3 +34,8 @@ data class MultiResponse(
     @SerializedName("total_results")
     val totalResults: Int
 )
+
+data class StreamResponse(
+    val id: Int,
+    val results: StreamProvidersBr,
+)
