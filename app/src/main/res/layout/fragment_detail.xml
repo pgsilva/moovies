@@ -23,13 +23,28 @@
             tools:layout_editor_absoluteX="0dp"
             tools:src="@drawable/img_cover_movie" />
 
+        <TextView
+            android:id="@+id/tv_initial_moovies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="20dp"
+            android:alpha="1.0"
+            android:fontFamily="@font/cookit_regular"
+            android:text="M"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <Button
             android:id="@+id/bt_my_list"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="40dp"
+            android:layout_marginVertical="20dp"
             android:text="Minha Lista"
             android:textAllCaps="false"
             android:textColor="?attr/colorOnBackground"
