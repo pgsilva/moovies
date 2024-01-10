@@ -3,9 +3,9 @@ package com.dojo.moovies.ui.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dojo.moovies.core.domain.MooviesDataSimplified
+import com.dojo.moovies.core.domain.MooviesWatchProvider
 import com.dojo.moovies.interactor.DetailInteractor
 import com.dojo.moovies.interactor.state.DetailInteractorState
-import com.dojo.moovies.out.api.data.tmdb.Provider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,11 +19,11 @@ class DetailViewModel(
     private val interactor: DetailInteractor
 ) : ViewModel() {
 
-    private val _streamingList = MutableStateFlow(emptyList<Provider>())
+    private val _streamingList = MutableStateFlow(emptyList<MooviesWatchProvider>())
 
     val streamingList = _streamingList.asStateFlow()
 
-    private val _streamingBuy = MutableStateFlow(emptyList<Provider>())
+    private val _streamingBuy = MutableStateFlow(emptyList<MooviesWatchProvider>())
 
     val streamingBuy = _streamingBuy.asStateFlow()
 
@@ -50,4 +50,25 @@ class DetailViewModel(
         }
     }
 
+    fun checkIsMyList(detailMap: Pair<Int, String>): Flow<MooviesDataSimplified?> = flow {
+        interactor.loadMyListByIdAndMediaType(detailMap)
+            .flowOn(Dispatchers.IO)
+            .collect { myList ->
+                if (myList is DetailInteractorState.MyListState.Success) {
+                    emit(myList.data)
+                }
+            }
+    }
+
+    fun saveInMyList(mooviesDataSimplified: MooviesDataSimplified) {
+        viewModelScope.launch(Dispatchers.IO) {
+            interactor.saveInMyList(mooviesDataSimplified)
+        }
+    }
+
+    fun removeFromMyList(mooviesDataSimplified: MooviesDataSimplified) {
+        viewModelScope.launch(Dispatchers.IO) {
+            interactor.removeFromMyList(mooviesDataSimplified)
+        }
+    }
 }

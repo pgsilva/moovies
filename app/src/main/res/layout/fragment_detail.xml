@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:orientation="vertical"
+    android:paddingBottom="20dp"
     android:theme="@style/Theme.Moovies"
     tools:context=".ui.search.SearchFragment">
 
@@ -38,7 +39,7 @@
 
 
             <Button
-                android:id="@+id/bt_my_list"
+                android:id="@+id/bt_my_list_saved"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,6 +49,22 @@
                 android:textColor="?attr/colorOnBackground"
                 app:cornerRadius="20dp"
                 app:icon="@drawable/ic_check"
+                app:iconTint="?attr/colorOnBackground"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:strokeColor="?attr/colorOnBackground" />
+
+            <Button
+                android:id="@+id/bt_my_list"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:text="@string/str_title_my_list"
+                android:textAllCaps="false"
+                android:textColor="?attr/colorOnBackground"
+                app:cornerRadius="20dp"
+                app:icon="@drawable/ic_add"
                 app:iconTint="?attr/colorOnBackground"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +81,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="40dp">
 
             <ImageView
                 android:id="@+id/iv_cover_poster"
@@ -195,7 +213,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="20dp"
                 android:orientation="horizontal"
                 app:layoutManager="LinearLayoutManager"
                 app:layout_constraintStart_toStartOf="@id/tv_label_buy"

@@ -63,7 +63,7 @@ val searchViewModel = module {
 
 val detailViewModel = module {
     viewModel {
-        val detailInteractor = DetailInteractor(get())
+        val detailInteractor = DetailInteractor(get(), get())
         DetailViewModel(detailInteractor)
     }
 }

@@ -9,6 +9,7 @@ import com.dojo.moovies.out.api.data.tmdb.MovieDetail
 import com.dojo.moovies.out.api.data.tmdb.StreamProvider
 import com.dojo.moovies.out.db.entity.MyListEntity
 import java.text.SimpleDateFormat
+import java.util.UUID
 
 
 @SuppressLint("SimpleDateFormat")
@@ -57,6 +58,22 @@ internal fun MyListEntity.toDomain(): MooviesDataSimplified {
         overview = this.overview,
         posterPath = this.posterPath,
         mediaType = MooviesMediaType.valueFromString(this.mediaType),
+        genreList = this.genreList,
+        releaseDate = this.releaseDate
+    )
+}
+
+internal fun MooviesDataSimplified.toEntity(): MyListEntity{
+    return MyListEntity(
+        mooviesId = UUID.randomUUID().toString(),
+        id = this.id,
+        backdropPath = this.backdropPath,
+        name = name,
+        originalLanguage = this.originalLanguage,
+        originalName = originalName,
+        overview = this.overview,
+        posterPath = this.posterPath,
+        mediaType = MooviesMediaType.valueFromEnum(this.mediaType),
         genreList = this.genreList,
         releaseDate = this.releaseDate
     )

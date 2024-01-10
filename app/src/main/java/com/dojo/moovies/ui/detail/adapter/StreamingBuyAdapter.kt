@@ -3,21 +3,21 @@ package com.dojo.moovies.ui.detail.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.dojo.moovies.core.domain.MooviesWatchProvider
 import com.dojo.moovies.databinding.ItemStreamListBinding
-import com.dojo.moovies.out.api.data.tmdb.Provider
 import com.dojo.moovies.ui.TmdbImageSize
 import com.dojo.moovies.ui.loadFromTMDBApi
 
 class StreamingBuyAdapter(
 ) : RecyclerView.Adapter<StreamingBuyAdapter.ViewHolder>() {
 
-    private val dataset = mutableListOf<Provider>()
+    private val dataset = mutableListOf<MooviesWatchProvider>()
 
     inner class ViewHolder(binding: ItemStreamListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         private val logo = binding.ivLogo
-        fun bind(item: Provider) {
+        fun bind(item: MooviesWatchProvider) {
             logo.loadFromTMDBApi(item.logoPath, TmdbImageSize.POSTER_COVER_SIZE)
 
         }
@@ -40,7 +40,7 @@ class StreamingBuyAdapter(
 
     override fun getItemCount(): Int = dataset.size
 
-    fun refresh(items: List<Provider>) {
+    fun refresh(items: List<MooviesWatchProvider>) {
         dataset.clear()
         dataset.addAll(items)
 
