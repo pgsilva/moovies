@@ -3,12 +3,16 @@ package com.dojo.moovies.ui.detail
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dojo.moovies.R
+import com.dojo.moovies.core.domain.MooviesDataSimplified
 import com.dojo.moovies.databinding.FragmentDetailBinding
 import com.dojo.moovies.ui.TmdbImageSize
 import com.dojo.moovies.ui.detail.adapter.StreamingBuyAdapter
@@ -54,25 +58,55 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private fun initComponents() {
         binding.abToolbar.outlineProvider = null
+        binding.btMyList.visibility = GONE
+        binding.btMyListSaved.visibility = GONE
+
+        val detailMap = args.id to args.mediaType
 
         initStreamingList()
         initStreamingBuyList()
-
         initObservables()
 
-        val detailMap = args.id to args.mediaType
         loadDetailInfo(detailMap)
-        loadStreaminInfo()
+        loadStreaminInfo(detailMap)
     }
 
-    private fun loadStreaminInfo() {
+    private fun initButtonsMyList(detail: MooviesDataSimplified) {
+        binding.btMyList.setOnClickListener {
+            viewModel.saveInMyList(detail)
+            changeVisibilityRemove()
+
+            Toast.makeText(
+                context,
+                "Adicionado com Sucesso !",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        binding.btMyListSaved.setOnClickListener {
+            viewModel.removeFromMyList(detail)
+            changeVisibilityAdd()
+
+            Toast.makeText(
+                context,
+                "Removido com Sucesso !",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+
+    private fun loadStreaminInfo(detailMap: Pair<Int, String>) {
         lifecycleScope.launch {
+            viewModel.loadStreaming(detailMap)
             initObservables()
         }
 
     }
 
     private fun loadDetailInfo(detailMap: Pair<Int, String>) {
+        verifyButtomMyList(detailMap)
+
         lifecycleScope.launch {
             viewModel.loadDetail(detailMap).collect { detail ->
                 detail?.let {
@@ -85,6 +119,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     binding.tvDetailOverview.text = detail.overview
                     binding.tvGenreList.text = detail.genreList
                     binding.tvDate.text = detail.releaseDate
+
+                    initButtonsMyList(detail)
                 }
 
             }
@@ -113,9 +149,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private fun observableStreamingList() = lifecycleScope.launch {
         viewModel.streamingList.collect {
             if (it.isEmpty()) {
-                binding.tvLabelStreaming.visibility = View.GONE
+                binding.tvLabelStreaming.visibility = GONE
             } else {
-                binding.tvLabelStreaming.visibility = View.VISIBLE
+                binding.tvLabelStreaming.visibility = VISIBLE
                 streamingChanneAdapter.refresh(it)
 
             }
@@ -125,13 +161,35 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private fun observableStreamingBuyList() = lifecycleScope.launch {
         viewModel.streamingBuy.collect {
             if (it.isEmpty()) {
-                binding.tvLabelBuy.visibility = View.GONE
+                binding.tvLabelBuy.visibility = GONE
             } else {
-                binding.tvLabelBuy.visibility = View.VISIBLE
+                binding.tvLabelBuy.visibility = VISIBLE
                 streamingBuyAdapter.refresh(it)
 
             }
         }
     }
 
+    private fun verifyButtomMyList(detailMap: Pair<Int, String>) = lifecycleScope.launch {
+        viewModel.checkIsMyList(detailMap).collect { mylist ->
+            if (mylist == null) {
+                changeVisibilityAdd()
+            } else {
+                changeVisibilityRemove()
+            }
+        }
+    }
+
+    private fun changeVisibilityAdd() {
+        binding.btMyList.visibility = VISIBLE
+        binding.btMyListSaved.visibility = GONE
+    }
+
+    private fun changeVisibilityRemove() {
+        binding.btMyList.visibility = GONE
+        binding.btMyListSaved.visibility = VISIBLE
+    }
+
+
 }
+

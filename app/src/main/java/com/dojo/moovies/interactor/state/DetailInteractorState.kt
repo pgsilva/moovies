@@ -13,4 +13,8 @@ class DetailInteractorState {
         data class Success(val data: MooviesWatchProviders) : DetailStreamingListState()
         object Error : DetailStreamingListState()
     }
+
+    sealed class MyListState {
+        data class Success(val data: MooviesDataSimplified?) : MyListState()
+    }
 }
