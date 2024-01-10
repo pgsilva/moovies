@@ -5,11 +5,13 @@ import androidx.room.RoomDatabase
 import com.dojo.moovies.out.db.entity.MyListEntity
 
 internal const val DB_NAME = "moovies-dojo.db"
+
 @Database(
     entities = [MyListEntity::class],
-    version = 1,
+    version = 6,
     exportSchema = false
 )
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract fun myListDao(): MyListDao
+
 }

@@ -2,5 +2,7 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Theme.Moovies" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+<!--        <item name="fontFamily">@font/gotham_medium</item>-->
     </style>
+
 </resources>

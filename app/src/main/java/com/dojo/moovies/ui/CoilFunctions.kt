@@ -1,32 +1,35 @@
 package com.dojo.moovies.ui
 
 import android.widget.ImageView
-import android.os.Build.VERSION.SDK_INT
-import coil.ImageLoader
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
 import coil.load
 import com.dojo.moovies.R
 
-private const val TMDB_IMAGE_URL = "https://www.themoviedb.org/t/p/w300_and_h450_bestv2/"
-
-fun ImageView.loadFromTMDBApi(url: String?) {
-    this.load("$TMDB_IMAGE_URL$url")
+enum class TmdbImageSize {
+    POSTER_SIZE, COVER_SIZE, POSTER_BLUR_SIZE,POSTER_COVER_SIZE, POSTER_SIZE_DETAIL,
 }
 
-fun ImageView.load(url: String? = null) {
-    val loader = ImageLoader.Builder(context)
-        .components {
-            if (SDK_INT >= 28) {
-                add(ImageDecoderDecoder.Factory())
-            } else {
-                add(GifDecoder.Factory())
-            }
-        }.build()
+private const val TMDB_IMAGE_URL = "https://www.themoviedb.org/t/p"
+private const val POSTER_SIZE = "/w300_and_h450_bestv2/"
+private const val COVER_SIZE = "/w1920_and_h800_multi_faces/"
+private const val POSTER_SIZE_DETAIL = "/w780/"
+private const val POSTER_COVER_SIZE = "/original/"
+private const val POSTER_BLUR_SIZE = "/w300_and_h450_bestv2_filter(blur)/"
 
-    load(url, loader) {
-//        fallback()
-//        error()
-        placeholder(R.drawable.img_placeholder_movie_poster)
+fun ImageView.loadFromTMDBApi(url: String?, size: TmdbImageSize) {
+    when (size) {
+        TmdbImageSize.POSTER_SIZE -> this.tryLoad("$TMDB_IMAGE_URL$POSTER_SIZE$url")
+        TmdbImageSize.COVER_SIZE -> this.tryLoad("$TMDB_IMAGE_URL$COVER_SIZE$url")
+        TmdbImageSize.POSTER_BLUR_SIZE -> this.tryLoad("$TMDB_IMAGE_URL$POSTER_BLUR_SIZE$url")
+        TmdbImageSize.POSTER_COVER_SIZE ->this.tryLoad("$TMDB_IMAGE_URL$POSTER_COVER_SIZE$url")
+        TmdbImageSize.POSTER_SIZE_DETAIL ->this.tryLoad("$TMDB_IMAGE_URL$POSTER_SIZE_DETAIL$url")
+    }
+}
+
+
+fun ImageView.tryLoad(url: String? = null) {
+    load(url) {
+        fallback(R.drawable.img_no_signal_error)
+        error(R.drawable.img_no_signal_error)
+        placeholder(R.drawable.card_outline)
     }
 }

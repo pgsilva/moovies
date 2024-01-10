@@ -13,14 +13,15 @@ interface MyListDao {
     @Query("SELECT * FROM $TABLE_NAME_MY_LIST")
     fun findAll(): Flow<List<MyListEntity>>
 
-    @Query("SELECT * FROM $TABLE_NAME_MY_LIST WHERE id = :taskId")
-    fun findById(taskId: String): Flow<MyListEntity?>
 
-    @Query("DELETE FROM $TABLE_NAME_MY_LIST WHERE id = :taskId")
-    suspend fun delete(taskId: String)
+    @Query("SELECT * FROM $TABLE_NAME_MY_LIST WHERE mooviesId = :id")
+    fun findByMooviesId(id: String): Flow<MyListEntity?>
+
+    @Query("DELETE FROM $TABLE_NAME_MY_LIST WHERE mooviesId = :id")
+    suspend fun delete(id: String)
 
     @Upsert
-    suspend fun update(taskEntity: MyListEntity)
+    suspend fun update(myListEntity: MyListEntity)
 
     @Query("DELETE FROM $TABLE_NAME_MY_LIST")
     suspend fun deleteAll()

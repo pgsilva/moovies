@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,36 +7,240 @@
     android:fillViewport="true"
     android:orientation="vertical"
     android:theme="@style/Theme.Moovies"
-    tools:context=".ui.home.HomeFragment"
-    >
+    tools:context=".ui.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/ab_toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="HomeFragment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@drawable/gradient"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/bt_pesquisa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pesquisa"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp">
 
-    <Button
-        android:id="@+id/bt_mylist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Minha Lista"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt_pesquisa" />
+            <ImageButton
+                android:id="@+id/ib_search"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:background="@android:color/transparent"
+                android:padding="4dp"
+                android:src="@drawable/ic_search"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white"
+                android:contentDescription="@string/stre_btn_search" />
 
+            <TextView
+                android:id="@+id/tv_initial_moovies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="4dp"
+                android:alpha="1.0"
+                android:fontFamily="@font/cookit_regular"
+                android:text="@string/str_app_initial"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_cover_poster"
+                android:layout_width="match_parent"
+                android:layout_height="470dp"
+                android:alpha="0.7"
+                android:scaleType="centerCrop"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="4dp"
+                tools:src="@drawable/img_cover_poster"
+                android:contentDescription="@string/str_poster_cover" />
+
+            <Button
+                android:id="@+id/bt_my_list"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="@string/bt_my_lista"
+                android:textAllCaps="false"
+                android:textColor="?attr/colorOnBackground"
+                app:cornerRadius="20dp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_cover_poster"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_cover_poster"
+                app:strokeColor="?attr/colorOnBackground" />
+
+            <TextView
+                android:id="@+id/tv_title_moovies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:alpha="1.0"
+                android:fontFamily="@font/cookit_regular"
+                android:padding="4dp"
+                android:text="@string/str_tittle"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="60sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/iv_cover_poster"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_cover_poster"
+                app:layout_constraintVertical_bias="0.594" />
+
+            <!--Conteudo-->
+
+
+            <TextView
+                android:id="@+id/tv_discover_movie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:padding="8dp"
+                android:text="@string/str_title_discover_movie"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/tv_title_moovies"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_moovies" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_discover_movie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="2dp"
+                android:orientation="horizontal"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="@id/tv_discover_movie"
+                app:layout_constraintTop_toBottomOf="@id/tv_discover_movie"
+                tools:layout_editor_absoluteX="0dp"
+                tools:listitem="@layout/item_home_list" />
+
+            <TextView
+                android:id="@+id/tv_discover_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="2dp"
+                android:padding="4dp"
+                android:text="@string/str_title_discover_tv"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/tv_title_moovies"
+                app:layout_constraintTop_toBottomOf="@id/rv_discover_movie" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_discover_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="2dp"
+                android:orientation="horizontal"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="@id/tv_discover_tv"
+                app:layout_constraintTop_toBottomOf="@id/tv_discover_tv"
+                tools:listitem="@layout/item_home_list" />
+
+
+            <TextView
+                android:id="@+id/tv_my_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="2dp"
+                android:padding="4dp"
+                android:text="@string/str_title_my_list"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/tv_title_moovies"
+                app:layout_constraintTop_toBottomOf="@id/rv_discover_tv" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_my_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="2dp"
+                android:orientation="horizontal"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="@id/tv_my_list"
+                app:layout_constraintTop_toBottomOf="@id/tv_my_list"
+                tools:listitem="@layout/item_home_list" />
+
+
+            <TextView
+                android:id="@+id/tv_popular_movie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="2dp"
+                android:padding="4dp"
+                android:text="@string/str_title_popular_movie"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/tv_title_moovies"
+                app:layout_constraintTop_toBottomOf="@id/rv_my_list" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_popular_movie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="2dp"
+                android:orientation="horizontal"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="@id/tv_popular_movie"
+                app:layout_constraintTop_toBottomOf="@id/tv_popular_movie"
+                tools:listitem="@layout/item_home_list" />
+
+            <TextView
+                android:id="@+id/tv_popular_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="2dp"
+                android:padding="4dp"
+                android:text="@string/str_title_popular_tv"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/tv_title_moovies"
+                app:layout_constraintTop_toBottomOf="@id/rv_popular_movie" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_popular_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="2dp"
+                android:orientation="horizontal"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="@id/tv_popular_tv"
+                app:layout_constraintTop_toBottomOf="@id/tv_popular_tv"
+                tools:listitem="@layout/item_home_list" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
