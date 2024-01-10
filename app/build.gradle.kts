@@ -19,7 +19,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        buildConfigField("String", "TMDB_API_KEY", getApiKey())
+        buildConfigField("String", "TMDB_API_KEY", getApiKey("TMDB_API_KEY"))
+        buildConfigField("String", "MOTN_API_KEY", getApiKey("MOTN_API_KEY"))
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -62,8 +63,8 @@ android {
     }
 }
 
-fun getApiKey(): String {
-    return gradleLocalProperties(rootDir).getProperty("TMDB_API_KEY")
+fun getApiKey(key:String): String {
+    return gradleLocalProperties(rootDir).getProperty(key)
 }
 
 dependencies {
@@ -82,14 +83,21 @@ dependencies {
 
     //Material
     implementation("com.google.android.material:material:1.11.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     //Coil
-    implementation("io.coil-kt:coil:2.5.0")
-    implementation("io.coil-kt:coil-gif:2.5.0")
+    val coilVersion = "2.5.0"
+    implementation("io.coil-kt:coil:$coilVersion")
+    implementation("io.coil-kt:coil-gif:$coilVersion")
+    implementation("io.coil-kt:coil-svg:$coilVersion")
 
     //Koin
     val koinVersion = "3.2.0"
     implementation("io.insert-koin:koin-androidx-compose:$koinVersion")
+    implementation("io.insert-koin:koin-core:$koinVersion")
+    implementation("io.insert-koin:koin-android:$koinVersion")
+
+
 
     //Retrofit
     val retrofitVersion = "2.9.0"

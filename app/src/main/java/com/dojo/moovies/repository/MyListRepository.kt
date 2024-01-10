@@ -1,0 +1,36 @@
+package com.dojo.moovies.repository
+
+import com.dojo.moovies.core.domain.MooviesDataSimplified
+import com.dojo.moovies.out.db.MyListDao
+import com.dojo.moovies.repository.mapper.toDomain
+import com.dojo.moovies.repository.mapper.toEntity
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+
+class MyListRepository(
+    private val dao: MyListDao
+) {
+    fun findAll(): Flow<List<MooviesDataSimplified>> {
+        return dao.findAll().map { list ->
+            list.map { it.toDomain() }
+        }
+    }
+
+    fun findByIdAndMediaType(detailMap: Pair<Int, String>): Flow<MooviesDataSimplified?> {
+        return dao.findByIdAndMediaType(detailMap.first.toLong(), detailMap.second)
+            .map {
+                it?.toDomain()
+            }
+    }
+
+    suspend fun upsert(domain: MooviesDataSimplified) {
+        val entity = domain.toEntity()
+        dao.update(entity)
+    }
+
+    suspend fun remove(domain: MooviesDataSimplified) {
+        val entity = domain.toEntity()
+        dao.deleteByIdAndMediaType(entity.id, entity.mediaType)
+    }
+
+}

@@ -15,6 +15,14 @@
             android:id="@+id/action_fg_home_to_fg_search"
             app:destination="@id/fg_search" />
 
+        <action
+            android:id="@+id/action_fg_home_to_fg_mylist"
+            app:destination="@id/fg_mylist" />
+
+        <action
+            android:id="@+id/action_fg_home_to_fg_detail"
+            app:destination="@id/fg_detail" />
+
     </fragment>
 
     <fragment
@@ -33,6 +41,25 @@
         android:id="@+id/fg_detail"
         android:name="com.dojo.moovies.ui.detail.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="mediaType"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fg_mylist"
+        android:name="com.dojo.moovies.ui.mylist.MyListFragment"
+        android:label="fragment_mylist"
+        tools:layout="@layout/fragment_mylist" >
+
+        <action
+            android:id="@+id/action_fg_mylist_to_fg_detail"
+            app:destination="@id/fg_detail" />
+
+    </fragment>
 
 </navigation>
