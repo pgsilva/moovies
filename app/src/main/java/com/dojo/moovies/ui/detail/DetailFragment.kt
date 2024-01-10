@@ -9,15 +9,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dojo.moovies.R
-import com.dojo.moovies.core.domain.MooviesProvider
 import com.dojo.moovies.databinding.FragmentDetailBinding
-import com.dojo.moovies.out.api.TheMovieDbApi
 import com.dojo.moovies.ui.TmdbImageSize
 import com.dojo.moovies.ui.detail.adapter.StreamingBuyAdapter
 import com.dojo.moovies.ui.detail.adapter.StreamingChanneAdapter
 import com.dojo.moovies.ui.loadFromTMDBApi
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailFragment : Fragment(R.layout.fragment_detail) {
@@ -37,7 +34,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentDetailBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -65,16 +62,12 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
         val detailMap = args.id to args.mediaType
         loadDetailInfo(detailMap)
-        loadStreaminInfo(detailMap)
+        loadStreaminInfo()
     }
 
-    private fun loadStreaminInfo(detailMap: Pair<Int, String>) {
+    private fun loadStreaminInfo() {
         lifecycleScope.launch {
-            viewModel.loadStreaming(detailMap).let { response ->
-                response?.let {
-                    initObservables()
-                }
-            }
+            initObservables()
         }
 
     }
@@ -84,13 +77,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             viewModel.loadDetail(detailMap).collect { detail ->
                 detail?.let {
                     binding.ivCoverPoster.loadFromTMDBApi(
-                        detail.backdropPath,
-                        TmdbImageSize.COVER_SIZE
-                    )
-
-                    binding.ivDetailPoster.loadFromTMDBApi(
                         detail.posterPath,
-                        TmdbImageSize.POSTER_SIZE
+                        TmdbImageSize.POSTER_SIZE_DETAIL
                     )
 
                     binding.tvDetailName.text = detail.name

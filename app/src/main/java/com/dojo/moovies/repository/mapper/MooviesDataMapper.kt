@@ -1,21 +1,24 @@
 package com.dojo.moovies.repository.mapper
 
+import android.annotation.SuppressLint
 import com.dojo.moovies.core.domain.MooviesDataSimplified
 import com.dojo.moovies.core.domain.MooviesMediaType
-import com.dojo.moovies.core.domain.MooviesProvider
+import com.dojo.moovies.core.domain.MooviesWatchProvider
+import com.dojo.moovies.core.domain.MooviesWatchProviders
 import com.dojo.moovies.out.api.data.tmdb.MovieDetail
 import com.dojo.moovies.out.api.data.tmdb.StreamProvider
 import com.dojo.moovies.out.db.entity.MyListEntity
 import java.text.SimpleDateFormat
 
 
+@SuppressLint("SimpleDateFormat")
 internal fun MovieDetail.toDomain(): MooviesDataSimplified {
     val name = this.name ?: this.title
     val originalName = this.originalName ?: this.title
     val poster = this.posterPath ?: this.backdropPath
     var releaseDate = this.releaseDate ?: this.firstAirDate
 
-    var mediaType: MooviesMediaType = if (this.name != null) {
+    val mediaType: MooviesMediaType = if (this.name != null) {
         MooviesMediaType.TV
     } else {
         MooviesMediaType.MOVIE
@@ -26,7 +29,7 @@ internal fun MovieDetail.toDomain(): MooviesDataSimplified {
         val formatterOut = SimpleDateFormat("dd/MM/yyyy")
 
         val date = formatterIn.parse(releaseDate)
-        releaseDate = formatterOut.format(date)
+        releaseDate = date?.let { formatterOut.format(it) }
     }
 
     return MooviesDataSimplified(
@@ -59,10 +62,27 @@ internal fun MyListEntity.toDomain(): MooviesDataSimplified {
     )
 }
 
-internal fun StreamProvider.toProviderDomain(): MooviesProvider {
-    //TODO ALTERAR PARA DOMINIOS PROPORIOS
-    return MooviesProvider(
-        buy = this.buy,
-        flatRate = this.flatRate
+internal fun StreamProvider.toProviderDomain(): MooviesWatchProviders {
+    val buy = this.buy?.map {
+        MooviesWatchProvider(
+            it.logoPath,
+            it.providerId,
+            it.providerName,
+            it.displayPriority
+        )
+    }
+
+    val flatRate = this.flatRate?.map {
+        MooviesWatchProvider(
+            it.logoPath,
+            it.providerId,
+            it.providerName,
+            it.displayPriority
+        )
+    }
+
+    return MooviesWatchProviders(
+        buy = buy,
+        flatRate = flatRate
     )
 }

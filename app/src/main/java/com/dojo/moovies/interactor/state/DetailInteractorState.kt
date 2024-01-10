@@ -1,7 +1,7 @@
 package com.dojo.moovies.interactor.state
 
 import com.dojo.moovies.core.domain.MooviesDataSimplified
-import com.dojo.moovies.core.domain.MooviesProvider
+import com.dojo.moovies.core.domain.MooviesWatchProviders
 
 class DetailInteractorState {
     sealed class DetailState {
@@ -10,7 +10,7 @@ class DetailInteractorState {
     }
 
     sealed class DetailStreamingListState {
-        data class Success(val data: MooviesProvider) : DetailStreamingListState()
+        data class Success(val data: MooviesWatchProviders) : DetailStreamingListState()
         object Error : DetailStreamingListState()
     }
 }

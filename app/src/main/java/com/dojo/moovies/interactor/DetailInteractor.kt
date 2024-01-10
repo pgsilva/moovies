@@ -11,7 +11,6 @@ class DetailInteractor(
     private val apiRepository: TheMovieDbRepository
 ) {
 
-
     suspend fun load(map: Pair<Int, String>): Flow<DetailInteractorState.DetailState> =
         flow {
             when (MooviesMediaType.valueFromString(map.second)) {

@@ -2,7 +2,7 @@ package com.dojo.moovies.repository
 
 import android.util.Log
 import com.dojo.moovies.core.domain.MooviesDataSimplified
-import com.dojo.moovies.core.domain.MooviesProvider
+import com.dojo.moovies.core.domain.MooviesWatchProviders
 import com.dojo.moovies.out.api.TheMovieDbApi
 import com.dojo.moovies.repository.mapper.toDomain
 import com.dojo.moovies.repository.mapper.toProviderDomain
@@ -17,8 +17,8 @@ class TheMovieDbRepository(
     suspend fun getDiscoverMovies(): Flow<List<MooviesDataSimplified>> = flow {
         val response = api.getDiscoverMovies()
         if (response.isSuccessful) {
-            response.body()!!.let { response ->
-                val domain = response.results.map { it.toDomain() }
+            response.body()!!.let { movieResponse ->
+                val domain = movieResponse.results.map { it.toDomain() }
                 emit(domain)
             }
         } else {
@@ -36,8 +36,8 @@ class TheMovieDbRepository(
     suspend fun getDiscoverTv(): Flow<List<MooviesDataSimplified>> = flow {
         val response = api.getDiscoverTv()
         if (response.isSuccessful) {
-            response.body()!!.let { response ->
-                val domain = response.results.map { it.toDomain() }
+            response.body()!!.let { tvResponse ->
+                val domain = tvResponse.results.map { it.toDomain() }
                 emit(domain)
             }
         } else {
@@ -55,8 +55,8 @@ class TheMovieDbRepository(
     suspend fun getMultiByQuery(query: String): Flow<List<MooviesDataSimplified>> = flow {
         val response = api.getMultiByQuery(query)
         if (response.isSuccessful) {
-            response.body()!!.let { response ->
-                val domain = response.results.map { it.toDomain() }
+            response.body()!!.let { multiResponse ->
+                val domain = multiResponse.results.map { it.toDomain() }
                 emit(domain)
             }
         } else {
@@ -74,8 +74,8 @@ class TheMovieDbRepository(
     fun getPopularMovies(): Flow<List<MooviesDataSimplified>> = flow {
         val response = api.getTopRatedMovies()
         if (response.isSuccessful) {
-            response.body()!!.let { response ->
-                val domain = response.results.map { it.toDomain() }
+            response.body()!!.let { popularMovieResponse ->
+                val domain = popularMovieResponse.results.map { it.toDomain() }
                 emit(domain)
             }
         } else {
@@ -93,8 +93,8 @@ class TheMovieDbRepository(
     fun getPopularTv(): Flow<List<MooviesDataSimplified>> = flow {
         val response = api.getTopRatedTv()
         if (response.isSuccessful) {
-            response.body()!!.let { response ->
-                val domain = response.results.map { it.toDomain() }
+            response.body()!!.let { popularTvResponse ->
+                val domain = popularTvResponse.results.map { it.toDomain() }
                 emit(domain)
             }
         } else {
@@ -112,8 +112,8 @@ class TheMovieDbRepository(
     fun getMovie(id: Int): Flow<MooviesDataSimplified?> = flow {
         val response = api.getMovieDetail(id)
         if (response.isSuccessful) {
-            response.body()!!.let { response ->
-                val domain = response.toDomain()
+            response.body()!!.let {detail ->
+                val domain = detail.toDomain()
                 emit(domain)
             }
         } else {
@@ -130,8 +130,8 @@ class TheMovieDbRepository(
     fun getTv(id: Int): Flow<MooviesDataSimplified?> = flow {
         val response = api.getTvDetail(id)
         if (response.isSuccessful) {
-            response.body()!!.let { response ->
-                val domain = response.toDomain()
+            response.body()!!.let { detail ->
+                val domain = detail.toDomain()
                 emit(domain)
             }
         } else {
@@ -145,11 +145,11 @@ class TheMovieDbRepository(
         }
     }
 
-    fun getMovieStreaming(id: Int): Flow<MooviesProvider?> = flow {
+    fun getMovieStreaming(id: Int): Flow<MooviesWatchProviders?> = flow {
         val response = api.getMovieStreaming(id)
         if (response.isSuccessful) {
-            response.body()!!.let { response ->
-                response.results.br?.let {
+            response.body()!!.let { movieStreaming ->
+                movieStreaming.results.br?.let {
                     val domain = it.toProviderDomain()
                     emit(domain)
                 }
@@ -165,11 +165,11 @@ class TheMovieDbRepository(
         }
     }
 
-    fun getTvStreaming(id: Int): Flow<MooviesProvider?> = flow {
+    fun getTvStreaming(id: Int): Flow<MooviesWatchProviders?> = flow {
         val response = api.getTvStreaming(id)
         if (response.isSuccessful) {
-            response.body()!!.let { response ->
-                response.results.br?.let {
+            response.body()!!.let { tvStreaming ->
+                tvStreaming.results.br?.let {
                     val domain = it.toProviderDomain()
                     emit(domain)
                 }

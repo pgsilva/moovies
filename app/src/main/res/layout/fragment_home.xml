@@ -32,7 +32,8 @@
                 android:src="@drawable/ic_search"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/white" />
+                app:tint="@color/white"
+                android:contentDescription="@string/stre_btn_search" />
 
             <TextView
                 android:id="@+id/tv_initial_moovies"
@@ -42,7 +43,7 @@
                 android:layout_marginTop="4dp"
                 android:alpha="1.0"
                 android:fontFamily="@font/cookit_regular"
-                android:text="M"
+                android:text="@string/str_app_initial"
                 android:textColor="@color/white"
                 android:textSize="40sp"
                 android:textStyle="bold"
@@ -59,17 +60,18 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/iv_cover_poster"
                 android:layout_width="match_parent"
                 android:layout_height="470dp"
-                android:alpha="0.9"
+                android:alpha="0.7"
                 android:scaleType="centerCrop"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="4dp"
-                tools:src="@drawable/img_cover_poster" />
+                tools:src="@drawable/img_cover_poster"
+                android:contentDescription="@string/str_poster_cover" />
 
             <Button
                 android:id="@+id/bt_my_list"

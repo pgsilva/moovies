@@ -3,7 +3,6 @@ package com.dojo.moovies.ui.detail.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.dojo.moovies.core.domain.MooviesDataSimplified
 import com.dojo.moovies.databinding.ItemStreamListBinding
 import com.dojo.moovies.out.api.data.tmdb.Provider
 import com.dojo.moovies.ui.TmdbImageSize
@@ -14,12 +13,13 @@ class StreamingChanneAdapter(
 
     private val dataset = mutableListOf<Provider>()
 
-    inner class ViewHolder(private val binding: ItemStreamListBinding) :
+    inner class ViewHolder(binding: ItemStreamListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         private val logo = binding.ivLogo
+
         fun bind(item: Provider) {
-            logo.loadFromTMDBApi(item.logoPath, TmdbImageSize.LOGO_SIZE)
+            logo.loadFromTMDBApi(item.logoPath, TmdbImageSize.POSTER_COVER_SIZE)
 
         }
     }
