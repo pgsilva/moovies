@@ -69,8 +69,7 @@ class MyListAdapter(
                     } else {
                         dataset.filter {
                             (it.name.lowercase().contains(charString.lowercase())) or
-                                    (valueFromEnum(it.mediaType).lowercase()
-                                        .contains(charString.lowercase()))
+                                    (valueFromEnum(it.mediaType).lowercase() == charString.lowercase())
                         }.toMutableList()
                     }
                 return FilterResults().apply { values = filteredList }

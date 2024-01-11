@@ -2,7 +2,6 @@ package com.dojo.moovies.interactor
 
 import android.util.Log
 import com.dojo.moovies.interactor.state.HomeInteractorState.HomeLoadState
-import com.dojo.moovies.out.db.MyListDao
 import com.dojo.moovies.repository.MyListRepository
 import com.dojo.moovies.repository.TheMovieDbRepository
 import kotlinx.coroutines.flow.Flow
@@ -45,7 +44,7 @@ class HomeIntercator(
 
 
     suspend fun loadPreviewMyList(): Flow<HomeLoadState> = flow {
-        dbRepository.findAll().collect {
+        dbRepository.findAllLimit20().collect {
             emit(HomeLoadState.Success(it))
         }
     }

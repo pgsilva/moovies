@@ -19,6 +19,12 @@ class MyListRepository(
         }
     }
 
+    fun findAllLimit20(): Flow<List<MooviesDataSimplified>> {
+        return dao.findAllLimit20().map { list ->
+            list.map { it.toDomain() }
+        }
+    }
+
     suspend fun findByIdAndMediaType(detailMap: Pair<Int, String>): MooviesDataSimplified? {
         var response: MyListEntity?
         withContext(Dispatchers.IO) {

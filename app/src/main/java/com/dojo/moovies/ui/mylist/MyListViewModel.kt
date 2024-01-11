@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dojo.moovies.core.domain.MooviesDataSimplified
 import com.dojo.moovies.interactor.MyListInteractor
-import com.dojo.moovies.interactor.state.HomeInteractorState
 import com.dojo.moovies.interactor.state.MyListInteractorState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,7 +26,7 @@ class MyListViewModel(
 
     private fun load() {
         viewModelScope.launch {
-            interactor.loadMyList()
+            interactor.loadPreviewMyList()
                 .flowOn(Dispatchers.IO)
                 .collect { state ->
                     if (state is MyListInteractorState.MyListState.Success)

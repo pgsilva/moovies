@@ -8,9 +8,10 @@ import kotlinx.coroutines.flow.flow
 class MyListInteractor(
     private val dbRepository: MyListRepository
 ) {
-    suspend fun loadMyList(): Flow<MyListInteractorState.MyListState> = flow {
+    suspend fun loadPreviewMyList(): Flow<MyListInteractorState.MyListState> = flow {
         dbRepository.findAll().collect {
             emit(MyListInteractorState.MyListState.Success(it))
         }
     }
 }
+

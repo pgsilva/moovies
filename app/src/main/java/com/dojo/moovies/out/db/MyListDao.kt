@@ -13,6 +13,9 @@ interface MyListDao {
     @Query("SELECT * FROM $TABLE_NAME_MY_LIST")
     fun findAll(): Flow<List<MyListEntity>>
 
+    @Query("SELECT * FROM $TABLE_NAME_MY_LIST LIMIT 20")
+    fun findAllLimit20(): Flow<List<MyListEntity>>
+
     @Query("SELECT * FROM $TABLE_NAME_MY_LIST WHERE mooviesId = :id")
     suspend fun findByMooviesId(id: String): MyListEntity?
 

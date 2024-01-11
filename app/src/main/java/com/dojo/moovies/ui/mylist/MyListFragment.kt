@@ -64,23 +64,36 @@ class MyListFragment : Fragment(R.layout.fragment_mylist) {
 
     private fun configureChipButtons() {
         binding.cpMovies.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                myListAdapter.filter.filter(valueFromEnum(MooviesMediaType.MOVIE))
-                binding.cpTv.isChecked = false
+            if (isChecked and !binding.cpTv.isChecked) {
+                filterByMovie()
+            } else if (!isChecked and binding.cpTv.isChecked) {
+                filterByTv()
             } else {
                 initObservables()
             }
         }
 
         binding.cpTv.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                myListAdapter.filter.filter(valueFromEnum(MooviesMediaType.TV))
-                binding.cpMovies.isChecked = false
+            if (isChecked and !binding.cpMovies.isChecked) {
+                filterByTv()
+            } else if (!isChecked and binding.cpMovies.isChecked) {
+                filterByMovie()
             } else {
                 initObservables()
             }
         }
     }
+
+    private fun filterByMovie() {
+        initObservables()
+        myListAdapter.filter.filter(valueFromEnum(MooviesMediaType.MOVIE))
+    }
+
+    private fun filterByTv() {
+        initObservables()
+        myListAdapter.filter.filter(valueFromEnum(MooviesMediaType.TV))
+    }
+
 
     private fun initObservables() = lifecycleScope.launch {
         viewModel.myList.collect {
