@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dojo.moovies.core.domain.MooviesDataSimplified
 import com.dojo.moovies.interactor.SearchInteractor
+import com.dojo.moovies.interactor.state.HomeInteractorState
 import com.dojo.moovies.interactor.state.SearchInteractorState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,12 +26,9 @@ class SearchViewModel(
         clearHistoricSearch()
 
         viewModelScope.launch {
-            interactor.findBy(query)
-                .flowOn(Dispatchers.IO)
-                .collect { state ->
-                    if (state is SearchInteractorState.SearchState.Success)
-                        _searchList.update { state.data }
-                }
+            val state = interactor.findBy(query)
+            if (state is SearchInteractorState.SearchState.Success)
+                _searchList.update { state.data }
         }
     }
 

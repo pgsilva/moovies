@@ -55,6 +55,7 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.abToolbar.outlineProvider = null
 
         initDependencies()
         initComponents()
@@ -84,8 +85,6 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun initComponents() {
-        binding.abToolbar.outlineProvider = null
-
         initSearchButton()
         initMyListButton()
         initDiscoverMovieList()

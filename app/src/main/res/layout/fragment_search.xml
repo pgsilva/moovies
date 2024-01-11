@@ -26,7 +26,8 @@
         app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ab_toolbar" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_search_items"
@@ -40,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/sv_search_input"
         app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="0dp"
-        tools:listitem="@layout/item_search_result_list" />
+        tools:listitem="@layout/item_result_list" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

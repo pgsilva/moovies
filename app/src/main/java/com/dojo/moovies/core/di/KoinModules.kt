@@ -3,6 +3,7 @@ package com.dojo.moovies.core.di
 import androidx.room.Room
 import com.dojo.moovies.interactor.DetailInteractor
 import com.dojo.moovies.interactor.HomeIntercator
+import com.dojo.moovies.interactor.MyListInteractor
 import com.dojo.moovies.interactor.SearchInteractor
 import com.dojo.moovies.out.api.TheMovieDbApi
 import com.dojo.moovies.out.api.TheMovieDbApi.Companion.TMDB_API_URL
@@ -12,6 +13,7 @@ import com.dojo.moovies.repository.MyListRepository
 import com.dojo.moovies.repository.TheMovieDbRepository
 import com.dojo.moovies.ui.detail.DetailViewModel
 import com.dojo.moovies.ui.home.HomeViewModel
+import com.dojo.moovies.ui.mylist.MyListViewModel
 import com.dojo.moovies.ui.search.SearchViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -65,5 +67,12 @@ val detailViewModel = module {
     viewModel {
         val detailInteractor = DetailInteractor(get(), get())
         DetailViewModel(detailInteractor)
+    }
+}
+
+val myListViewModel = module {
+    viewModel {
+        val myListInteractor = MyListInteractor(get())
+        MyListViewModel(myListInteractor)
     }
 }

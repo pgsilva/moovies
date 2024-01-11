@@ -1,5 +1,6 @@
 package com.dojo.moovies.interactor
 
+import android.util.Log
 import com.dojo.moovies.interactor.state.HomeInteractorState.HomeLoadState
 import com.dojo.moovies.out.db.MyListDao
 import com.dojo.moovies.repository.MyListRepository
@@ -12,23 +13,36 @@ class HomeIntercator(
     private val dbRepository: MyListRepository
 ) {
 
-    suspend fun loadDiscoverMovies(): Flow<HomeLoadState> = flow {
+    suspend fun loadDiscoverMovies(): HomeLoadState = try {
         apiRepository.getDiscoverMovies().let {
-            it.collect { list ->
-                if (list.isEmpty()) emit(HomeLoadState.Error)
-                else emit(HomeLoadState.Success(list))
+            when {
+                it.isNotEmpty() -> HomeLoadState.Success(it)
+                else -> HomeLoadState.Error
             }
         }
+    } catch (e: Exception) {
+        Log.e(
+            "MOOVIES-THEMOVIEDBAPI",
+            "Api Discover Movie Error, response is not successful: ${e.printStackTrace()}"
+        )
+        HomeLoadState.Error
     }
 
-    suspend fun loadDiscoverTv(): Flow<HomeLoadState> = flow {
+    suspend fun loadDiscoverTv(): HomeLoadState = try {
         apiRepository.getDiscoverTv().let {
-            it.collect { list ->
-                if (list.isEmpty()) emit(HomeLoadState.Error)
-                else emit(HomeLoadState.Success(list))
+            when {
+                it.isNotEmpty() -> HomeLoadState.Success(it)
+                else -> HomeLoadState.Error
             }
         }
+    } catch (e: Exception) {
+        Log.e(
+            "MOOVIES-THEMOVIEDBAPI",
+            "Api Discover TV Error, response is not successful: ${e.printStackTrace()}"
+        )
+        HomeLoadState.Error
     }
+
 
     suspend fun loadPreviewMyList(): Flow<HomeLoadState> = flow {
         dbRepository.findAll().collect {
@@ -37,23 +51,34 @@ class HomeIntercator(
     }
 
     suspend fun loadPopularMovies(
-    ): Flow<HomeLoadState> = flow {
+    ): HomeLoadState = try {
         apiRepository.getPopularMovies().let {
-            it.collect { list ->
-                if (list.isEmpty()) emit(HomeLoadState.Error)
-                else emit(HomeLoadState.Success(list))
+            when {
+                it.isNotEmpty() -> HomeLoadState.Success(it)
+                else -> HomeLoadState.Error
             }
         }
+    } catch (e: Exception) {
+        Log.e(
+            "MOOVIES-THEMOVIEDBAPI",
+            "Api Popular Movies Error, response is not successful: ${e.printStackTrace()}"
+        )
+        HomeLoadState.Error
     }
 
     suspend fun loadPopularTv(
-    ): Flow<HomeLoadState> = flow {
+    ): HomeLoadState = try {
         apiRepository.getPopularTv().let {
-            it.collect { list ->
-                if (list.isEmpty()) emit(HomeLoadState.Error)
-                else emit(HomeLoadState.Success(list))
+            when {
+                it.isNotEmpty() -> HomeLoadState.Success(it)
+                else -> HomeLoadState.Error
             }
         }
+    } catch (e: Exception) {
+        Log.e(
+            "MOOVIES-THEMOVIEDBAPI",
+            "Api Popular Tv Error, response is not successful: ${e.printStackTrace()}"
+        )
+        HomeLoadState.Error
     }
-
 }

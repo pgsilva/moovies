@@ -6,7 +6,9 @@
     <string name="str_title_popular_tv">Sucessos em Séries</string>
     <string name="str_tittle">Moovies</string>
     <string name="str_title_my_list">Minha Lista</string>
+    <string name="str_title_header_my_list">My Moovies</string>
     <string name="hint_search_text_input_layout">Pesquise por filmes ou séries …</string>
+    <string name="hint_search_text_input_my_list">Pesquise em sua list …</string>
     <string name="str_detail_label_streaming">Assista em</string>
     <string name="str_detail_label_buy">Disponível para compra em</string>
     <string name="bt_my_lista">Minha Lista</string>

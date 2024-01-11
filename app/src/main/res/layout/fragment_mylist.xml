@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:alpha="1.0"
                 android:fontFamily="@font/cookit_regular"
-                android:text="@string/app_name"
+                android:text="@string/str_title_header_my_list"
                 android:textColor="@color/white"
                 android:textSize="40sp"
                 android:textStyle="bold"
@@ -42,5 +42,63 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <SearchView
+        android:id="@+id/sv_search_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTintMode="multiply"
+        android:clipToPadding="false"
+        android:hint="@string/hint_search_text_input_my_list"
+        android:paddingBottom="4dp"
+        android:queryHint="@string/hint_search_text_input_my_list"
+        app:defaultQueryHint="@string/hint_search_text_input_my_list"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ab_toolbar" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/cg_filters_myLista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:paddingHorizontal="4dp"
+
+        app:layout_constraintBottom_toTopOf="@id/rv_my_list"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sv_search_input">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/cp_movies"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filmes" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/cp_tv"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Séries" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_my_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingHorizontal="4dp"
+        android:paddingTop="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cg_filters_myLista"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp"
+        tools:listitem="@layout/item_result_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,18 +1,21 @@
-package com.dojo.moovies.ui.search.adapter
+package com.dojo.moovies.ui.mylist.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.dojo.moovies.R
 import com.dojo.moovies.core.domain.MooviesDataSimplified
+import com.dojo.moovies.core.domain.MooviesMediaType.Companion.valueFromEnum
 import com.dojo.moovies.databinding.ItemResultListBinding
 import com.dojo.moovies.ui.TmdbImageSize
 import com.dojo.moovies.ui.loadFromTMDBApi
 
-class SearchListAdapter(
+class MyListAdapter(
     private val onSelect: (MooviesDataSimplified) -> Unit
-) : RecyclerView.Adapter<SearchListAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<MyListAdapter.ViewHolder>(), Filterable {
 
     private val dataset = mutableListOf<MooviesDataSimplified>()
 
@@ -42,7 +45,7 @@ class SearchListAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): SearchListAdapter.ViewHolder =
+    ): MyListAdapter.ViewHolder =
         ItemResultListBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -51,10 +54,37 @@ class SearchListAdapter(
             ViewHolder(it)
         }
 
-    override fun onBindViewHolder(holder: SearchListAdapter.ViewHolder, position: Int) =
+    override fun onBindViewHolder(holder: MyListAdapter.ViewHolder, position: Int) =
         holder.bind(dataset[position], onSelect)
 
     override fun getItemCount(): Int = dataset.size
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charString = constraint?.toString()
+                val filteredList: MutableList<MooviesDataSimplified> =
+                    if (charString.isNullOrBlank()) {
+                        dataset
+                    } else {
+                        dataset.filter {
+                            (it.name.lowercase().contains(charString.lowercase())) or
+                                    (valueFromEnum(it.mediaType).lowercase()
+                                        .contains(charString.lowercase()))
+                        }.toMutableList()
+                    }
+                return FilterResults().apply { values = filteredList }
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                if (results != null) {
+                    val values = results.values as List<MooviesDataSimplified>
+                    refresh(values)
+                }
+                notifyDataSetChanged()
+            }
+        }
+    }
 
     fun refresh(items: List<MooviesDataSimplified>) {
         dataset.clear()

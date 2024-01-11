@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:fillViewport="true"
     android:orientation="vertical"
     android:paddingBottom="20dp"
@@ -44,15 +45,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:text="@string/str_title_my_list"
+                android:text="@string/bt_my_lista"
                 android:textAllCaps="false"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="@color/white"
+                android:visibility="gone"
                 app:cornerRadius="20dp"
                 app:icon="@drawable/ic_check"
-                app:iconTint="?attr/colorOnBackground"
-                app:layout_constraintTop_toTopOf="parent"
+                app:iconTint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:strokeColor="?attr/colorOnBackground" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/white" />
 
             <Button
                 android:id="@+id/bt_my_list"
@@ -60,15 +62,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:text="@string/str_title_my_list"
+                android:text="@string/bt_my_lista"
                 android:textAllCaps="false"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="@color/white"
+                android:visibility="gone"
                 app:cornerRadius="20dp"
                 app:icon="@drawable/ic_add"
-                app:iconTint="?attr/colorOnBackground"
-                app:layout_constraintTop_toTopOf="parent"
+                app:iconTint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:strokeColor="?attr/colorOnBackground" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/white" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -89,46 +92,46 @@
                 android:layout_width="match_parent"
                 android:layout_height="600dp"
                 android:alpha="1.0"
+                android:contentDescription="@string/str_poster_cover"
                 android:scaleType="centerCrop"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="0dp"
-                tools:src="@drawable/img_poster_movie"
-                android:contentDescription="@string/str_poster_cover" />
+                tools:src="@drawable/img_poster_movie" />
 
 
-<!--            <androidx.cardview.widget.CardView-->
-<!--                android:id="@+id/cv_detail_poster"-->
-<!--                android:layout_width="150dp"-->
-<!--                android:layout_height="205dp"-->
-<!--                android:layout_marginStart="20dp"-->
-<!--                android:layout_marginTop="20dp"-->
-<!--                app:cardCornerRadius="5dp"-->
-<!--                app:cardElevation="3dp"-->
-<!--                app:layout_constraintBottom_toBottomOf="@id/iv_cover_poster"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/iv_cover_poster">-->
+            <!--            <androidx.cardview.widget.CardView-->
+            <!--                android:id="@+id/cv_detail_poster"-->
+            <!--                android:layout_width="150dp"-->
+            <!--                android:layout_height="205dp"-->
+            <!--                android:layout_marginStart="20dp"-->
+            <!--                android:layout_marginTop="20dp"-->
+            <!--                app:cardCornerRadius="5dp"-->
+            <!--                app:cardElevation="3dp"-->
+            <!--                app:layout_constraintBottom_toBottomOf="@id/iv_cover_poster"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/iv_cover_poster">-->
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/iv_detail_poster"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:scaleType="centerCrop"-->
-<!--                    tools:src="@drawable/img_poster_movie" />-->
-<!--            </androidx.cardview.widget.CardView>-->
+            <!--                <ImageView-->
+            <!--                    android:id="@+id/iv_detail_poster"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="match_parent"-->
+            <!--                    android:scaleType="centerCrop"-->
+            <!--                    tools:src="@drawable/img_poster_movie" />-->
+            <!--            </androidx.cardview.widget.CardView>-->
 
             <TextView
                 android:id="@+id/tv_detail_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="20dp"
                 android:layout_marginVertical="10dp"
                 android:ellipsize="end"
                 android:maxLines="3"
+                android:paddingHorizontal="20dp"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_cover_poster"
                 tools:text="Homem Aranha Homem Aranha Homem Aranha" />
 
