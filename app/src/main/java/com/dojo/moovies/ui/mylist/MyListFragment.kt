@@ -66,6 +66,7 @@ class MyListFragment : Fragment(R.layout.fragment_mylist) {
         binding.cpMovies.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 myListAdapter.filter.filter(valueFromEnum(MooviesMediaType.MOVIE))
+                binding.cpTv.isChecked = false
             } else {
                 initObservables()
             }
@@ -74,6 +75,7 @@ class MyListFragment : Fragment(R.layout.fragment_mylist) {
         binding.cpTv.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 myListAdapter.filter.filter(valueFromEnum(MooviesMediaType.TV))
+                binding.cpMovies.isChecked = false
             } else {
                 initObservables()
             }
