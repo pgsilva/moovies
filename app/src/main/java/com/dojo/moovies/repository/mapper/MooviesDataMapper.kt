@@ -5,7 +5,7 @@ import com.dojo.moovies.core.domain.MooviesDataSimplified
 import com.dojo.moovies.core.domain.MooviesMediaType
 import com.dojo.moovies.core.domain.MooviesWatchProvider
 import com.dojo.moovies.core.domain.MooviesWatchProviders
-import com.dojo.moovies.out.api.data.tmdb.MovieDetail
+import com.dojo.moovies.out.api.data.tmdb.Detail
 import com.dojo.moovies.out.api.data.tmdb.StreamProvider
 import com.dojo.moovies.out.db.entity.MyListEntity
 import java.text.SimpleDateFormat
@@ -13,7 +13,7 @@ import java.util.UUID
 
 
 @SuppressLint("SimpleDateFormat")
-internal fun MovieDetail.toDomain(): MooviesDataSimplified {
+internal fun Detail.toDomain(): MooviesDataSimplified {
     val name = this.name ?: this.title
     val originalName = this.originalName ?: this.title
     val poster = this.posterPath ?: this.backdropPath

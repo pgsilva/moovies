@@ -26,7 +26,10 @@
         app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ab_toolbar" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_search_items"
@@ -40,7 +43,25 @@
         app:layout_constraintTop_toBottomOf="@+id/sv_search_input"
         app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="0dp"
-        tools:listitem="@layout/item_search_result_list" />
+        android:visibility="gone"
+        tools:listitem="@layout/item_result_list" />
+
+    <TextView
+        android:id="@+id/tv_not_found"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_search_noting_found"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sv_search_input"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/cookit_regular"
+        android:alpha="0.5"
+        android:textColor="?attr/colorOnBackground"
+        tools:layout_editor_absoluteY="242dp" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

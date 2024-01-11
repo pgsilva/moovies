@@ -3,7 +3,7 @@ package com.dojo.moovies.out.api
 import com.dojo.moovies.BuildConfig
 import com.dojo.moovies.out.api.data.tmdb.DiscoverMovieResponse
 import com.dojo.moovies.out.api.data.tmdb.DiscoverTvResponse
-import com.dojo.moovies.out.api.data.tmdb.MovieDetail
+import com.dojo.moovies.out.api.data.tmdb.Detail
 import com.dojo.moovies.out.api.data.tmdb.MultiResponse
 import com.dojo.moovies.out.api.data.tmdb.StreamResponse
 import retrofit2.Response
@@ -55,14 +55,14 @@ interface TheMovieDbApi {
         @Path("movie_id") id: Int,
         @Query("api_key") apiKey: String = TMDB_API_KEY,
         @Query("language") language: String = TMDB_API_INITIAL_LANGUAGE
-    ): Response<MovieDetail>
+    ): Response<Detail>
 
     @GET("/3/tv/{series_id}")
     suspend fun getTvDetail(
         @Path("series_id") id: Int,
         @Query("api_key") apiKey: String = TMDB_API_KEY,
         @Query("language") language: String = TMDB_API_INITIAL_LANGUAGE
-    ): Response<MovieDetail>
+    ): Response<Detail>
 
     @GET("/3/movie/top_rated")
     suspend fun getTopRatedMovies(

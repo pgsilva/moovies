@@ -1,12 +1,14 @@
 package com.dojo.moovies.ui.detail
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -58,8 +60,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private fun initComponents() {
         binding.abToolbar.outlineProvider = null
-        binding.btMyList.visibility = GONE
-        binding.btMyListSaved.visibility = GONE
 
         val detailMap = args.id to args.mediaType
 
@@ -74,24 +74,22 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private fun initButtonsMyList(detail: MooviesDataSimplified) {
         binding.btMyList.setOnClickListener {
             viewModel.saveInMyList(detail)
-            changeVisibilityRemove()
 
-            Toast.makeText(
-                context,
-                "Adicionado com Sucesso !",
-                Toast.LENGTH_SHORT
-            ).show()
+            changeVisibilityWithAnimation(
+                visible = binding.btMyListSaved,
+                gone = binding.btMyList
+            )
+
         }
 
         binding.btMyListSaved.setOnClickListener {
             viewModel.removeFromMyList(detail)
-            changeVisibilityAdd()
 
-            Toast.makeText(
-                context,
-                "Removido com Sucesso !",
-                Toast.LENGTH_SHORT
-            ).show()
+            changeVisibilityWithAnimation(
+                visible = binding.btMyList,
+                gone = binding.btMyListSaved
+            )
+
         }
     }
 
@@ -108,7 +106,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         verifyButtomMyList(detailMap)
 
         lifecycleScope.launch {
-            viewModel.loadDetail(detailMap).collect { detail ->
+            viewModel.loadDetail(detailMap).let { detail ->
                 detail?.let {
                     binding.ivCoverPoster.loadFromTMDBApi(
                         detail.posterPath,
@@ -171,25 +169,48 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     }
 
     private fun verifyButtomMyList(detailMap: Pair<Int, String>) = lifecycleScope.launch {
-        viewModel.checkIsMyList(detailMap).collect { mylist ->
+        viewModel.checkIsMyList(detailMap).let { mylist ->
             if (mylist == null) {
-                changeVisibilityAdd()
+                changeVisibility(
+                    visible = binding.btMyList,
+                    gone = binding.btMyListSaved
+                )
             } else {
-                changeVisibilityRemove()
+                changeVisibility(
+                    visible = binding.btMyListSaved,
+                    gone = binding.btMyList
+                )
             }
         }
     }
 
-    private fun changeVisibilityAdd() {
-        binding.btMyList.visibility = VISIBLE
-        binding.btMyListSaved.visibility = GONE
+    private fun changeVisibility(visible: Button, gone: Button) {
+        visible.visibility = VISIBLE
+        gone.visibility = GONE
     }
 
-    private fun changeVisibilityRemove() {
-        binding.btMyList.visibility = GONE
-        binding.btMyListSaved.visibility = VISIBLE
-    }
 
+    private fun changeVisibilityWithAnimation(visible: Button, gone: Button) {
+        val shortAnimationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
+
+        visible.apply {
+            alpha = 0f
+            visibility = VISIBLE
+            animate()
+                .alpha(1f)
+                .setDuration(shortAnimationDuration.toLong())
+                .setListener(null)
+        }
+
+        gone.animate()
+            .alpha(0f)
+            .setDuration(shortAnimationDuration.toLong())
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    gone.visibility = GONE
+                }
+            })
+    }
 
 }
 

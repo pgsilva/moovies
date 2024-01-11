@@ -1,9 +1,8 @@
 package com.dojo.moovies.out.api.data.tmdb
 
 import com.google.gson.annotations.SerializedName
-import java.math.BigDecimal
 
-data class MovieDetail(
+data class Detail(
 
     @SerializedName("backdrop_path")
     val backdropPath: String?,

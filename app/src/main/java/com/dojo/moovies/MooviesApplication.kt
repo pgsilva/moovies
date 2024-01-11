@@ -5,6 +5,7 @@ import com.dojo.moovies.core.di.databaseModule
 import com.dojo.moovies.core.di.detailViewModel
 import com.dojo.moovies.core.di.repositoryModule
 import com.dojo.moovies.core.di.homeViewModel
+import com.dojo.moovies.core.di.myListViewModel
 import com.dojo.moovies.core.di.searchViewModel
 import com.dojo.moovies.core.di.tmdbApiModule
 import org.koin.android.ext.koin.androidContext
@@ -25,9 +26,11 @@ class MooviesApplication: Application() {
                 tmdbApiModule,
                 databaseModule,
                 repositoryModule,
+
                 homeViewModel,
                 searchViewModel,
-                detailViewModel
+                detailViewModel,
+                myListViewModel
             ))
 
         }

@@ -14,12 +14,14 @@ import com.dojo.moovies.R
 import com.dojo.moovies.core.domain.MooviesDataSimplified
 import com.dojo.moovies.core.domain.MooviesMediaType.Companion.valueFromEnum
 import com.dojo.moovies.databinding.FragmentHomeBinding
-import com.dojo.moovies.ui.home.HomeCoverLoader.loadCoverImage
+import com.dojo.moovies.ui.TmdbImageSize
+import com.dojo.moovies.ui.home.HomeCoverLoader.COVERS
 import com.dojo.moovies.ui.home.adapter.DiscoverMovieAdapter
 import com.dojo.moovies.ui.home.adapter.DiscoverTvAdapter
 import com.dojo.moovies.ui.home.adapter.PopularMovieAdapter
 import com.dojo.moovies.ui.home.adapter.PopularTvAdapter
 import com.dojo.moovies.ui.home.adapter.PreviewMyListAdapter
+import com.dojo.moovies.ui.loadFromTMDBApi
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -39,6 +41,8 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val viewModel: HomeViewModel by viewModel()
 
+    private val urlImage = COVERS.random()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,15 +50,15 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(layoutInflater)
-        loadCoverImage(binding.ivCoverPoster)
+        binding.ivCoverPoster.loadFromTMDBApi(urlImage, TmdbImageSize.COVER_SIZE)
 
         return binding.root
     }
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.abToolbar.outlineProvider = null
 
         initDependencies()
         initComponents()
@@ -84,8 +88,6 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun initComponents() {
-        binding.abToolbar.outlineProvider = null
-
         initSearchButton()
         initMyListButton()
         initDiscoverMovieList()

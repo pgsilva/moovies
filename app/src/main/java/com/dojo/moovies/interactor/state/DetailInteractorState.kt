@@ -16,5 +16,6 @@ class DetailInteractorState {
 
     sealed class MyListState {
         data class Success(val data: MooviesDataSimplified?) : MyListState()
+        object Error : MyListState()
     }
 }

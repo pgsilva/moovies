@@ -1,12 +1,8 @@
 package com.dojo.moovies.ui.home
 
-import android.widget.ImageView
-import com.dojo.moovies.ui.TmdbImageSize
-import com.dojo.moovies.ui.loadFromTMDBApi
-
 object HomeCoverLoader {
 
-    private val COVERS = listOf(
+    val COVERS = listOf(
         "8oPHgn8PLJwSYrNjDjUcJeK0s2m.jpg",
         "rBF8wVQN8hTWHspVZBlI3h7HZJ.jpg",
         "/5Iw7zQTHVRBOYpA0V6z0yypOPZh.jpg",
@@ -20,9 +16,5 @@ object HomeCoverLoader {
         "/rkB4LyZHo1NHXFEDHl9vSD9r1lI.jpg",
         "/79ytfhiSukl0R4Hg5yLPILTdUXT.jpg"
     )
-
-
-    fun loadCoverImage(view: ImageView) {
-        view.loadFromTMDBApi(COVERS.random(), TmdbImageSize.COVER_SIZE)
-    }
+    
 }

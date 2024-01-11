@@ -27,37 +27,31 @@ class DetailViewModel(
 
     val streamingBuy = _streamingBuy.asStateFlow()
 
-    fun loadDetail(map: Pair<Int, String>): Flow<MooviesDataSimplified?> = flow {
-        interactor.load(map).collect { state ->
-            if (state is DetailInteractorState.DetailState.Success)
-                emit(state.data)
-        }
+    suspend fun loadDetail(map: Pair<Int, String>): MooviesDataSimplified? {
+        val state = interactor.load(map)
+        return if (state is DetailInteractorState.DetailState.Success)
+            state.data
+        else null
     }
 
     fun loadStreaming(map: Pair<Int, String>) {
         viewModelScope.launch {
-            interactor.loadStreaming(map)
-                .flowOn(Dispatchers.IO)
-                .collect { state ->
-                    if (state is DetailInteractorState.DetailStreamingListState.Success) {
-                        if (state.data.buy != null)
-                            _streamingBuy.update { state.data.buy }
+            val state = interactor.loadStreaming(map)
+            if (state is DetailInteractorState.DetailStreamingListState.Success) {
+                if (state.data.buy != null)
+                    _streamingBuy.update { state.data.buy }
 
-                        if (state.data.flatRate != null)
-                            _streamingList.update { state.data.flatRate }
-                    }
-                }
+                if (state.data.flatRate != null)
+                    _streamingList.update { state.data.flatRate }
+            }
         }
     }
 
-    fun checkIsMyList(detailMap: Pair<Int, String>): Flow<MooviesDataSimplified?> = flow {
-        interactor.loadMyListByIdAndMediaType(detailMap)
-            .flowOn(Dispatchers.IO)
-            .collect { myList ->
-                if (myList is DetailInteractorState.MyListState.Success) {
-                    emit(myList.data)
-                }
-            }
+    suspend fun checkIsMyList(detailMap: Pair<Int, String>): MooviesDataSimplified? {
+        val state = interactor.loadMyListByIdAndMediaType(detailMap)
+        return if (state is DetailInteractorState.MyListState.Success) {
+            state.data
+        } else null
     }
 
     fun saveInMyList(mooviesDataSimplified: MooviesDataSimplified) {

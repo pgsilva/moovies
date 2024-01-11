@@ -12,7 +12,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_poster"
         android:layout_width="120dp"
-        android:layout_height="155dp"
+        android:layout_height="160dp"
         app:cardCornerRadius="5dp"
         app:cardElevation="3dp"
         android:layout_margin="4dp"
