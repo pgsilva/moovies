@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:fillViewport="true"
     android:orientation="vertical"
     android:paddingBottom="20dp"
@@ -44,15 +45,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:text="@string/str_title_my_list"
+                android:text="@string/bt_my_lista"
                 android:textAllCaps="false"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="@color/white"
+                android:visibility="gone"
                 app:cornerRadius="20dp"
                 app:icon="@drawable/ic_check"
-                app:iconTint="?attr/colorOnBackground"
-                app:layout_constraintTop_toTopOf="parent"
+                app:iconTint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:strokeColor="?attr/colorOnBackground" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/white" />
 
             <Button
                 android:id="@+id/bt_my_list"
@@ -60,15 +62,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:text="@string/str_title_my_list"
+                android:text="@string/bt_my_lista"
                 android:textAllCaps="false"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="@color/white"
+                android:visibility="gone"
                 app:cornerRadius="20dp"
                 app:icon="@drawable/ic_add"
-                app:iconTint="?attr/colorOnBackground"
-                app:layout_constraintTop_toTopOf="parent"
+                app:iconTint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:strokeColor="?attr/colorOnBackground" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/white" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -81,7 +84,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:paddingBottom="40dp">
 
             <ImageView
@@ -89,46 +92,46 @@
                 android:layout_width="match_parent"
                 android:layout_height="600dp"
                 android:alpha="1.0"
+                android:contentDescription="@string/str_poster_cover"
                 android:scaleType="centerCrop"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="0dp"
-                tools:src="@drawable/img_poster_movie"
-                android:contentDescription="@string/str_poster_cover" />
+                tools:src="@drawable/img_poster_movie" />
 
 
-<!--            <androidx.cardview.widget.CardView-->
-<!--                android:id="@+id/cv_detail_poster"-->
-<!--                android:layout_width="150dp"-->
-<!--                android:layout_height="205dp"-->
-<!--                android:layout_marginStart="20dp"-->
-<!--                android:layout_marginTop="20dp"-->
-<!--                app:cardCornerRadius="5dp"-->
-<!--                app:cardElevation="3dp"-->
-<!--                app:layout_constraintBottom_toBottomOf="@id/iv_cover_poster"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/iv_cover_poster">-->
+            <!--            <androidx.cardview.widget.CardView-->
+            <!--                android:id="@+id/cv_detail_poster"-->
+            <!--                android:layout_width="150dp"-->
+            <!--                android:layout_height="205dp"-->
+            <!--                android:layout_marginStart="20dp"-->
+            <!--                android:layout_marginTop="20dp"-->
+            <!--                app:cardCornerRadius="5dp"-->
+            <!--                app:cardElevation="3dp"-->
+            <!--                app:layout_constraintBottom_toBottomOf="@id/iv_cover_poster"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/iv_cover_poster">-->
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/iv_detail_poster"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:scaleType="centerCrop"-->
-<!--                    tools:src="@drawable/img_poster_movie" />-->
-<!--            </androidx.cardview.widget.CardView>-->
+            <!--                <ImageView-->
+            <!--                    android:id="@+id/iv_detail_poster"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="match_parent"-->
+            <!--                    android:scaleType="centerCrop"-->
+            <!--                    tools:src="@drawable/img_poster_movie" />-->
+            <!--            </androidx.cardview.widget.CardView>-->
 
             <TextView
                 android:id="@+id/tv_detail_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="20dp"
                 android:layout_marginVertical="10dp"
                 android:ellipsize="end"
                 android:maxLines="3"
+                android:paddingHorizontal="20dp"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_cover_poster"
                 tools:text="Homem Aranha Homem Aranha Homem Aranha" />
 
@@ -138,8 +141,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="8dp"
                 android:layout_marginEnd="20dp"
+
+                android:paddingHorizontal="20dp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@id/tv_detail_name"
+                app:layout_constraintStart_toStartOf="@id/tv_detail_name"
                 app:layout_constraintTop_toBottomOf="@id/tv_detail_name"
                 tools:text="01/06/2023" />
 
@@ -150,6 +155,7 @@
                 android:layout_marginVertical="8dp"
                 android:layout_marginStart="20dp"
                 android:maxLines="2"
+                android:textColor="?attr/colorOnBackground"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -158,28 +164,68 @@
 
 
             <TextView
-                android:id="@+id/tv_detail_overview"
+                android:id="@+id/tv_label_overview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="12dp"
+                android:text="@string/str_detail_label_overview"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_genre_list" />
+
+
+            <TextView
+                android:id="@+id/tv_detail_overview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_genre_list"
+                app:layout_constraintTop_toBottomOf="@id/tv_label_overview"
                 tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consequat ante at turpis luctus pretium. Etiam ut orci nibh. Phasellus congue sed urna gravida eleifend. Proin ut viverra tortor, ut ornare ligula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla a est maximus, bibendum mauris sit amet, venenatis elit. " />
+
+            <TextView
+                android:id="@+id/tv_label_videos"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/str_detail_label_videos"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_overview" />
+
+            <WebView
+                android:id="@+id/youtube_web_view"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:visibility="gone"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="8dp"
+                android:background="@drawable/card_outline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_label_videos" />
 
             <TextView
                 android:id="@+id/tv_label_streaming"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="10dp"
+                android:layout_marginVertical="12dp"
                 android:text="@string/str_detail_label_streaming"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_overview" />
+                app:layout_constraintTop_toBottomOf="@id/youtube_web_view" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_stream"
@@ -200,7 +246,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="10dp"
+                android:layout_marginVertical="12dp"
                 android:text="@string/str_detail_label_buy"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="16sp"

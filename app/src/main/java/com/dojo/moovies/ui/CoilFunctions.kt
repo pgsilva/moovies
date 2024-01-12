@@ -30,6 +30,6 @@ fun ImageView.tryLoad(url: String? = null) {
     load(url) {
         fallback(R.drawable.img_no_signal_error)
         error(R.drawable.img_no_signal_error)
-        placeholder(R.drawable.card_outline)
+        placeholder(R.drawable.gif_loading_image_movie)
     }
 }

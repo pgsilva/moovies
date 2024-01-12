@@ -1,6 +1,7 @@
 package com.dojo.moovies.interactor.state
 
 import com.dojo.moovies.core.domain.MooviesDataSimplified
+import com.dojo.moovies.core.domain.MooviesTrailerData
 import com.dojo.moovies.core.domain.MooviesWatchProviders
 
 class DetailInteractorState {
@@ -16,5 +17,11 @@ class DetailInteractorState {
 
     sealed class MyListState {
         data class Success(val data: MooviesDataSimplified?) : MyListState()
+        object Error : MyListState()
+    }
+
+    sealed class TrailerState {
+        data class Success(val data: MooviesTrailerData?) : TrailerState()
+        object Error : TrailerState()
     }
 }

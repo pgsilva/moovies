@@ -49,23 +49,17 @@ class HomeViewModel(
 
     private fun loadDiscoverMovies() {
         viewModelScope.launch {
-            interactor.loadDiscoverMovies()
-                .flowOn(Dispatchers.IO)
-                .collect { state ->
-                    if (state is HomeInteractorState.HomeLoadState.Success)
-                        _discoverMovieList.update { state.data }
-                }
+            val state = interactor.loadDiscoverMovies()
+            if (state is HomeInteractorState.HomeLoadState.Success)
+                _discoverMovieList.update { state.data }
         }
     }
 
     private fun loadDiscoverTv() {
         viewModelScope.launch {
-            interactor.loadDiscoverTv()
-                .flowOn(Dispatchers.IO)
-                .collect { state ->
-                    if (state is HomeInteractorState.HomeLoadState.Success)
-                        _discoverTvList.update { state.data }
-                }
+            val state = interactor.loadDiscoverTv()
+            if (state is HomeInteractorState.HomeLoadState.Success)
+                _discoverTvList.update { state.data }
         }
     }
 
@@ -82,26 +76,21 @@ class HomeViewModel(
 
     private fun loadPopularMovies() {
         viewModelScope.launch {
-            interactor.loadPopularMovies()
-                .flowOn(Dispatchers.IO)
-                .collect { state ->
-                    if (state is HomeInteractorState.HomeLoadState.Success)
-                        _popularMovieList.update { state.data }
-                }
+            val state = interactor.loadPopularMovies()
+            if (state is HomeInteractorState.HomeLoadState.Success)
+                _popularMovieList.update { state.data }
+
         }
     }
 
     private fun loadPopularTv() {
         viewModelScope.launch {
-            interactor.loadPopularTv()
-                .flowOn(Dispatchers.IO)
-                .collect { state ->
-                    if (state is HomeInteractorState.HomeLoadState.Success)
-                        _popularTvList.update { state.data }
-                }
+            val state = interactor.loadPopularTv()
+            if (state is HomeInteractorState.HomeLoadState.Success)
+                _popularTvList.update { state.data }
+
         }
     }
-
 
 
 }
