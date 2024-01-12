@@ -2,12 +2,16 @@ package com.dojo.moovies.ui.detail
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -15,10 +19,12 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dojo.moovies.R
 import com.dojo.moovies.core.domain.MooviesDataSimplified
+import com.dojo.moovies.core.domain.MooviesWatchProvider
+import com.dojo.moovies.core.domain.YOUTUBE_EMBED_URL
 import com.dojo.moovies.databinding.FragmentDetailBinding
 import com.dojo.moovies.ui.TmdbImageSize
 import com.dojo.moovies.ui.detail.adapter.StreamingBuyAdapter
-import com.dojo.moovies.ui.detail.adapter.StreamingChanneAdapter
+import com.dojo.moovies.ui.detail.adapter.StreamingChannelAdapter
 import com.dojo.moovies.ui.loadFromTMDBApi
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -27,7 +33,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private lateinit var binding: FragmentDetailBinding
 
-    private lateinit var streamingChanneAdapter: StreamingChanneAdapter
+    private lateinit var streamingChanneAdapter: StreamingChannelAdapter
 
     private lateinit var streamingBuyAdapter: StreamingBuyAdapter
 
@@ -53,9 +59,13 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     }
 
     private fun initDependencies() {
-        streamingChanneAdapter = StreamingChanneAdapter()
+        streamingChanneAdapter = StreamingChannelAdapter {
+            initLinkAction(it)
+        }
 
-        streamingBuyAdapter = StreamingBuyAdapter()
+        streamingBuyAdapter = StreamingBuyAdapter {
+            initLinkAction(it)
+        }
     }
 
     private fun initComponents() {
@@ -68,7 +78,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         initObservables()
 
         loadDetailInfo(detailMap)
-        loadStreaminInfo(detailMap)
     }
 
     private fun initButtonsMyList(detail: MooviesDataSimplified) {
@@ -102,6 +111,35 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     }
 
+    private fun loadTrailer(detailMap: Pair<Int, String>) {
+        lifecycleScope.launch {
+            viewModel.loadTrailer(detailMap).let { trailer ->
+                trailer?.let {
+                    val ytbView = binding.youtubeWebView
+
+                    ytbView.webViewClient = object : WebViewClient() {
+
+                        override fun shouldOverrideUrlLoading(
+                            view: WebView?,
+                            url: String
+                        ): Boolean {
+                            return false
+                        }
+                    }
+
+                    ytbView.settings.javaScriptEnabled = true
+                    ytbView.settings.loadWithOverviewMode = true
+                    ytbView.settings.useWideViewPort = true
+
+                    ytbView.visibility = VISIBLE
+                    binding.tvLabelVideos.visibility = VISIBLE
+
+                    ytbView.loadUrl(YOUTUBE_EMBED_URL + trailer.key)
+                }
+            }
+        }
+    }
+
     private fun loadDetailInfo(detailMap: Pair<Int, String>) {
         verifyButtomMyList(detailMap)
 
@@ -119,6 +157,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     binding.tvDate.text = detail.releaseDate
 
                     initButtonsMyList(detail)
+                    loadStreaminInfo(detailMap)
+                    loadTrailer(detailMap)
                 }
 
             }
@@ -133,14 +173,16 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private fun initStreamingList() {
         binding.rvStream.let { rv ->
             rv.adapter = streamingChanneAdapter
-            rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            rv.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
     }
 
     private fun initStreamingBuyList() {
         binding.rvStreamBuy.let { rv ->
             rv.adapter = streamingBuyAdapter
-            rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            rv.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
     }
 
@@ -191,7 +233,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
 
     private fun changeVisibilityWithAnimation(visible: Button, gone: Button) {
-        val shortAnimationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
+        val shortAnimationDuration =
+            resources.getInteger(android.R.integer.config_shortAnimTime)
 
         visible.apply {
             alpha = 0f
@@ -210,6 +253,14 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     gone.visibility = GONE
                 }
             })
+    }
+
+    private fun initLinkAction(it: MooviesWatchProvider) {
+        val viewIntent = Intent(
+            "android.intent.action.VIEW",
+            Uri.parse(it.link)
+        )
+        startActivity(viewIntent)
     }
 
 }

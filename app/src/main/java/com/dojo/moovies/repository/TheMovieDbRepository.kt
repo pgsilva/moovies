@@ -1,21 +1,21 @@
 package com.dojo.moovies.repository
 
-import android.util.Log
 import com.dojo.moovies.core.domain.MooviesDataSimplified
+import com.dojo.moovies.core.domain.MooviesTrailerData
 import com.dojo.moovies.core.domain.MooviesWatchProviders
-import com.dojo.moovies.interactor.state.DetailInteractorState
+import com.dojo.moovies.core.domain.TMDB_TRAILER_API_TRAILER_VALUE
+import com.dojo.moovies.core.domain.TMDB_TRAILER_API_YOUTUBE_VALUE
 import com.dojo.moovies.out.api.TheMovieDbApi
+import com.dojo.moovies.out.api.data.tmdb.Detail
 import com.dojo.moovies.out.api.data.tmdb.DiscoverMovieResponse
 import com.dojo.moovies.out.api.data.tmdb.DiscoverTvResponse
-import com.dojo.moovies.out.api.data.tmdb.Detail
 import com.dojo.moovies.out.api.data.tmdb.MultiResponse
 import com.dojo.moovies.out.api.data.tmdb.StreamResponse
+import com.dojo.moovies.out.api.data.tmdb.TrailerResponse
 import com.dojo.moovies.repository.mapper.RetrofitCommons.extractResponse
 import com.dojo.moovies.repository.mapper.toDomain
 import com.dojo.moovies.repository.mapper.toProviderDomain
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
 class TheMovieDbRepository(
@@ -111,5 +111,38 @@ class TheMovieDbRepository(
 
         return response.results.br?.toProviderDomain()
     }
+
+    suspend fun getTrailerMovie(id: Int): MooviesTrailerData? {
+        val response: TrailerResponse
+
+        withContext(Dispatchers.IO) {
+            response = api.getTrailerMovie(id).extractResponse()
+        }
+
+        val videos = response.results.filter {
+            (it.site == TMDB_TRAILER_API_YOUTUBE_VALUE) and
+                    (it.type == TMDB_TRAILER_API_TRAILER_VALUE) and
+                    (it.official)
+        }
+
+        return videos.firstOrNull()?.toDomain()
+    }
+
+    suspend fun getTrailerTv(id: Int): MooviesTrailerData? {
+        val response: TrailerResponse
+
+        withContext(Dispatchers.IO) {
+            response = api.getTrailerTv(id).extractResponse()
+        }
+
+        val videos = response.results.filter {
+            (it.site == TMDB_TRAILER_API_YOUTUBE_VALUE) and
+                    (it.type == TMDB_TRAILER_API_TRAILER_VALUE) and
+                    (it.official)
+        }
+
+        return videos.firstOrNull()?.toDomain()
+    }
+
 
 }

@@ -3,15 +3,13 @@ package com.dojo.moovies.ui.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dojo.moovies.core.domain.MooviesDataSimplified
+import com.dojo.moovies.core.domain.MooviesTrailerData
 import com.dojo.moovies.core.domain.MooviesWatchProvider
 import com.dojo.moovies.interactor.DetailInteractor
 import com.dojo.moovies.interactor.state.DetailInteractorState
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -64,5 +62,12 @@ class DetailViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             interactor.removeFromMyList(mooviesDataSimplified)
         }
+    }
+
+    suspend fun loadTrailer(map: Pair<Int, String>): MooviesTrailerData? {
+        val state = interactor.loadTrailer(map)
+        return if (state is DetailInteractorState.TrailerState.Success)
+            state.data
+        else null
     }
 }

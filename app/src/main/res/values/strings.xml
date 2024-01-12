@@ -16,4 +16,6 @@
     <string name="str_app_initial">M</string>
     <string name="str_poster_cover">Poster do filme ou série</string>
     <string name="title_search_noting_found">Nada Encontrado…</string>
+    <string name="str_detail_label_videos">Trailer</string>
+    <string name="str_detail_label_overview">Overview\n</string>
 </resources>
