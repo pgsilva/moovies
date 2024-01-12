@@ -5,11 +5,8 @@ import com.dojo.moovies.core.domain.MooviesDataSimplified
 import com.dojo.moovies.core.domain.MooviesMediaType
 import com.dojo.moovies.interactor.state.DetailInteractorState
 import com.dojo.moovies.interactor.state.DetailInteractorState.DetailStreamingListState
-import com.dojo.moovies.interactor.state.HomeInteractorState
 import com.dojo.moovies.repository.MyListRepository
 import com.dojo.moovies.repository.TheMovieDbRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 
 class DetailInteractor(
     private val apiRepository: TheMovieDbRepository,
@@ -73,6 +70,25 @@ class DetailInteractor(
             DetailInteractorState.MyListState.Error
         }
 
+    suspend fun loadTrailer(map: Pair<Int, String>): DetailInteractorState.TrailerState = try {
+        when (MooviesMediaType.valueFromString(map.second)) {
+            MooviesMediaType.MOVIE -> {
+                val trailer = apiRepository.getTrailerMovie(map.first)
+                DetailInteractorState.TrailerState.Success(trailer)
+            }
+
+            MooviesMediaType.TV -> {
+                val trailer = apiRepository.getTrailerTv(map.first)
+                DetailInteractorState.TrailerState.Success(trailer)
+            }
+        }
+    } catch (e: Exception) {
+        Log.e(
+            "MOOVIES-DATABASE",
+            "Api Video List Error, response is not successful: ${e.printStackTrace()}"
+        )
+        DetailInteractorState.TrailerState.Error
+    }
 
     suspend fun saveInMyList(mooviesDataSimplified: MooviesDataSimplified) {
         myListRepository.upsert(mooviesDataSimplified)

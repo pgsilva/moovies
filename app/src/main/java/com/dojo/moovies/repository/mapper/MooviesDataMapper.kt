@@ -3,10 +3,12 @@ package com.dojo.moovies.repository.mapper
 import android.annotation.SuppressLint
 import com.dojo.moovies.core.domain.MooviesDataSimplified
 import com.dojo.moovies.core.domain.MooviesMediaType
+import com.dojo.moovies.core.domain.MooviesTrailerData
 import com.dojo.moovies.core.domain.MooviesWatchProvider
 import com.dojo.moovies.core.domain.MooviesWatchProviders
 import com.dojo.moovies.out.api.data.tmdb.Detail
 import com.dojo.moovies.out.api.data.tmdb.StreamProvider
+import com.dojo.moovies.out.api.data.tmdb.TrailersContent
 import com.dojo.moovies.out.db.entity.MyListEntity
 import java.text.SimpleDateFormat
 import java.util.UUID
@@ -63,7 +65,7 @@ internal fun MyListEntity.toDomain(): MooviesDataSimplified {
     )
 }
 
-internal fun MooviesDataSimplified.toEntity(): MyListEntity{
+internal fun MooviesDataSimplified.toEntity(): MyListEntity {
     return MyListEntity(
         mooviesId = UUID.randomUUID().toString(),
         id = this.id,
@@ -82,15 +84,18 @@ internal fun MooviesDataSimplified.toEntity(): MyListEntity{
 internal fun StreamProvider.toProviderDomain(): MooviesWatchProviders {
     val buy = this.buy?.map {
         MooviesWatchProvider(
+            this.link,
             it.logoPath,
             it.providerId,
             it.providerName,
-            it.displayPriority
-        )
+            it.displayPriority,
+
+            )
     }
 
     val flatRate = this.flatRate?.map {
         MooviesWatchProvider(
+            this.link,
             it.logoPath,
             it.providerId,
             it.providerName,
@@ -100,6 +105,17 @@ internal fun StreamProvider.toProviderDomain(): MooviesWatchProviders {
 
     return MooviesWatchProviders(
         buy = buy,
-        flatRate = flatRate
+        flatRate = flatRate,
+    )
+}
+
+internal fun TrailersContent.toDomain(): MooviesTrailerData {
+    return MooviesTrailerData(
+        name = this.name,
+        key = this.key,
+        site = this.site,
+        type = this.type,
+        official = this.official,
+        id = this.id
     )
 }

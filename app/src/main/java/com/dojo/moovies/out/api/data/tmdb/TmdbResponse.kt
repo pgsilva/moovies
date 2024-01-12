@@ -39,3 +39,8 @@ data class StreamResponse(
     val id: Int,
     val results: StreamProvidersBr,
 )
+
+data class TrailerResponse(
+    val id: Int,
+    val results: List<TrailersContent>,
+)

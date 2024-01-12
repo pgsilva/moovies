@@ -9,16 +9,21 @@ import com.dojo.moovies.ui.TmdbImageSize
 import com.dojo.moovies.ui.loadFromTMDBApi
 
 class StreamingBuyAdapter(
+    private val onSelect: (MooviesWatchProvider) -> Unit
 ) : RecyclerView.Adapter<StreamingBuyAdapter.ViewHolder>() {
 
     private val dataset = mutableListOf<MooviesWatchProvider>()
 
-    inner class ViewHolder(binding: ItemStreamListBinding) :
+    inner class ViewHolder(private val binding: ItemStreamListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         private val logo = binding.ivLogo
-        fun bind(item: MooviesWatchProvider) {
+        fun bind(item: MooviesWatchProvider, onSelect: (MooviesWatchProvider) -> Unit) {
             logo.loadFromTMDBApi(item.logoPath, TmdbImageSize.POSTER_COVER_SIZE)
+
+            binding.root.setOnClickListener {
+                onSelect(item)
+            }
 
         }
     }
@@ -36,7 +41,7 @@ class StreamingBuyAdapter(
         }
 
     override fun onBindViewHolder(holder: StreamingBuyAdapter.ViewHolder, position: Int) =
-        holder.bind(dataset[position])
+        holder.bind(dataset[position], onSelect)
 
     override fun getItemCount(): Int = dataset.size
 
