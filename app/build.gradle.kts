@@ -97,7 +97,8 @@ dependencies {
     implementation("io.insert-koin:koin-core:$koinVersion")
     implementation("io.insert-koin:koin-android:$koinVersion")
 
-
+    //Facebook Shimmer
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
 
     //Retrofit
     val retrofitVersion = "2.9.0"

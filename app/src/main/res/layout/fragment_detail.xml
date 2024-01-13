@@ -78,13 +78,23 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
+    <include
+        android:visibility="invisible"
+        android:id="@+id/is_detail_fragment"
+        layout="@layout/fragment_detail_shimmer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
     <ScrollView
+        android:id="@+id/sv_detail_content"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:paddingBottom="40dp">
 
             <ImageView
@@ -212,7 +222,8 @@
                 android:background="@drawable/card_outline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_label_videos" />
+                app:layout_constraintTop_toBottomOf="@id/tv_label_videos"
+                tools:ignore="WebViewLayout" />
 
             <TextView
                 android:id="@+id/tv_label_streaming"
