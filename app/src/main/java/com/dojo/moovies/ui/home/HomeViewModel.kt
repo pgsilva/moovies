@@ -3,20 +3,19 @@ package com.dojo.moovies.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dojo.moovies.core.domain.MooviesDataSimplified
-import com.dojo.moovies.interactor.HomeIntercator
+import com.dojo.moovies.interactor.HomeInteractor
 import com.dojo.moovies.interactor.state.HomeInteractorState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.getAndUpdate
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 private const val TOTAL_LISTS_TO_LOAD_FROM_API = 4
 
 class HomeViewModel(
-    private val interactor: HomeIntercator
+    private val interactor: HomeInteractor
 ) : ViewModel() {
 
     private val _discoverMovieList = MutableStateFlow(emptyList<MooviesDataSimplified>())

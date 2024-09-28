@@ -2,7 +2,7 @@ package com.dojo.moovies.core.di
 
 import androidx.room.Room
 import com.dojo.moovies.interactor.DetailInteractor
-import com.dojo.moovies.interactor.HomeIntercator
+import com.dojo.moovies.interactor.HomeInteractor
 import com.dojo.moovies.interactor.MyListInteractor
 import com.dojo.moovies.interactor.SearchInteractor
 import com.dojo.moovies.out.api.TheMovieDbApi
@@ -51,8 +51,8 @@ val repositoryModule = module {
 
 val homeViewModel = module {
     viewModel {
-        val homeIntercator = HomeIntercator(get(), get())
-        HomeViewModel(homeIntercator)
+        val homeInteractor = HomeInteractor(get(), get())
+        HomeViewModel(homeInteractor)
     }
 }
 
