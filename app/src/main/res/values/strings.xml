@@ -9,9 +9,11 @@
     <string name="str_title_header_my_list">My Moovies</string>
     <string name="hint_search_text_input_layout">Pesquise por filmes ou séries …</string>
     <string name="hint_search_text_input_my_list">Pesquise em sua list …</string>
-    <string name="str_detail_label_streaming">Assista em</string>
-    <string name="str_detail_label_buy">Disponível para compra em</string>
+    <string name="str_detail_label_streaming">Assista</string>
+    <string name="str_detail_label_buy">Alugue</string>
     <string name="bt_my_lista">Minha Lista</string>
+    <string name="bt_watched">Assisti</string>
+    <string name="bt_not_watched">Não Assisti</string>
     <string name="stre_btn_search">Botão Pesquisar</string>
     <string name="str_app_initial">M</string>
     <string name="str_poster_cover">Poster do filme ou série</string>
@@ -19,4 +21,5 @@
     <string name="str_detail_label_videos">Trailer</string>
     <string name="str_detail_label_overview">Overview\n</string>
     <string name="banner_ad_unit_id">ca-app-pub-5942000979469254/3861152790</string>
+    <string name="str_title_similar">Veja também</string>
 </resources>
