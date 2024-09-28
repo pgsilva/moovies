@@ -7,13 +7,13 @@ import com.dojo.moovies.repository.TheMovieDbRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class HomeIntercator(
+class HomeInteractor(
     private val apiRepository: TheMovieDbRepository,
     private val dbRepository: MyListRepository
 ) {
 
     suspend fun loadDiscoverMovies(): HomeLoadState = try {
-        apiRepository.getDiscoverMovies().let {
+        apiRepository.getDiscoverMovies(page = 1).let {
             when {
                 it.isNotEmpty() -> HomeLoadState.Success(it)
                 else -> HomeLoadState.Error
@@ -28,7 +28,7 @@ class HomeIntercator(
     }
 
     suspend fun loadDiscoverTv(): HomeLoadState = try {
-        apiRepository.getDiscoverTv().let {
+        apiRepository.getDiscoverTv(page = 1).let {
             when {
                 it.isNotEmpty() -> HomeLoadState.Success(it)
                 else -> HomeLoadState.Error
@@ -51,7 +51,7 @@ class HomeIntercator(
 
     suspend fun loadPopularMovies(
     ): HomeLoadState = try {
-        apiRepository.getPopularMovies().let {
+        apiRepository.getPopularMovies(page = 1).let {
             when {
                 it.isNotEmpty() -> HomeLoadState.Success(it)
                 else -> HomeLoadState.Error
@@ -67,7 +67,7 @@ class HomeIntercator(
 
     suspend fun loadPopularTv(
     ): HomeLoadState = try {
-        apiRepository.getPopularTv().let {
+        apiRepository.getPopularTv(1).let {
             when {
                 it.isNotEmpty() -> HomeLoadState.Success(it)
                 else -> HomeLoadState.Error

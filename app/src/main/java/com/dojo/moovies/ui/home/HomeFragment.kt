@@ -22,8 +22,10 @@ import com.dojo.moovies.ui.home.adapter.PopularMovieAdapter
 import com.dojo.moovies.ui.home.adapter.PopularTvAdapter
 import com.dojo.moovies.ui.home.adapter.PreviewMyListAdapter
 import com.dojo.moovies.ui.loadFromTMDBApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.lang.Thread.sleep
 
 internal class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -88,6 +90,8 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun initComponents() {
+        initLoadingShimmer()
+
         initSearchButton()
         initMyListButton()
         initDiscoverMovieList()
@@ -96,15 +100,17 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
         initPopularMovieList()
         initPopularTvList()
         initObservables()
+
     }
 
     private fun initObservables() {
-
         observableDiscoverMovie()
         observableDiscoverTv()
         observablePreviewMyList()
         observablePopularMovie()
         observablePopularTv()
+
+        stopLoadingShimmer()
     }
 
 
@@ -203,5 +209,21 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
         )
         findNavController().navigate(direction)
     }
+
+    private fun stopLoadingShimmer() = lifecycleScope.launch {
+        viewModel.allDataLoad.collect {
+            if (it) {
+                binding.isHomeFragment.root.visibility = GONE
+                binding.svHomeContent.visibility = VISIBLE
+            }
+        }
+    }
+
+
+    private fun initLoadingShimmer() {
+        binding.svHomeContent.visibility = GONE
+        binding.isHomeFragment.root.visibility = VISIBLE
+    }
+
 
 }

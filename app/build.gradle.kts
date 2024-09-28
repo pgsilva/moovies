@@ -97,7 +97,8 @@ dependencies {
     implementation("io.insert-koin:koin-core:$koinVersion")
     implementation("io.insert-koin:koin-android:$koinVersion")
 
-
+    //Facebook Shimmer
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
 
     //Retrofit
     val retrofitVersion = "2.9.0"
@@ -116,6 +117,11 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
     implementation("androidx.navigation:navigation-dynamic-features-fragment:$navVersion")
     implementation("androidx.navigation:navigation-compose:$navVersion")
+
+    //Google Ads
+    val adsVersion = "23.3.0"
+    implementation("com.google.android.gms:play-services-ads:$adsVersion")
+    implementation("com.google.android.gms:play-services-ads-lite:$adsVersion")
 
 
     //Tests

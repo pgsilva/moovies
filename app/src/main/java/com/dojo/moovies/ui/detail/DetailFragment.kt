@@ -26,6 +26,7 @@ import com.dojo.moovies.ui.TmdbImageSize
 import com.dojo.moovies.ui.detail.adapter.StreamingBuyAdapter
 import com.dojo.moovies.ui.detail.adapter.StreamingChannelAdapter
 import com.dojo.moovies.ui.loadFromTMDBApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -73,6 +74,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
         val detailMap = args.id to args.mediaType
 
+        initLoadingShimmer()
         initStreamingList()
         initStreamingBuyList()
         initObservables()
@@ -152,17 +154,35 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     )
 
                     binding.tvDetailName.text = detail.name
-                    binding.tvDetailOverview.text = detail.overview
+                    if (detail.overview.isBlank())
+                        binding.tvLabelOverview.visibility = GONE
+                    else {
+                        binding.tvLabelOverview.visibility = VISIBLE
+                        binding.tvDetailOverview.text = detail.overview
+                    }
                     binding.tvGenreList.text = detail.genreList
                     binding.tvDate.text = detail.releaseDate
 
                     initButtonsMyList(detail)
                     loadStreaminInfo(detailMap)
                     loadTrailer(detailMap)
+
+                    stopLoadingShimmer()
                 }
 
             }
         }
+    }
+
+    private fun stopLoadingShimmer() {
+        binding.isDetailFragment.root.visibility = GONE
+        binding.svDetailContent.visibility = VISIBLE
+    }
+
+    private fun initLoadingShimmer() {
+        binding.svDetailContent.visibility = GONE
+        binding.isDetailFragment.root.visibility = VISIBLE
+
     }
 
     private fun initObservables() {

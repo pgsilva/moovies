@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sf_detail_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    tools:duration="800">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="580dp"
+            android:background="@color/shimmer_background"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/shimmer_background" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="18dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/shimmer_background"
+            android:paddingHorizontal="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/shimmer_background"
+            android:paddingHorizontal="20dp" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="18dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/shimmer_background"
+            android:paddingHorizontal="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/shimmer_background"
+            android:paddingHorizontal="20dp" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="18dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/shimmer_background"
+            android:paddingHorizontal="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/shimmer_background"
+            android:paddingHorizontal="20dp" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="18dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/shimmer_background"
+            android:paddingHorizontal="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/shimmer_background"
+            android:paddingHorizontal="20dp" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="18dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/shimmer_background"
+            android:paddingHorizontal="20dp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/shimmer_background"
+            android:paddingHorizontal="20dp" />
+
+    </LinearLayout>
+
+</com.facebook.shimmer.ShimmerFrameLayout>
