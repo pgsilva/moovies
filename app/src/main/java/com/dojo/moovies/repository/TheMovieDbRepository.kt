@@ -17,26 +17,31 @@ import com.dojo.moovies.repository.mapper.toDomain
 import com.dojo.moovies.repository.mapper.toProviderDomain
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlin.random.Random
 
 class TheMovieDbRepository(
     private val api: TheMovieDbApi
 ) {
 
-    suspend fun getDiscoverMovies(): List<MooviesDataSimplified> {
+    suspend fun getDiscoverMovies(page: Int): List<MooviesDataSimplified> {
         val response: DiscoverMovieResponse
 
         withContext(Dispatchers.IO) {
-            response = api.getDiscoverMovies().extractResponse()
+            response = api.getDiscoverMovies(
+                page = page
+            ).extractResponse()
         }
 
         return response.results.map { it.toDomain() }
     }
 
-    suspend fun getDiscoverTv(): List<MooviesDataSimplified> {
+    suspend fun getDiscoverTv(page: Int): List<MooviesDataSimplified> {
         val response: DiscoverTvResponse
 
         withContext(Dispatchers.IO) {
-            response = api.getDiscoverTv().extractResponse()
+            response = api.getDiscoverTv(
+                page = page
+            ).extractResponse()
         }
 
         return response.results.map { it.toDomain() }
@@ -52,21 +57,25 @@ class TheMovieDbRepository(
         return response.results.map { it.toDomain() }
     }
 
-    suspend fun getPopularMovies(): List<MooviesDataSimplified> {
+    suspend fun getPopularMovies(page: Int): List<MooviesDataSimplified> {
         val response: DiscoverMovieResponse
 
         withContext(Dispatchers.IO) {
-            response = api.getTopRatedMovies().extractResponse()
+            response = api.getTopRatedMovies(
+                page = page
+            ).extractResponse()
         }
 
         return response.results.map { it.toDomain() }
     }
 
-    suspend fun getPopularTv(): List<MooviesDataSimplified> {
+    suspend fun getPopularTv(page: Int): List<MooviesDataSimplified> {
         val response: DiscoverTvResponse
 
         withContext(Dispatchers.IO) {
-            response = api.getTopRatedTv().extractResponse()
+            response = api.getTopRatedTv(
+                page = page
+            ).extractResponse()
         }
 
         return response.results.map { it.toDomain() }

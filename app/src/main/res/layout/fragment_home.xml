@@ -28,12 +28,12 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="20dp"
                 android:background="@android:color/transparent"
+                android:contentDescription="@string/stre_btn_search"
                 android:padding="4dp"
                 android:src="@drawable/ic_search"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/white"
-                android:contentDescription="@string/stre_btn_search" />
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/tv_initial_moovies"
@@ -54,7 +54,17 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <include
+        android:visibility="invisible"
+        android:id="@+id/is_home_fragment"
+        layout="@layout/fragment_home_shimmer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
     <ScrollView
+        android:visibility="visible"
+        android:id="@+id/sv_home_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -67,11 +77,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="470dp"
                 android:alpha="0.7"
+                android:contentDescription="@string/str_poster_cover"
                 android:scaleType="centerCrop"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="4dp"
-                tools:src="@drawable/img_cover_poster"
-                android:contentDescription="@string/str_poster_cover" />
+                tools:src="@drawable/img_cover_poster" />
 
             <Button
                 android:id="@+id/bt_my_list"
@@ -114,7 +124,7 @@
                 android:id="@+id/tv_discover_movie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginVertical="4dp"
                 android:padding="8dp"
                 android:text="@string/str_title_discover_movie"
                 android:textColor="?attr/colorOnBackground"
@@ -123,7 +133,6 @@
                 app:layout_constraintStart_toStartOf="@id/tv_title_moovies"
                 app:layout_constraintTop_toBottomOf="@id/tv_title_moovies" />
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_discover_movie"
                 android:layout_width="match_parent"
@@ -131,18 +140,18 @@
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="2dp"
                 android:orientation="horizontal"
+                android:layout_gravity="center"
                 app:layoutManager="LinearLayoutManager"
                 app:layout_constraintStart_toStartOf="@id/tv_discover_movie"
                 app:layout_constraintTop_toBottomOf="@id/tv_discover_movie"
-                tools:layout_editor_absoluteX="0dp"
                 tools:listitem="@layout/item_home_list" />
 
             <TextView
                 android:id="@+id/tv_discover_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="2dp"
-                android:padding="4dp"
+                android:layout_marginVertical="4dp"
+                android:padding="8dp"
                 android:text="@string/str_title_discover_tv"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="16sp"
@@ -167,8 +176,8 @@
                 android:id="@+id/tv_my_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="2dp"
-                android:padding="4dp"
+                android:layout_marginVertical="4dp"
+                android:padding="8dp"
                 android:text="@string/str_title_my_list"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="16sp"
@@ -193,8 +202,8 @@
                 android:id="@+id/tv_popular_movie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="2dp"
-                android:padding="4dp"
+                android:layout_marginVertical="4dp"
+                android:padding="8dp"
                 android:text="@string/str_title_popular_movie"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="16sp"
@@ -218,8 +227,8 @@
                 android:id="@+id/tv_popular_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="2dp"
-                android:padding="4dp"
+                android:layout_marginVertical="4dp"
+                android:padding="8dp"
                 android:text="@string/str_title_popular_tv"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="16sp"
