@@ -15,18 +15,20 @@ import android.webkit.WebViewClient
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dojo.moovies.R
 import com.dojo.moovies.core.domain.MooviesDataSimplified
+import com.dojo.moovies.core.domain.MooviesMediaType.Companion.valueFromEnum
 import com.dojo.moovies.core.domain.MooviesWatchProvider
 import com.dojo.moovies.core.domain.YOUTUBE_EMBED_URL
 import com.dojo.moovies.databinding.FragmentDetailBinding
 import com.dojo.moovies.ui.TmdbImageSize
+import com.dojo.moovies.ui.detail.adapter.SimilarAdapter
 import com.dojo.moovies.ui.detail.adapter.StreamingBuyAdapter
 import com.dojo.moovies.ui.detail.adapter.StreamingChannelAdapter
 import com.dojo.moovies.ui.loadFromTMDBApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -37,6 +39,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private lateinit var streamingChanneAdapter: StreamingChannelAdapter
 
     private lateinit var streamingBuyAdapter: StreamingBuyAdapter
+
+    private lateinit var similarAdapter: SimilarAdapter
 
     private val viewModel: DetailViewModel by viewModel()
 
@@ -67,6 +71,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         streamingBuyAdapter = StreamingBuyAdapter {
             initLinkAction(it)
         }
+
+        similarAdapter = SimilarAdapter {
+            initDetailAction(it)
+        }
     }
 
     private fun initComponents() {
@@ -77,6 +85,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         initLoadingShimmer()
         initStreamingList()
         initStreamingBuyList()
+        initSimilarList()
         initObservables()
 
         loadDetailInfo(detailMap)
@@ -105,12 +114,19 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     }
 
 
-    private fun loadStreaminInfo(detailMap: Pair<Int, String>) {
+    private fun loadStreamingInfo(detailMap: Pair<Int, String>) {
         lifecycleScope.launch {
             viewModel.loadStreaming(detailMap)
             initObservables()
         }
 
+    }
+
+    private fun loadSimilarInfo(detailMap: Pair<Int, String>) {
+        lifecycleScope.launch {
+            viewModel.loadSimilar(detailMap)
+            initObservables()
+        }
     }
 
     private fun loadTrailer(detailMap: Pair<Int, String>) {
@@ -143,12 +159,18 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     }
 
     private fun loadDetailInfo(detailMap: Pair<Int, String>) {
-        verifyButtomMyList(detailMap)
+        verifyButtonMyList(detailMap)
 
         lifecycleScope.launch {
             viewModel.loadDetail(detailMap).let { detail ->
                 detail?.let {
+
                     binding.ivCoverPoster.loadFromTMDBApi(
+                        detail.backdropPath,
+                        TmdbImageSize.COVER_SIZE
+                    )
+
+                    binding.ivDetailPoster.loadFromTMDBApi(
                         detail.posterPath,
                         TmdbImageSize.POSTER_SIZE_DETAIL
                     )
@@ -161,11 +183,12 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                         binding.tvDetailOverview.text = detail.overview
                     }
                     binding.tvGenreList.text = detail.genreList
-                    binding.tvDate.text = detail.releaseDate
+                    binding.tvDate.text = "Lançamento: ${detail.releaseDate}"
 
                     initButtonsMyList(detail)
-                    loadStreaminInfo(detailMap)
+                    loadStreamingInfo(detailMap)
                     loadTrailer(detailMap)
+                    loadSimilarInfo(detailMap)
 
                     stopLoadingShimmer()
                 }
@@ -188,6 +211,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private fun initObservables() {
         observableStreamingList()
         observableStreamingBuyList()
+        observableSimilarList()
     }
 
     private fun initStreamingList() {
@@ -201,6 +225,14 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private fun initStreamingBuyList() {
         binding.rvStreamBuy.let { rv ->
             rv.adapter = streamingBuyAdapter
+            rv.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
+    }
+
+    private fun initSimilarList() {
+        binding.rvSimilar.let { rv ->
+            rv.adapter = similarAdapter
             rv.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
@@ -230,7 +262,19 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         }
     }
 
-    private fun verifyButtomMyList(detailMap: Pair<Int, String>) = lifecycleScope.launch {
+    private fun observableSimilarList() = lifecycleScope.launch {
+        viewModel.similar.collect {
+            if (it.isEmpty()) {
+                binding.tvSimilar.visibility = GONE
+            } else {
+                binding.tvSimilar.visibility = VISIBLE
+                similarAdapter.refresh(it)
+
+            }
+        }
+    }
+
+    private fun verifyButtonMyList(detailMap: Pair<Int, String>) = lifecycleScope.launch {
         viewModel.checkIsMyList(detailMap).let { mylist ->
             if (mylist == null) {
                 changeVisibility(
@@ -281,6 +325,14 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             Uri.parse(it.link)
         )
         startActivity(viewIntent)
+    }
+
+    private fun initDetailAction(item: MooviesDataSimplified) {
+        val direction = DetailFragmentDirections.actionFgDetailToFgDetail(
+            item.id.toInt(),
+            valueFromEnum(item.mediaType)
+        )
+        findNavController().navigate(direction)
     }
 
 }

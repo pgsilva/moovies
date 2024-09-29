@@ -189,7 +189,7 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun initMyListButton() {
         binding.btMyList.setOnClickListener {
             findNavController().navigate(
-                R.id.action_fg_home_to_fg_mylist
+                HomeFragmentDirections.actionFgHomeToFgMylist()
             )
         }
     }
@@ -197,7 +197,7 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun initSearchButton() {
         binding.ibSearch.setOnClickListener {
             findNavController().navigate(
-                R.id.action_fg_home_to_fg_search
+                HomeFragmentDirections.actionFgHomeToFgSearch()
             )
         }
     }

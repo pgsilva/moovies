@@ -106,4 +106,21 @@ interface TheMovieDbApi {
         @Query("api_key") apiKey: String = TMDB_API_KEY,
     ): Response<TrailerResponse>
 
+
+    @GET("/3/movie/{movie_id}/similar")
+    suspend fun getSimilarMovie(
+        @Path("movie_id") id: Int,
+        @Query("page") page: Int = TMDB_API_INITIAL_PAGE,
+        @Query("language") language: String = TMDB_API_INITIAL_LANGUAGE,
+        @Query("api_key") apiKey: String = TMDB_API_KEY,
+    ): Response<DiscoverMovieResponse>
+
+    @GET("/3/tv/{tv_id}/similar")
+    suspend fun getSimilarTv(
+        @Path("tv_id") id: Int,
+        @Query("page") page: Int = TMDB_API_INITIAL_PAGE,
+        @Query("language") language: String = TMDB_API_INITIAL_LANGUAGE,
+        @Query("api_key") apiKey: String = TMDB_API_KEY,
+    ): Response<DiscoverTvResponse>
+
 }

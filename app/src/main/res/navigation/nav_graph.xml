@@ -22,7 +22,6 @@
         <action
             android:id="@+id/action_fg_home_to_fg_detail"
             app:destination="@id/fg_detail" />
-
     </fragment>
 
     <fragment
@@ -42,12 +41,19 @@
         android:name="com.dojo.moovies.ui.detail.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" >
+
         <argument
             android:name="id"
             app:argType="integer" />
+
         <argument
             android:name="mediaType"
             app:argType="string" />
+
+        <action
+            android:id="@+id/action_fg_detail_to_fg_detail"
+            app:destination="@id/fg_detail" />
+
     </fragment>
 
     <fragment

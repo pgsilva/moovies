@@ -4,7 +4,7 @@ import android.util.Log
 import com.dojo.moovies.core.domain.MooviesDataSimplified
 import com.dojo.moovies.core.domain.MooviesMediaType
 import com.dojo.moovies.interactor.state.DetailInteractorState
-import com.dojo.moovies.interactor.state.DetailInteractorState.DetailStreamingListState
+import com.dojo.moovies.interactor.state.DetailInteractorState.StreamingListState
 import com.dojo.moovies.repository.MyListRepository
 import com.dojo.moovies.repository.TheMovieDbRepository
 
@@ -34,18 +34,18 @@ class DetailInteractor(
     }
 
 
-    suspend fun loadStreaming(map: Pair<Int, String>): DetailStreamingListState = try {
+    suspend fun loadStreaming(map: Pair<Int, String>): StreamingListState = try {
         when (MooviesMediaType.valueFromString(map.second)) {
             MooviesMediaType.MOVIE -> {
                 val list = apiRepository.getMovieStreaming(map.first)
-                if (list == null) DetailStreamingListState.Error
-                else DetailStreamingListState.Success(list)
+                if (list == null) StreamingListState.Error
+                else StreamingListState.Success(list)
             }
 
             MooviesMediaType.TV -> {
                 val list = apiRepository.getTvStreaming(map.first)
-                if (list == null) DetailStreamingListState.Error
-                else DetailStreamingListState.Success(list)
+                if (list == null) StreamingListState.Error
+                else StreamingListState.Success(list)
             }
         }
     } catch (e: Exception) {
@@ -53,7 +53,7 @@ class DetailInteractor(
             "MOOVIES-THEMOVIEDBAPI",
             "Api Streaming List Error, response is not successful: ${e.printStackTrace()}"
         )
-        DetailStreamingListState.Error
+        StreamingListState.Error
     }
 
     suspend fun loadMyListByIdAndMediaType(detailMap: Pair<Int, String>): DetailInteractorState.MyListState =
@@ -97,6 +97,28 @@ class DetailInteractor(
     suspend fun removeFromMyList(mooviesDataSimplified: MooviesDataSimplified) {
         myListRepository.remove(mooviesDataSimplified)
     }
+
+
+    suspend fun loadSimilar(map: Pair<Int, String>): DetailInteractorState.SimilarListState =
+        try {
+            when (MooviesMediaType.valueFromString(map.second)) {
+                MooviesMediaType.MOVIE -> {
+                    val similarList = apiRepository.getSimilarMovie(map.first, page = 1)
+                    DetailInteractorState.SimilarListState.Success(similarList)
+                }
+
+                MooviesMediaType.TV -> {
+                    val similarList = apiRepository.getSimilarTv(map.first, page = 1)
+                    DetailInteractorState.SimilarListState.Success(similarList)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(
+                "MOOVIES-DATABASE",
+                "Api Similar Error, response is not successful: ${e.printStackTrace()}"
+            )
+            DetailInteractorState.SimilarListState.Error
+        }
 }
 
 

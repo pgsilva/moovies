@@ -13,12 +13,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+
         <ImageView
+            android:id="@+id/sh_cover"
             android:layout_width="match_parent"
-            android:layout_height="580dp"
+            android:layout_height="300dp"
             android:background="@color/shimmer_background"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="0dp" />
+
 
         <TextView
             android:layout_width="match_parent"

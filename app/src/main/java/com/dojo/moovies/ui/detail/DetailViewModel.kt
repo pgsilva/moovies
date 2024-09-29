@@ -25,6 +25,10 @@ class DetailViewModel(
 
     val streamingBuy = _streamingBuy.asStateFlow()
 
+    private val _similar = MutableStateFlow(emptyList<MooviesDataSimplified>())
+
+    val similar = _similar.asStateFlow()
+
     suspend fun loadDetail(map: Pair<Int, String>): MooviesDataSimplified? {
         val state = interactor.load(map)
         return if (state is DetailInteractorState.DetailState.Success)
@@ -35,7 +39,7 @@ class DetailViewModel(
     fun loadStreaming(map: Pair<Int, String>) {
         viewModelScope.launch {
             val state = interactor.loadStreaming(map)
-            if (state is DetailInteractorState.DetailStreamingListState.Success) {
+            if (state is DetailInteractorState.StreamingListState.Success) {
                 if (state.data.buy != null)
                     _streamingBuy.update { state.data.buy }
 
@@ -69,5 +73,14 @@ class DetailViewModel(
         return if (state is DetailInteractorState.TrailerState.Success)
             state.data
         else null
+    }
+
+    fun loadSimilar(map: Pair<Int, String>) {
+        viewModelScope.launch {
+            val state = interactor.loadSimilar(map)
+            if (state is DetailInteractorState.SimilarListState.Success) {
+                _similar.update { state.data }
+            }
+        }
     }
 }
