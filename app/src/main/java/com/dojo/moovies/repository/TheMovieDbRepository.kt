@@ -153,5 +153,31 @@ class TheMovieDbRepository(
         return videos.firstOrNull()?.toDomain()
     }
 
+    suspend fun getSimilarMovie(id: Int, page: Int): List<MooviesDataSimplified> {
+        val response: DiscoverMovieResponse
+
+        withContext(Dispatchers.IO) {
+            response = api.getSimilarMovie(
+                id = id,
+                page = page
+            ).extractResponse()
+        }
+
+        return response.results.map { it.toDomain() }
+    }
+
+    suspend fun getSimilarTv(id: Int, page: Int): List<MooviesDataSimplified> {
+        val response: DiscoverTvResponse
+
+        withContext(Dispatchers.IO) {
+            response = api.getSimilarTv(
+                id = id,
+                page = page
+            ).extractResponse()
+        }
+
+        return response.results.map { it.toDomain() }
+    }
+
 
 }

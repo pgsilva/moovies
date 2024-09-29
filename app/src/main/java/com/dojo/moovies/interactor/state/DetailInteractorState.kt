@@ -10,10 +10,16 @@ class DetailInteractorState {
         object Error : DetailState()
     }
 
-    sealed class DetailStreamingListState {
-        data class Success(val data: MooviesWatchProviders) : DetailStreamingListState()
-        object Error : DetailStreamingListState()
+    sealed class StreamingListState {
+        data class Success(val data: MooviesWatchProviders) : StreamingListState()
+        object Error : StreamingListState()
     }
+
+    sealed class SimilarListState {
+        data class Success(val data: List<MooviesDataSimplified>) : SimilarListState()
+        object Error : SimilarListState()
+    }
+
 
     sealed class MyListState {
         data class Success(val data: MooviesDataSimplified?) : MyListState()
