@@ -13,10 +13,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 private const val TOTAL_LISTS_TO_LOAD_FROM_API = 4
+private const val MAX_NUMBER_PAGE = 5
+private const val MIN_NUMBER_PAGE = 1
 
 class HomeViewModel(
     private val interactor: HomeInteractor
 ) : ViewModel() {
+
 
     private val _discoverMovieList = MutableStateFlow(emptyList<MooviesDataSimplified>())
 
@@ -46,6 +49,8 @@ class HomeViewModel(
 
     internal val allDataLoad = _allDataLoad.asStateFlow()
 
+    private var currentPage = MIN_NUMBER_PAGE
+
     init {
         loadDiscoverMovies()
         loadDiscoverTv()
@@ -56,10 +61,34 @@ class HomeViewModel(
         checkAllDataLoad()
     }
 
+    fun nextContentPage() {
+        if (currentPage < MAX_NUMBER_PAGE) {
+            currentPage++
+            loadDiscoverMovies(currentPage)
+            loadDiscoverTv(currentPage)
+            loadPopularMovies(currentPage)
+            loadPopularTv(currentPage)
 
-    private fun loadDiscoverMovies() {
+            checkAllDataLoad()
+        }
+
+    }
+
+    fun previousContentPage() {
+        if (currentPage > MIN_NUMBER_PAGE) {
+            currentPage--
+            loadDiscoverMovies(currentPage)
+            loadDiscoverTv(currentPage)
+            loadPopularMovies(currentPage)
+            loadPopularTv(currentPage)
+
+            checkAllDataLoad()
+        }
+    }
+
+    private fun loadDiscoverMovies(page: Int = MIN_NUMBER_PAGE) {
         viewModelScope.launch {
-            val state = interactor.loadDiscoverMovies()
+            val state = interactor.loadDiscoverMovies(page)
             if (state is HomeInteractorState.HomeLoadState.Success) {
                 _discoverMovieList.update { state.data }
                 _loadCount.update { count -> count + 1 }
@@ -67,9 +96,9 @@ class HomeViewModel(
         }
     }
 
-    private fun loadDiscoverTv() {
+    private fun loadDiscoverTv(page: Int = MIN_NUMBER_PAGE) {
         viewModelScope.launch {
-            val state = interactor.loadDiscoverTv()
+            val state = interactor.loadDiscoverTv(page)
             if (state is HomeInteractorState.HomeLoadState.Success) {
                 _discoverTvList.update { state.data }
                 _loadCount.update { count -> count + 1 }
@@ -90,9 +119,9 @@ class HomeViewModel(
         }
     }
 
-    private fun loadPopularMovies() {
+    private fun loadPopularMovies(page: Int = MIN_NUMBER_PAGE) {
         viewModelScope.launch {
-            val state = interactor.loadPopularMovies()
+            val state = interactor.loadPopularMovies(page)
             if (state is HomeInteractorState.HomeLoadState.Success) {
                 _popularMovieList.update { state.data }
                 _loadCount.update { count -> count + 1 }
@@ -101,9 +130,9 @@ class HomeViewModel(
         }
     }
 
-    private fun loadPopularTv() {
+    private fun loadPopularTv(page: Int = MIN_NUMBER_PAGE) {
         viewModelScope.launch {
-            val state = interactor.loadPopularTv()
+            val state = interactor.loadPopularTv(page)
             if (state is HomeInteractorState.HomeLoadState.Success) {
                 _popularTvList.update { state.data }
                 _loadCount.update { count -> count + 1 }
@@ -115,8 +144,10 @@ class HomeViewModel(
     private fun checkAllDataLoad() {
         viewModelScope.launch {
             loadCount.collect {
-                if (it == TOTAL_LISTS_TO_LOAD_FROM_API)
+                if (it == TOTAL_LISTS_TO_LOAD_FROM_API) {
                     _allDataLoad.emit(true)
+                    _loadCount.update { 0 }
+                }
             }
         }
     }

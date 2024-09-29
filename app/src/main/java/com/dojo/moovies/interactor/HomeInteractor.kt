@@ -12,8 +12,8 @@ class HomeInteractor(
     private val dbRepository: MyListRepository
 ) {
 
-    suspend fun loadDiscoverMovies(): HomeLoadState = try {
-        apiRepository.getDiscoverMovies(page = 1).let {
+    suspend fun loadDiscoverMovies(page: Int): HomeLoadState = try {
+        apiRepository.getDiscoverMovies(page).let {
             when {
                 it.isNotEmpty() -> HomeLoadState.Success(it)
                 else -> HomeLoadState.Error
@@ -27,8 +27,8 @@ class HomeInteractor(
         HomeLoadState.Error
     }
 
-    suspend fun loadDiscoverTv(): HomeLoadState = try {
-        apiRepository.getDiscoverTv(page = 1).let {
+    suspend fun loadDiscoverTv(page: Int): HomeLoadState = try {
+        apiRepository.getDiscoverTv(page).let {
             when {
                 it.isNotEmpty() -> HomeLoadState.Success(it)
                 else -> HomeLoadState.Error
@@ -50,8 +50,9 @@ class HomeInteractor(
     }
 
     suspend fun loadPopularMovies(
+        page: Int
     ): HomeLoadState = try {
-        apiRepository.getPopularMovies(page = 1).let {
+        apiRepository.getPopularMovies(page).let {
             when {
                 it.isNotEmpty() -> HomeLoadState.Success(it)
                 else -> HomeLoadState.Error
@@ -66,8 +67,9 @@ class HomeInteractor(
     }
 
     suspend fun loadPopularTv(
+        page: Int
     ): HomeLoadState = try {
-        apiRepository.getPopularTv(1).let {
+        apiRepository.getPopularTv(page).let {
             when {
                 it.isNotEmpty() -> HomeLoadState.Success(it)
                 else -> HomeLoadState.Error

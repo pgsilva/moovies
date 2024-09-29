@@ -62,13 +62,14 @@
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/cg_filters_myLista"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
         android:paddingHorizontal="4dp"
 
-        app:layout_constraintBottom_toTopOf="@id/rv_my_list"
+
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/rv_my_list"
         app:layout_constraintTop_toBottomOf="@id/sv_search_input">
 
         <com.google.android.material.chip.Chip
@@ -84,6 +85,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Séries" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/cg_order_myLista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:paddingHorizontal="4dp"
+
+        app:layout_constraintBottom_toTopOf="@id/rv_my_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sv_search_input">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/cp_watched"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assistidos" />
 
     </com.google.android.material.chip.ChipGroup>
 

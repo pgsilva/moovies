@@ -12,8 +12,8 @@
     <string name="str_detail_label_streaming">Assista</string>
     <string name="str_detail_label_buy">Alugue</string>
     <string name="bt_my_lista">Minha Lista</string>
-    <string name="bt_watched">Assisti</string>
-    <string name="bt_not_watched">Não Assisti</string>
+    <string name="bt_watched">Assistido</string>
+    <string name="bt_not_watched">Assistir</string>
     <string name="stre_btn_search">Botão Pesquisar</string>
     <string name="str_app_initial">M</string>
     <string name="str_poster_cover">Poster do filme ou série</string>

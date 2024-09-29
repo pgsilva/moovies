@@ -1,9 +1,15 @@
 package com.dojo.moovies.ui.mylist
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -14,6 +20,7 @@ import com.dojo.moovies.core.domain.MooviesDataSimplified
 import com.dojo.moovies.core.domain.MooviesMediaType
 import com.dojo.moovies.core.domain.MooviesMediaType.Companion.valueFromEnum
 import com.dojo.moovies.databinding.FragmentMylistBinding
+import com.dojo.moovies.databinding.ItemResultListBinding
 import com.dojo.moovies.ui.mylist.adapter.MyListAdapter
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -45,9 +52,12 @@ class MyListFragment : Fragment(R.layout.fragment_mylist) {
     }
 
     private fun initDependencies() {
-        myListAdapter = MyListAdapter {
-            initDetailAction(it)
-        }
+        myListAdapter = MyListAdapter(
+            onSelect = { initDetailAction(it) },
+            onSelectWatch = { item, watched ->
+                initCheckWatchAction(item, watched)
+            }
+        )
     }
 
     private fun initComponents() {
@@ -82,6 +92,13 @@ class MyListFragment : Fragment(R.layout.fragment_mylist) {
                 initObservables()
             }
         }
+
+        binding.cpWatched.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                myListAdapter.sortWatched()
+            } else initObservables()
+        }
+
     }
 
     private fun filterByMovie() {
@@ -109,6 +126,17 @@ class MyListFragment : Fragment(R.layout.fragment_mylist) {
         findNavController().navigate(direction)
     }
 
+    private fun initCheckWatchAction(
+        item: MooviesDataSimplified,
+        watched: Boolean
+    ) = lifecycleScope.launch {
+        if (watched) {
+            viewModel.markAsNotWatched(item)
+        } else {
+            viewModel.markAsWatched(item)
+        }
+    }
+
     private fun configureSearchInput() {
         binding.svSearchInput.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -131,4 +159,6 @@ class MyListFragment : Fragment(R.layout.fragment_mylist) {
         })
     }
 
+
 }
+
