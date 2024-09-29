@@ -44,4 +44,9 @@ class MyListRepository(
         dao.deleteByIdAndMediaType(entity.id, entity.mediaType)
     }
 
+    suspend fun updateWatched(copy: MooviesDataSimplified) {
+        val entity = copy.toEntity()
+        dao.updateWatched(entity.id, entity.watched, entity.mediaType)
+    }
+
 }

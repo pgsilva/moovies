@@ -4,7 +4,7 @@ enum class MooviesMediaType {
     TV, MOVIE;
 
     companion object {
-        fun valueFromString(str: String) : MooviesMediaType {
+        fun valueFromString(str: String): MooviesMediaType {
             return when (str) {
                 "tv" -> TV
                 "movie" -> MOVIE
@@ -12,9 +12,9 @@ enum class MooviesMediaType {
             }
         }
 
-        fun valueFromEnum(enum: MooviesMediaType) : String {
+        fun valueFromEnum(enum: MooviesMediaType): String {
             return when (enum) {
-                TV ->  "tv"
+                TV -> "tv"
                 MOVIE -> "movie"
             }
         }
@@ -31,5 +31,6 @@ data class MooviesDataSimplified(
     val posterPath: String?,
     val mediaType: MooviesMediaType,
     val genreList: String,
-    val releaseDate: String
+    val releaseDate: String,
+    val watched: Boolean
 )

@@ -26,7 +26,7 @@
                 tools:layout_editor_absoluteX="0dp" />
 
             <TextView
-                android:id="@+id/tv_title_moovies"
+                android:id="@+id/shimmer_title_moovies"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"

@@ -35,4 +35,16 @@ class MyListViewModel(
         }
     }
 
+    fun markAsWatched(item: MooviesDataSimplified) {
+        viewModelScope.launch(Dispatchers.IO) {
+            interactor.markAsWatched(item)
+        }
+    }
+
+    fun markAsNotWatched(item: MooviesDataSimplified) {
+        viewModelScope.launch(Dispatchers.IO) {
+            interactor.markAsNotWatched(item)
+        }
+    }
+
 }

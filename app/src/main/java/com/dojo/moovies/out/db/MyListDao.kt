@@ -2,6 +2,7 @@ package com.dojo.moovies.out.db
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Update
 import androidx.room.Upsert
 import com.dojo.moovies.out.db.entity.MyListEntity
 import com.dojo.moovies.out.db.entity.TABLE_NAME_MY_LIST
@@ -30,4 +31,7 @@ interface MyListDao {
 
     @Query("DELETE FROM $TABLE_NAME_MY_LIST")
     suspend fun deleteAll()
+
+    @Query("UPDATE $TABLE_NAME_MY_LIST SET watched = :watched WHERE id = :id AND mediaType = :mediaType")
+    suspend fun updateWatched(id: Long, watched: Boolean, mediaType: String)
 }
