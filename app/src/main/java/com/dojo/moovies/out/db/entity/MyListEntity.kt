@@ -22,5 +22,6 @@ data class MyListEntity(
     val posterPath: String?,
     val mediaType: String,
     val genreList: String,
-    val releaseDate: String
+    val releaseDate: String,
+    val watched: Boolean
 )

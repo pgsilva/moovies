@@ -99,6 +99,7 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
         initPreviewMyListList()
         initPopularMovieList()
         initPopularTvList()
+        initPageButtons()
         initObservables()
 
     }
@@ -179,6 +180,7 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
+
     private fun initPreviewMyListList() {
         binding.rvMyList.let { rv ->
             rv.adapter = previewMyListAdapter
@@ -225,5 +227,22 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.isHomeFragment.root.visibility = VISIBLE
     }
 
+    private fun initPageButtons() {
+        binding.ibNextPage.setOnClickListener {
+            initLoadingShimmer()
+            lifecycleScope.launch {
+                viewModel.nextContentPage()
+                stopLoadingShimmer()
+            }
+        }
+
+        binding.ibPreviousPage.setOnClickListener {
+            initLoadingShimmer()
+            lifecycleScope.launch {
+                viewModel.previousContentPage()
+                stopLoadingShimmer()
+            }
+        }
+    }
 
 }

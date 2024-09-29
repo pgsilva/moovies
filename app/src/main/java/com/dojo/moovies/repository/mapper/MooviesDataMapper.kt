@@ -45,7 +45,8 @@ internal fun Detail.toDomain(): MooviesDataSimplified {
         posterPath = poster,
         mediaType = mediaType,
         genreList = this.genres?.joinToString(" - ") { it.name } ?: "",
-        releaseDate = releaseDate ?: "No Release Date Provided"
+        releaseDate = releaseDate ?: "No Release Date Provided",
+        watched = false
     )
 }
 
@@ -61,7 +62,8 @@ internal fun MyListEntity.toDomain(): MooviesDataSimplified {
         posterPath = this.posterPath,
         mediaType = MooviesMediaType.valueFromString(this.mediaType),
         genreList = this.genreList,
-        releaseDate = this.releaseDate
+        releaseDate = this.releaseDate,
+        watched = this.watched
     )
 }
 
@@ -77,7 +79,8 @@ internal fun MooviesDataSimplified.toEntity(): MyListEntity {
         posterPath = this.posterPath,
         mediaType = MooviesMediaType.valueFromEnum(this.mediaType),
         genreList = this.genreList,
-        releaseDate = this.releaseDate
+        releaseDate = this.releaseDate,
+        watched = this.watched
     )
 }
 

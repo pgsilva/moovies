@@ -8,7 +8,7 @@ internal const val DB_NAME = "moovies-dojo.db"
 
 @Database(
     entities = [MyListEntity::class],
-    version = 6,
+    version = 7,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

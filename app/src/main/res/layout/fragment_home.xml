@@ -133,6 +133,33 @@
                 app:layout_constraintStart_toStartOf="@id/tv_title_moovies"
                 app:layout_constraintTop_toBottomOf="@id/tv_title_moovies" />
 
+
+            <ImageButton
+                android:id="@+id/ib_next_page"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="20dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/stre_btn_search"
+                android:padding="4dp"
+                android:src="@drawable/ic_next"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_moovies"
+                app:tint="?attr/colorOnBackground" />
+
+            <ImageButton
+                android:id="@+id/ib_previous_page"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="20dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/stre_btn_search"
+                android:padding="4dp"
+                android:src="@drawable/ic_back"
+                app:layout_constraintEnd_toStartOf="@id/ib_next_page"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_moovies"
+                app:tint="?attr/colorOnBackground" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_discover_movie"
                 android:layout_width="match_parent"
