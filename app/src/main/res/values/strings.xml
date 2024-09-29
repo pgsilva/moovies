@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Moovies</string>
-    <string name="str_title_discover_movie">Novidades em Filmes</string>
-    <string name="str_title_discover_tv">Novidades em Séries</string>
+    <string name="str_title_discover_movie">Popular em Filmes</string>
+    <string name="str_title_discover_tv">Popular em Séries</string>
     <string name="str_title_popular_movie">Sucessos em Filmes</string>
     <string name="str_title_popular_tv">Sucessos em Séries</string>
     <string name="str_tittle">Moovies</string>
@@ -20,6 +20,7 @@
     <string name="title_search_noting_found">Nada Encontrado…</string>
     <string name="str_detail_label_videos">Trailer</string>
     <string name="str_detail_label_overview">Overview\n</string>
+    <string name="str_detail_label_actor">Elenco</string>
     <string name="banner_ad_unit_id">ca-app-pub-5942000979469254/3861152790</string>
     <string name="str_title_similar">Veja também</string>
 </resources>

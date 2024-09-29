@@ -27,7 +27,9 @@ data class Detail(
     @SerializedName("release_date")
     val releaseDate: String?,
     @SerializedName("first_air_date")
-    val firstAirDate: String?
+    val firstAirDate: String?,
+    @SerializedName("profile_path")
+    val profilePath: String?
 )
 
 data class MovieGenre(

@@ -1,6 +1,7 @@
 package com.dojo.moovies.out.api
 
 import com.dojo.moovies.BuildConfig
+import com.dojo.moovies.out.api.data.tmdb.CreditDetail
 import com.dojo.moovies.out.api.data.tmdb.DiscoverMovieResponse
 import com.dojo.moovies.out.api.data.tmdb.DiscoverTvResponse
 import com.dojo.moovies.out.api.data.tmdb.Detail
@@ -122,5 +123,20 @@ interface TheMovieDbApi {
         @Query("language") language: String = TMDB_API_INITIAL_LANGUAGE,
         @Query("api_key") apiKey: String = TMDB_API_KEY,
     ): Response<DiscoverTvResponse>
+
+    @GET("/3/movie/{movie_id}/credits")
+    suspend fun getCreditsMovie(
+        @Path("movie_id") id: Int,
+        @Query("page") page: Int = TMDB_API_INITIAL_PAGE,
+        @Query("api_key") apiKey: String = TMDB_API_KEY,
+    ): Response<CreditDetail>
+
+
+    @GET("/3/tv/{tv_id}/credits")
+    suspend fun getCreditsTv(
+        @Path("tv_id") id: Int,
+        @Query("language") language: String = TMDB_API_INITIAL_LANGUAGE,
+        @Query("api_key") apiKey: String = TMDB_API_KEY,
+    ): Response<CreditDetail>
 
 }

@@ -1,11 +1,13 @@
 package com.dojo.moovies.repository
 
+import com.dojo.moovies.core.domain.MooviesActorData
 import com.dojo.moovies.core.domain.MooviesDataSimplified
 import com.dojo.moovies.core.domain.MooviesTrailerData
 import com.dojo.moovies.core.domain.MooviesWatchProviders
 import com.dojo.moovies.core.domain.TMDB_TRAILER_API_TRAILER_VALUE
 import com.dojo.moovies.core.domain.TMDB_TRAILER_API_YOUTUBE_VALUE
 import com.dojo.moovies.out.api.TheMovieDbApi
+import com.dojo.moovies.out.api.data.tmdb.CreditDetail
 import com.dojo.moovies.out.api.data.tmdb.Detail
 import com.dojo.moovies.out.api.data.tmdb.DiscoverMovieResponse
 import com.dojo.moovies.out.api.data.tmdb.DiscoverTvResponse
@@ -177,6 +179,27 @@ class TheMovieDbRepository(
         }
 
         return response.results.map { it.toDomain() }
+    }
+
+    suspend fun getMovieCast(id: Int): List<MooviesActorData> {
+        val response: CreditDetail
+
+        withContext(Dispatchers.IO) {
+            response = api.getCreditsMovie(id).extractResponse()
+        }
+
+        return response.cast.map { it.toDomain() }
+
+    }
+
+    suspend fun getTvCast(id: Int): List<MooviesActorData> {
+        val response: CreditDetail
+
+        withContext(Dispatchers.IO) {
+            response = api.getCreditsTv(id).extractResponse()
+        }
+
+        return response.cast.map { it.toDomain() }
     }
 
 
