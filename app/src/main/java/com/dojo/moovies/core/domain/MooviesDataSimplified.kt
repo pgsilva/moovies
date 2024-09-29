@@ -8,6 +8,7 @@ enum class MooviesMediaType {
             return when (str) {
                 "tv" -> TV
                 "movie" -> MOVIE
+                // "person" -> PERSON
                 else -> throw IllegalArgumentException("MediaType invalid")
             }
         }
@@ -16,6 +17,7 @@ enum class MooviesMediaType {
             return when (enum) {
                 TV -> "tv"
                 MOVIE -> "movie"
+                //  PERSON -> "person"
             }
         }
     }
@@ -32,5 +34,6 @@ data class MooviesDataSimplified(
     val mediaType: MooviesMediaType,
     val genreList: String,
     val releaseDate: String,
-    val watched: Boolean
+    val watched: Boolean,
+    val profilePath: String?
 )

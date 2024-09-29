@@ -16,6 +16,7 @@ import com.dojo.moovies.core.domain.MooviesMediaType.Companion.valueFromEnum
 import com.dojo.moovies.databinding.FragmentHomeBinding
 import com.dojo.moovies.ui.TmdbImageSize
 import com.dojo.moovies.ui.home.HomeCoverLoader.COVERS
+import com.dojo.moovies.ui.home.HomeCoverLoader.getNextCover
 import com.dojo.moovies.ui.home.adapter.DiscoverMovieAdapter
 import com.dojo.moovies.ui.home.adapter.DiscoverTvAdapter
 import com.dojo.moovies.ui.home.adapter.PopularMovieAdapter
@@ -43,7 +44,7 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val viewModel: HomeViewModel by viewModel()
 
-    private val urlImage = COVERS.random()
+    private val urlImage = getNextCover()
 
 
     override fun onCreateView(
@@ -53,6 +54,10 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
     ): View {
         binding = FragmentHomeBinding.inflate(layoutInflater)
         binding.ivCoverPoster.loadFromTMDBApi(urlImage, TmdbImageSize.COVER_SIZE)
+
+        binding.ivCoverPoster.setOnClickListener {
+            binding.ivCoverPoster.loadFromTMDBApi(getNextCover(), TmdbImageSize.COVER_SIZE)
+        }
 
         return binding.root
     }
@@ -101,6 +106,8 @@ internal class HomeFragment : Fragment(R.layout.fragment_home) {
         initPopularTvList()
         initPageButtons()
         initObservables()
+
+
 
     }
 

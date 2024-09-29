@@ -1,11 +1,14 @@
 package com.dojo.moovies.repository.mapper
 
 import android.annotation.SuppressLint
+import com.dojo.moovies.core.domain.MooviesActorData
 import com.dojo.moovies.core.domain.MooviesDataSimplified
 import com.dojo.moovies.core.domain.MooviesMediaType
 import com.dojo.moovies.core.domain.MooviesTrailerData
 import com.dojo.moovies.core.domain.MooviesWatchProvider
 import com.dojo.moovies.core.domain.MooviesWatchProviders
+import com.dojo.moovies.out.api.data.tmdb.Cast
+import com.dojo.moovies.out.api.data.tmdb.CreditDetail
 import com.dojo.moovies.out.api.data.tmdb.Detail
 import com.dojo.moovies.out.api.data.tmdb.StreamProvider
 import com.dojo.moovies.out.api.data.tmdb.TrailersContent
@@ -18,7 +21,7 @@ import java.util.UUID
 internal fun Detail.toDomain(): MooviesDataSimplified {
     val name = this.name ?: this.title
     val originalName = this.originalName ?: this.title
-    val poster = this.posterPath ?: this.backdropPath
+    val poster = this.posterPath ?: this.backdropPath ?: this.profilePath
     var releaseDate = this.releaseDate ?: this.firstAirDate
 
     val mediaType: MooviesMediaType = if (this.name != null) {
@@ -46,7 +49,8 @@ internal fun Detail.toDomain(): MooviesDataSimplified {
         mediaType = mediaType,
         genreList = this.genres?.joinToString(" - ") { it.name } ?: "",
         releaseDate = releaseDate ?: "No Release Date Provided",
-        watched = false
+        watched = false,
+        profilePath = profilePath
     )
 }
 
@@ -63,7 +67,8 @@ internal fun MyListEntity.toDomain(): MooviesDataSimplified {
         mediaType = MooviesMediaType.valueFromString(this.mediaType),
         genreList = this.genreList,
         releaseDate = this.releaseDate,
-        watched = this.watched
+        watched = this.watched,
+        profilePath = null
     )
 }
 
@@ -120,5 +125,22 @@ internal fun TrailersContent.toDomain(): MooviesTrailerData {
         type = this.type,
         official = this.official,
         id = this.id
+    )
+}
+
+internal fun Cast.toDomain(): MooviesActorData {
+    return MooviesActorData(
+        adult = this.adult,
+        gender = this.gender,
+        id = this.id,
+        knownForDepartment = this.knownForDepartment,
+        name = this.name,
+        originalName = this.originalName,
+        popularity = this.popularity,
+        profilePath = this.profilePath,
+        castId = this.castId,
+        character = this.character,
+        creditId = this.creditId,
+        order = this.order
     )
 }

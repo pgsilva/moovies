@@ -119,6 +119,32 @@ class DetailInteractor(
             )
             DetailInteractorState.SimilarListState.Error
         }
+
+    suspend fun loadCast(detailMap: Pair<Int, String>): DetailInteractorState.CastListState =
+        try {
+            when (MooviesMediaType.valueFromString(detailMap.second)) {
+                MooviesMediaType.MOVIE -> {
+                    val castList = apiRepository.getMovieCast(detailMap.first)
+                    DetailInteractorState.CastListState.Success(castList)
+                }
+
+                MooviesMediaType.TV -> {
+                    val castList = apiRepository.getTvCast(detailMap.first)
+                    DetailInteractorState.CastListState.Success(castList)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(
+                "MOOVIES-DATABASE",
+                "Api Cast Error, response is not successful: ${e.printStackTrace()}"
+            )
+
+            DetailInteractorState.CastListState.Error
+        }
 }
+
+
+
+
 
 

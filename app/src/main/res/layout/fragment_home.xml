@@ -31,6 +31,7 @@
                 android:contentDescription="@string/stre_btn_search"
                 android:padding="4dp"
                 android:src="@drawable/ic_search"
+                android:stateListAnimator="@animator/animator_click_effect"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/white" />
@@ -55,18 +56,18 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <include
-        android:visibility="invisible"
         android:id="@+id/is_home_fragment"
         layout="@layout/fragment_home_shimmer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
 
 
     <ScrollView
-        android:visibility="visible"
         android:id="@+id/sv_home_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -143,6 +144,7 @@
                 android:contentDescription="@string/stre_btn_search"
                 android:padding="4dp"
                 android:src="@drawable/ic_next"
+                android:stateListAnimator="@animator/animator_click_effect"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_title_moovies"
                 app:tint="?attr/colorOnBackground" />
@@ -151,11 +153,12 @@
                 android:id="@+id/ib_previous_page"
                 android:layout_width="20dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="8dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/stre_btn_search"
                 android:padding="4dp"
                 android:src="@drawable/ic_back"
+                android:stateListAnimator="@animator/animator_click_effect"
                 app:layout_constraintEnd_toStartOf="@id/ib_next_page"
                 app:layout_constraintTop_toBottomOf="@id/tv_title_moovies"
                 app:tint="?attr/colorOnBackground" />
@@ -164,10 +167,10 @@
                 android:id="@+id/rv_discover_movie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="2dp"
                 android:orientation="horizontal"
-                android:layout_gravity="center"
                 app:layoutManager="LinearLayoutManager"
                 app:layout_constraintStart_toStartOf="@id/tv_discover_movie"
                 app:layout_constraintTop_toBottomOf="@id/tv_discover_movie"

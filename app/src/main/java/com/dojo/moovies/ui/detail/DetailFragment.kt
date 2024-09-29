@@ -25,6 +25,7 @@ import com.dojo.moovies.core.domain.MooviesWatchProvider
 import com.dojo.moovies.core.domain.YOUTUBE_EMBED_URL
 import com.dojo.moovies.databinding.FragmentDetailBinding
 import com.dojo.moovies.ui.TmdbImageSize
+import com.dojo.moovies.ui.detail.adapter.CastAdapter
 import com.dojo.moovies.ui.detail.adapter.SimilarAdapter
 import com.dojo.moovies.ui.detail.adapter.StreamingBuyAdapter
 import com.dojo.moovies.ui.detail.adapter.StreamingChannelAdapter
@@ -41,6 +42,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private lateinit var streamingBuyAdapter: StreamingBuyAdapter
 
     private lateinit var similarAdapter: SimilarAdapter
+
+    private lateinit var castAdapter: CastAdapter
 
     private val viewModel: DetailViewModel by viewModel()
 
@@ -75,6 +78,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         similarAdapter = SimilarAdapter {
             initDetailAction(it)
         }
+
+        castAdapter = CastAdapter()
     }
 
     private fun initComponents() {
@@ -83,6 +88,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         val detailMap = args.id to args.mediaType
 
         initLoadingShimmer()
+        initCastInfoList()
         initStreamingList()
         initStreamingBuyList()
         initSimilarList()
@@ -113,6 +119,13 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         }
     }
 
+
+    private fun loadCastInfo(detailMap: Pair<Int, String>) {
+        lifecycleScope.launch {
+            viewModel.loadCast(detailMap)
+            initObservables()
+        }
+    }
 
     private fun loadStreamingInfo(detailMap: Pair<Int, String>) {
         lifecycleScope.launch {
@@ -176,16 +189,18 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     )
 
                     binding.tvDetailName.text = detail.name
-                    if (detail.overview.isBlank())
-                        binding.tvLabelOverview.visibility = GONE
-                    else {
-                        binding.tvLabelOverview.visibility = VISIBLE
+                    if (detail.overview.isNotBlank())
+                    //binding.tvLabelOverview.visibility = VISIBLE
                         binding.tvDetailOverview.text = detail.overview
+                    else {
+                        //binding.tvLabelOverview.visibility = GONE
+
                     }
                     binding.tvGenreList.text = detail.genreList
                     binding.tvDate.text = "Lançamento: ${detail.releaseDate}"
 
                     initButtonsMyList(detail)
+                    loadCastInfo(detailMap)
                     loadStreamingInfo(detailMap)
                     loadTrailer(detailMap)
                     loadSimilarInfo(detailMap)
@@ -209,6 +224,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     }
 
     private fun initObservables() {
+        observableCastInfo()
         observableStreamingList()
         observableStreamingBuyList()
         observableSimilarList()
@@ -233,6 +249,14 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private fun initSimilarList() {
         binding.rvSimilar.let { rv ->
             rv.adapter = similarAdapter
+            rv.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
+    }
+
+    private fun initCastInfoList() {
+        binding.rvActor.let { rv ->
+            rv.adapter = castAdapter
             rv.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
@@ -270,6 +294,17 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 binding.tvSimilar.visibility = VISIBLE
                 similarAdapter.refresh(it)
 
+            }
+        }
+    }
+
+    private fun observableCastInfo() = lifecycleScope.launch {
+        viewModel.cast.collect {
+            if (it.isEmpty()) {
+                binding.tvLabelActor.visibility = GONE
+            } else {
+                binding.tvLabelActor.visibility = VISIBLE
+                castAdapter.refresh(it)
             }
         }
     }

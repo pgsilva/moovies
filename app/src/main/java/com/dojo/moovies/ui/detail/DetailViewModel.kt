@@ -2,6 +2,7 @@ package com.dojo.moovies.ui.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dojo.moovies.core.domain.MooviesActorData
 import com.dojo.moovies.core.domain.MooviesDataSimplified
 import com.dojo.moovies.core.domain.MooviesTrailerData
 import com.dojo.moovies.core.domain.MooviesWatchProvider
@@ -28,6 +29,10 @@ class DetailViewModel(
     private val _similar = MutableStateFlow(emptyList<MooviesDataSimplified>())
 
     val similar = _similar.asStateFlow()
+
+    private val _cast = MutableStateFlow(emptyList<MooviesActorData>())
+
+    val cast = _cast.asStateFlow()
 
     suspend fun loadDetail(map: Pair<Int, String>): MooviesDataSimplified? {
         val state = interactor.load(map)
@@ -80,6 +85,15 @@ class DetailViewModel(
             val state = interactor.loadSimilar(map)
             if (state is DetailInteractorState.SimilarListState.Success) {
                 _similar.update { state.data }
+            }
+        }
+    }
+
+    fun loadCast(detailMap: Pair<Int, String>) {
+        viewModelScope.launch {
+            val state = interactor.loadCast(detailMap)
+            if (state is DetailInteractorState.CastListState.Success) {
+                _cast.update { state.data }
             }
         }
     }
