@@ -28,7 +28,7 @@ interface TheMovieDbApi {
         @Query("api_key") apiKey: String = TMDB_API_KEY,
         @Query("language") language: String = TMDB_API_INITIAL_LANGUAGE,
         @Query("sort_by") sortBy: String = TMDB_API_INITIAL_SORT_BY,
-        @Query("include_adult") adult: Boolean = true,
+        @Query("include_adult") adult: Boolean = false,
         @Query("include_video") video: Boolean = true,
         @Query("page") page: Int = TMDB_API_INITIAL_PAGE
     ): Response<DiscoverMovieResponse>
@@ -38,7 +38,7 @@ interface TheMovieDbApi {
         @Query("api_key") apiKey: String = TMDB_API_KEY,
         @Query("language") language: String = TMDB_API_INITIAL_LANGUAGE,
         @Query("sort_by") sortBy: String = TMDB_API_INITIAL_SORT_BY,
-        @Query("include_adult") adult: Boolean = true,
+        @Query("include_adult") adult: Boolean = false,
         @Query("include_null_first_air_dates") firstAirData: Boolean = false,
         @Query("page") page: Int = TMDB_API_INITIAL_PAGE
     ): Response<DiscoverTvResponse>
@@ -48,7 +48,7 @@ interface TheMovieDbApi {
         @Query("query") query: String,
         @Query("api_key") apiKey: String = TMDB_API_KEY,
         @Query("language") language: String = TMDB_API_INITIAL_LANGUAGE,
-        @Query("include_adult") adult: Boolean = true,
+        @Query("include_adult") adult: Boolean = false,
         @Query("page") page: Int = TMDB_API_INITIAL_PAGE
     ): Response<MultiResponse>
 
